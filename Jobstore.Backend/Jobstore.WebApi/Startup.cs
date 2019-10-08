@@ -70,6 +70,8 @@ namespace Jobstore.WebApi
 				configureOptions.SaveToken = true;
 			});
 
+			services.AddAuthorization();
+
 			services.AddIdentityCore<AppUser>(o =>
 			{
 				o.Password.RequireDigit = false;
@@ -97,6 +99,7 @@ namespace Jobstore.WebApi
 
 			app.UseRouting();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>

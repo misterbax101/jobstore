@@ -1,6 +1,7 @@
 ﻿using Jobstore.Infrastructure.Identity;
 using Jobstore.Infrastructure.Identity.Models;
 using Jobstore.WebApi.Models.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -24,6 +25,14 @@ namespace Jobstore.WebApi.Controllers
 			_userManager = userManager;
 			_jwtFactory = jwtFactory;
 			_jwtOptions = jwtOptions.Value;
+		}
+
+
+		[Authorize]
+		public int Get()
+		{
+			var context = HttpContext;
+			return 1;
 		}
 
 		[HttpPost("login")]

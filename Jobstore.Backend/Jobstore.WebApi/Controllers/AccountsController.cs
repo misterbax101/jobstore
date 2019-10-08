@@ -24,7 +24,6 @@ namespace Jobstore.WebApi.Controllers
 			_appDbContext = appDbContext;
 		}
 
-		// POST api/accounts
 		[HttpPost]
 		public async Task<IActionResult> Post([FromBody]SignUpRequest model)
 		{
