@@ -1,18 +1,24 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Container } from 'reactstrap';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { SignUp, Home } from './components';
+
+import { SignUp, Home } from './components/pages';
+import { Login  } from './containers/pages';
+import { Header } from './components/layout';
+import setAuthToken from './untils/setAuthToken';
+
+setAuthToken(localStorage.getItem('jwtToken'));
 
 const App: React.FC = () => {
     return (
         <Container>
             <BrowserRouter>
-                <Fragment>
-                    <Switch>
-                        <Route path='/' exact component={Home} />
-                        <Route path='/sign-up' exact component={SignUp} />
-                    </Switch>
-                </Fragment>
+                <Header />
+                <Switch>
+                    <Route path='/' exact component={Home} />
+                    <Route path='/login' exact component={Login} />
+                    <Route path='/sign-up' exact component={SignUp} />
+                </Switch>
             </BrowserRouter>
         </Container>
     );

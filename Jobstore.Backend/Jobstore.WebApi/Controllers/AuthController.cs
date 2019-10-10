@@ -46,7 +46,7 @@ namespace Jobstore.WebApi.Controllers
 			var identity = await GetClaimsIdentity(request.Email, request.Password);
 			if (identity == null)
 			{
-				return BadRequest();
+				return BadRequest("Email or password is invalid.");
 			}
 
 			var jwt = await Tokens.GenerateJwt(identity, _jwtFactory, request.Email, _jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });

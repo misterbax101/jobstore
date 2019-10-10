@@ -84,6 +84,16 @@ namespace Jobstore.WebApi
 				.AddDefaultTokenProviders();
 
 			services.AddControllers();
+
+			services.AddCors(options =>
+			{
+				options.AddDefaultPolicy(builder =>
+				{
+					builder.AllowAnyOrigin()
+					.AllowAnyHeader()
+					.AllowAnyMethod();
+				});
+			});
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -101,6 +111,8 @@ namespace Jobstore.WebApi
 
 			app.UseAuthentication();
 			app.UseAuthorization();
+
+			app.UseCors();
 
 			app.UseEndpoints(endpoints =>
 			{

@@ -24,8 +24,20 @@ namespace Jobstore.WebApi.Controllers
 			_appDbContext = appDbContext;
 		}
 
+		[HttpGet]
+		[Route("{id:guid}")]
+		public async Task<IActionResult> Get(Guid id)
+		{
+			var result = await _userManager.FindByIdAsync(id.ToString());
+			if(result == null)
+			{
+				return NotFound();
+			}
+
+			return Ok(result);
+		}
 		[HttpPost]
-		public async Task<IActionResult> Post([FromBody]SignUpRequest model)
+		public async Task<IActionResult> Post([FromBody]SignUpRequest request)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -34,16 +46,19 @@ namespace Jobstore.WebApi.Controllers
 
 			var userIdentity = new AppUser
 			{
-				Email = model.Email,
-				UserName = model.Email
+				Email = request.Email,
+				UserName = request.Email,
+				FirstName = request.FirstName,
+				LastName = request.LastName
 			};
-			var result = await _userManager.CreateAsync(userIdentity, model.Password);
+			var result = await _userManager.CreateAsync(userIdentity, request.Password);
 
 			if (!result.Succeeded) return new BadRequestResult();
 
 			await _appDbContext.SaveChangesAsync();
 
-			return new OkObjectResult("Account created");
+			var userModel = await _userManager.FindByEmailAsync(request.Email);
+			return Ok(userModel);
 		}
 	}
 }
