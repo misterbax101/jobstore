@@ -6,7 +6,7 @@ import { login } from './../../store/auth/actions';
 
 const mapStateToProps = (state: AppState) => ({
     isAuthenticated: state.auth.isAuthenticated,
-    errors: state.errors.message
+    alertMessage: state.alert
 });
 
 export default connect(

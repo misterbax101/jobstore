@@ -83,7 +83,7 @@ namespace Jobstore.WebApi
 				.AddEntityFrameworkStores<AppIdentityDbContext>()
 				.AddDefaultTokenProviders();
 
-			services.AddControllers();
+            services.AddControllers();
 
 			services.AddCors(options =>
 			{
@@ -100,10 +100,15 @@ namespace Jobstore.WebApi
 		{
 			if (env.IsDevelopment())
 			{
-				app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/error-local-development");
+				//app.UseDeveloperExceptionPage();
 			}
+            else
+            {
+                app.UseExceptionHandler("/error");
+            }
 
-			var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
 			app.UseHttpsRedirection();
 

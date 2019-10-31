@@ -8,7 +8,7 @@ import {
     NavLink
 } from 'reactstrap';
 
-import LoginButton  from "./LoginButton";
+import LoginButton from "./LoginButton";
 
 class Header extends React.Component<{}, {}>{
     render() {
@@ -25,7 +25,12 @@ class Header extends React.Component<{}, {}>{
                     <NavItem>
                         <NavLink tag={Link} to="/about">About</NavLink>
                     </NavItem>
-                    <LoginButton/>
+                    <NavItem>
+                        <NavLink tag={Link} to="/sign-up">Sign Up</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <LoginButton />
+                    </NavItem>
                 </Nav>
             </Navbar>
         );

@@ -1,25 +1,36 @@
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import jwt from 'jsonwebtoken';
-
-import auth from './../../apis/auth';
-import { GET_ERRORS } from '../errors/types';
+import { authService } from '../../services';
+import { history } from '../../untils/history';
 import LoginModel from './../../models/LoginModel';
-import setAuthToken from './../../untils/setAuthToken';
-
+import { errorAlert, clearAlert } from '../alert/actions';
+import {
+    AuthActionTypes,
+    LOGIN_SUCCESS,
+    LOGOUT
+} from './types';
 
 export const login = (data: LoginModel) => async (dispatch: any) => {
     try {
-        const response = await auth.post('login', data);
-        const token = response.data.auth_token;
-        localStorage.setItem('jwtToken', token);
-        setAuthToken(token);
-        console.log(jwt.decode(token));
+        const userId = await authService.login(data);
+        dispatch(success(userId));
+        dispatch(clearAlert());
+        history.push('/');
     }
-    catch (err) {
-        dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-        })
+    catch (error) {
+        dispatch(errorAlert(error));
     }
 }
+
+export const logout = (): AuthActionTypes => ({ type: LOGOUT });
+
+export const authCheckState = () => (dispach: any) => {
+    const userId = authService.getUserIdFromStore();
+    if (userId) {
+        dispach(success(userId));
+    } else {
+        dispach(logout());
+    }
+}
+
+const success = (userId: string): AuthActionTypes => ({ type: LOGIN_SUCCESS, payload: userId });
+
 
