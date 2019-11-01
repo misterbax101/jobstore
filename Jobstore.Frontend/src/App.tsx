@@ -10,10 +10,8 @@ import { Header } from './components/layout';
 import { history } from './untils/history';
 import { authCheckState } from './store/auth/actions';
 import { clearAlert } from './store/alert/actions';
-import setAuthToken from './untils/setAuthToken';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
-setAuthToken(localStorage.getItem('jwtToken'));
 
 const App: React.FC = () => {
     return (

@@ -20,7 +20,10 @@ export const login = (data: LoginModel) => async (dispatch: any) => {
     }
 }
 
-export const logout = (): AuthActionTypes => ({ type: LOGOUT });
+export const logout = (): AuthActionTypes => {
+    authService.logout();
+    return { type: LOGOUT }
+};
 
 export const authCheckState = () => (dispach: any) => {
     const userId = authService.getUserIdFromStore();

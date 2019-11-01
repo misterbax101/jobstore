@@ -20,6 +20,8 @@ const signUpSchema = Yup.object({
         .required(),
     password: Yup.string()
         .label('Password')
+        .min(6)
+        .matches(/(?=.*[A-Z])(?=.*[a-z])(?=.*\d)/,'Password must contain at least one lowercase letter, one uppercase letter, and a number')
         .required(),
     confirmPassword: Yup.string()
         .label('Confirm Password')

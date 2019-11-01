@@ -15,7 +15,7 @@ class Header extends React.Component<{}, {}>{
         return (
             <Navbar color="light" light expand="md">
                 <NavbarBrand tag={Link} to="/">Jobstore</NavbarBrand>
-                <Nav className="ml-auti" navbar>
+                <Nav className="ml-auto" navbar>
                     <NavItem>
                         <NavLink tag={Link} to="/vacancies">Vacancies</NavLink>
                     </NavItem>
@@ -25,12 +25,7 @@ class Header extends React.Component<{}, {}>{
                     <NavItem>
                         <NavLink tag={Link} to="/about">About</NavLink>
                     </NavItem>
-                    <NavItem>
-                        <NavLink tag={Link} to="/sign-up">Sign Up</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <LoginButton />
-                    </NavItem>
+                    <LoginButton />
                 </Nav>
             </Navbar>
         );

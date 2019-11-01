@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, FormikProps, Form, Field, FormikActions } from 'formik';
-import { FormGroup, Button, Label, Col, Row } from 'reactstrap';
+import { FormGroup, Button, Label, Spinner } from 'reactstrap';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
@@ -54,6 +54,7 @@ class Login extends React.Component<LoginProps, {}>{
                         disabled={filedProps.isSubmitting}>
                         Submit
                 </Button>
+                {filedProps.isSubmitting && <Spinner type="grow" color="secondary" style={{verticalAlign:'middle'}} />}
                     <Link to={'/sign-up'} className={'btn btn-link'}>Register</Link>
                 </FormGroup>
             </Form>
