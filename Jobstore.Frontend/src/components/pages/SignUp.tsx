@@ -1,15 +1,16 @@
 import React from 'react';
 import { Formik, FormikProps, Form, Field, FormikActions } from 'formik';
-import { FormGroup, Button, Label } from 'reactstrap';
-import { RouteComponentProps } from 'react-router-dom';
+import { FormGroup, Button, Label, Spinner } from 'reactstrap';
 import * as Yup from 'yup';
 
 import SignUpModel from '../../models/SignUpModel';
 import CustomInput from '../base/CustomInput';
-import { async } from 'q';
+import Alert from '../../models/Alert';
+import AlertMessage from '../base/AlertMessage';
 
-interface SignUpProps extends RouteComponentProps {
+interface SignUpProps {
     onSubmit(data: SignUpModel): Promise<void>;
+    alert: Alert | null
 }
 
 const signUpSchema = Yup.object({
@@ -57,7 +58,7 @@ class SignUp extends React.Component<SignUpProps, {}> {
                 </FormGroup>
                 <FormGroup>
                     <Label htmlFor="lastName">Last name</Label>
-                    <Field name="lastName" placeholder="Enter last name" component={CustomInput} />
+                    <Field name="lastName" placeholder="Enter last name"  component={CustomInput} />
                 </FormGroup>
                 <FormGroup>
                     <Button
@@ -65,25 +66,29 @@ class SignUp extends React.Component<SignUpProps, {}> {
                         type="submit"
                         disabled={filedProps.isSubmitting}>
                         Submit
-                </Button>
+                    </Button>
+                    {filedProps.isSubmitting && <Spinner type="grow" color="secondary" style={{verticalAlign:'middle'}} />}
                 </FormGroup>
             </Form>
         );
     }
 
     onFormSubmit = async (values: SignUpModel, actions: FormikActions<SignUpModel>): Promise<void> => {
-        const response = await this.props.onSubmit(values);
+        await this.props.onSubmit(values);
         actions.setSubmitting(false);
     }
-    // {this.props.alertMessage.type && <AlertMessage message={this.props.alertMessage.message} alerType={this.props.alertMessage.type} />}
+
     render() {
         return (
-            <Formik
-                initialValues={{ email: '', password: '', confirmPassword: '', firstName: '', lastName: '' }}
-                validationSchema={signUpSchema}
-                render={this.renderForm}
-                onSubmit={() => console.log('done')}
-            />
+            <React.Fragment>
+                {this.props.alert && <AlertMessage data={this.props.alert} />}
+                <Formik
+                    initialValues={{ email: '', password: '', confirmPassword: '', firstName: '', lastName: '' }}
+                    validationSchema={signUpSchema}
+                    render={this.renderForm}
+                    onSubmit={this.onFormSubmit}
+                />
+            </React.Fragment>
         );
     }
 }

@@ -1,15 +1,14 @@
 import {
     AlertState,
-    AlertType,
     AlerActionTypes,
     SUCCESS,
     ERROR,
     CLEAR
 } from './types'
+import { AlertTypes } from '../../models/Alert';
 
 const initialSate: AlertState = {
-    message: null,
-    type: null
+    alert: null
 };
 
 export function alertReducer(
@@ -19,13 +18,17 @@ export function alertReducer(
     switch (action.type) {
         case SUCCESS:
             return {
-                message: action.payload,
-                type: AlertType.Success
+                alert: {
+                    message: action.payload,
+                    type: AlertTypes.Success
+                }
             }
         case ERROR:
             return {
-                message: action.payload,
-                type: AlertType.Error
+                alert: {
+                    message: action.payload,
+                    type: AlertTypes.Error
+                }
             }
         case CLEAR:
             return initialSate;

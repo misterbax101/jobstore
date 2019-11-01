@@ -11,7 +11,5 @@ const mapStateToProps = (state: AppState) => ({
 
 export default connect(
     mapStateToProps,
-    {
-        onLogin: login
-    },
+    { onLogin: login },
 )(Login)

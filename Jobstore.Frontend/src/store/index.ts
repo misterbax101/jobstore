@@ -3,11 +3,13 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import { authReducer } from './auth/reducer';
-import { alertReducer } from './alert/reducers';
+import { alertReducer } from './alert/reducer';
+import { usersReducer } from './users/reducer';
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    alert: alertReducer
+    alert: alertReducer,
+    users: usersReducer
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

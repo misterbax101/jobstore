@@ -4,18 +4,14 @@ import { FormGroup, Button, Label, Col, Row } from 'reactstrap';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
-import { AlertType } from '../../store/alert/types';
+import Alert from '../../models/Alert';
 import LoginModel from '../../models/LoginModel';
 import CustomInput from '../base/CustomInput';
 import AlertMessage from '../base/AlertMessage';
-import { async } from 'q';
 
 interface LoginProps extends RouteComponentProps {
     onLogin(model: LoginModel): Promise<void>;
-    alertMessage: {
-        message: string | null,
-        type: AlertType | null
-    },
+    alert: Alert,
     isAuthenticated: boolean
 }
 
@@ -71,17 +67,15 @@ class Login extends React.Component<LoginProps, {}>{
 
     render() {
         return (
-            <Row>
-                <Col sm={{ size: 8, offset: 2 }} >
-                    {this.props.alertMessage.type && <AlertMessage message={this.props.alertMessage.message} alerType={this.props.alertMessage.type} />}
-                    <Formik
-                        initialValues={{ email: 'test@gmail.com', password: 'Aa!123456', remeberMe: false }}
-                        validationSchema={loginModelSchema}
-                        onSubmit={this.onFormSubmit}
-                        render={this.renderForm}
-                    />
-                </Col>
-            </Row>
+            <React.Fragment>
+                {this.props.alert && <AlertMessage data={this.props.alert} />}
+                <Formik
+                    initialValues={{ email: 'test@gmail.com', password: 'Aa!123456', remeberMe: false }}
+                    validationSchema={loginModelSchema}
+                    onSubmit={this.onFormSubmit}
+                    render={this.renderForm}
+                />
+            </React.Fragment>
         );
     }
 }

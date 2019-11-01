@@ -1,20 +1,19 @@
 import React from 'react';
-import { Alert } from 'reactstrap';
+import { Alert as  AlertComponent } from 'reactstrap';
 
-import { AlertType } from '../../store/alert/types';
+import Alert, { AlertTypes } from '../../models/Alert';
 
 type Props = {
-    message: string | null
-    alerType: AlertType 
+    data: Alert
 }
 
 const mapColorToType = {
-    [AlertType.Success]: 'success',
-    [AlertType.Error]: 'danger',
-    [AlertType.Info]: 'info',
+    [AlertTypes.Success]: 'success',
+    [AlertTypes.Error]: 'danger',
+    [AlertTypes.Info]: 'info',
 }
 const AlertMessage: React.FC<Props> = (props) => {
-    return <Alert color={mapColorToType[props.alerType]}>{props.message}</Alert>;
+    return <AlertComponent color={mapColorToType[props.data.type]}>{props.data.message}</AlertComponent>;
 }
 
 export default AlertMessage;

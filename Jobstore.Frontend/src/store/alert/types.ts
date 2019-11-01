@@ -1,3 +1,5 @@
+import Alert from '../../models/Alert';
+
 export const SUCCESS = 'SUCCESS';
 export const ERROR = 'ERROR';
 export const CLEAR = 'CLEAR';
@@ -18,14 +20,6 @@ interface ClearAlertAction {
 
 export type AlerActionTypes = SuccessAlertAction | ErrorAlertAction | ClearAlertAction;
 
-
-export enum AlertType {
-    Success,
-    Error,
-    Info
-}
-
-export interface AlertState {
-    message: string | null,
-    type: AlertType | null
+export interface AlertState  {
+    alert: Alert | null
 }
