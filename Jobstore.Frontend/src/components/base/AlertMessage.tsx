@@ -1,7 +1,8 @@
 import React from 'react';
-import { Alert as  AlertComponent } from 'reactstrap';
+import { Alert as AlertComponent } from 'reactstrap';
 
-import Alert, { AlertTypes } from '../../models/Alert';
+import Alert from '../../models/Alert';
+import AlertTypes  from '../../models/AlertTypes';
 
 type Props = {
     data: Alert

@@ -1,17 +1,20 @@
-import { authService } from '../../services';
+import { authService, usersService } from '../../services';
 import { history } from '../../untils/history';
 import LoginModel from './../../models/LoginModel';
+import UserModel from './../../models/UserModel';
 import { errorAlert, clearAlert } from '../alert/actions';
 import {
     AuthActionTypes,
     LOGIN_SUCCESS,
     LOGOUT
 } from './types';
+import { async } from 'q';
 
 export const login = (data: LoginModel) => async (dispatch: any) => {
     try {
         const userId = await authService.login(data);
-        dispatch(success(userId));
+        const curentUser = await usersService.getUserById(userId);
+        dispatch(success(curentUser));
         dispatch(clearAlert());
         history.push('/');
     }
@@ -25,15 +28,16 @@ export const logout = (): AuthActionTypes => {
     return { type: LOGOUT }
 };
 
-export const authCheckState = () => (dispach: any) => {
+export const authCheckState = () => async (dispach: any) => {
     const userId = authService.getUserIdFromStore();
     if (userId) {
-        dispach(success(userId));
+        const curentUser = await usersService.getUserById(userId);
+        dispach(success(curentUser));
     } else {
         dispach(logout());
     }
 }
 
-const success = (userId: string): AuthActionTypes => ({ type: LOGIN_SUCCESS, payload: userId });
+const success = (userId: UserModel): AuthActionTypes => ({ type: LOGIN_SUCCESS, payload: userId });
 
 

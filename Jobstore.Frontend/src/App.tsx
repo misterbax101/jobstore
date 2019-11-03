@@ -6,7 +6,7 @@ import { Router, Route, Switch } from 'react-router-dom';
 
 import { Home } from './components/pages';
 import { Login, SignUp } from './containers/pages';
-import { Header } from './components/layout';
+import { Header } from './containers/layout';
 import { history } from './untils/history';
 import { authCheckState } from './store/auth/actions';
 import { clearAlert } from './store/alert/actions';

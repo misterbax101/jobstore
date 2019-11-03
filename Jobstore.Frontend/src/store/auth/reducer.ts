@@ -7,7 +7,7 @@ import {
 
 const initialState: AuthState = {
     isAuthenticated: false,
-    userId: null
+    currentUser: null
 };
 
 export function authReducer(
@@ -18,12 +18,12 @@ export function authReducer(
         case LOGIN_SUCCESS:
             return {
                 isAuthenticated: true,
-                userId: action.payload
+                currentUser: action.payload
             }
         case LOGOUT:
             return {
                 isAuthenticated: false,
-                userId: null
+                currentUser: null
             };
         default:
             return state;

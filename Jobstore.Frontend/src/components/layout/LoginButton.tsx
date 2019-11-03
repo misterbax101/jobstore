@@ -6,14 +6,12 @@ import {
     NavLink
 } from 'reactstrap';
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { AppState } from './../../store';
-import { logout } from './../../store/auth/actions';
 
 interface LoginButtonProps {
     isAuthenticated: boolean,
+    userName: string | null
     logout(): void;
 }
 
@@ -30,7 +28,7 @@ class LoginButton extends React.Component<LoginButtonProps, {}>{
         return (
             <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                    Hi
+                    Hi {this.props.userName}
                 </DropdownToggle>
                 <DropdownMenu right>
                     <DropdownItem>
@@ -46,8 +44,4 @@ class LoginButton extends React.Component<LoginButtonProps, {}>{
     }
 }
 
-const mapStateToProps = (state: AppState) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-});
-
-export default connect(mapStateToProps, { logout: logout })(LoginButton);
+export default LoginButton;

@@ -1,8 +1,9 @@
-export default interface SignUpModel {
+export default  interface SignUpModel {
     email: string,
     password: string,
     confirmPassword: string,
     firstName: string,
     lastName: string
 }
+
 

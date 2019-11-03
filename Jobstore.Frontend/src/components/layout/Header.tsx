@@ -10,7 +10,13 @@ import {
 
 import LoginButton from "./LoginButton";
 
-class Header extends React.Component<{}, {}>{
+interface HeaderProps {
+    isAuthenticated: boolean,
+    userName: string | null
+    logout(): void;
+}
+
+class Header extends React.Component<HeaderProps, {}>{
     render() {
         return (
             <Navbar color="light" light expand="md">
@@ -25,7 +31,7 @@ class Header extends React.Component<{}, {}>{
                     <NavItem>
                         <NavLink tag={Link} to="/about">About</NavLink>
                     </NavItem>
-                    <LoginButton />
+                    <LoginButton {...this.props} />
                 </Nav>
             </Navbar>
         );

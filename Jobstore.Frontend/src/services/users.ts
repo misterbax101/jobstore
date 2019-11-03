@@ -18,4 +18,6 @@ function signUp(data: SignUpModel): Promise<string> {
         .then(response => response.data.id);
 }
 
+
+
 export default userService;

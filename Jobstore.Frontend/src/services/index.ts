@@ -1,5 +1,7 @@
-import authService from './auth'
+import authService from './auth';
+import usersService from './users';
 
 export {
-    authService
+    authService,
+    usersService
 }

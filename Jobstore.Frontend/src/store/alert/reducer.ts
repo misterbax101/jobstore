@@ -5,7 +5,7 @@ import {
     ERROR,
     CLEAR
 } from './types'
-import { AlertTypes } from '../../models/Alert';
+import AlertTypes  from '../../models/AlertTypes';
 
 const initialSate: AlertState = {
     alert: null
