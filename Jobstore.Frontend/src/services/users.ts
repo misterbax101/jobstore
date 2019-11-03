@@ -8,14 +8,14 @@ const userService = {
     signUp
 }
 
-function getUserById(userId: string): Promise<UserModel> {
-    return axios.get<UserModel>(`accounts/${userId}`)
-        .then(response => response.data);
+async function getUserById(userId: string): Promise<UserModel> {
+    const response = await axios.get<UserModel>(`accounts/${userId}`);
+    return response.data;
 }
 
-function signUp(data: SignUpModel): Promise<string> {
-    return axios.post<UserModel>('accounts', data)
-        .then(response => response.data.id);
+async function signUp(data: SignUpModel): Promise<string> {
+    const response = await axios.post<UserModel>('accounts', data);
+    return response.data.id;
 }
 
 

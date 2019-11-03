@@ -10,16 +10,16 @@ const authService = {
     getUserIdFromStore
 };
 
-function login(model: LoginModel): Promise<string> {
-    return axios.post<LoginResponse>('/auth/login', model)
-        .then(response => {
-            localStorage.setItem('authData', JSON.stringify(response.data));
-            setAuthToken(response.data.auth_token);
-            return response.data.id;
-        })
-        .catch(error => {
-            throw error.response.data || 'Internal Server Error';
-        });
+async function login(model: LoginModel): Promise<string> {
+    try {
+        const response = await axios.post<LoginResponse>('/auth/login', model);
+        localStorage.setItem('authData', JSON.stringify(response.data));
+        setAuthToken(response.data.auth_token);
+        return response.data.id;
+    }
+    catch (error) {
+        throw error.response.data || 'Internal Server Error';
+    }
 }
 
 function logout() {
