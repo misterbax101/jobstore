@@ -1,4 +1,5 @@
-﻿using Jobstore.Infrastructure.Identity.Models;
+﻿using Jobstore.Infrastructure.Core;
+using Jobstore.Infrastructure.Identity.Models;
 using Microsoft.Extensions.Options;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -44,7 +45,7 @@ namespace Jobstore.Infrastructure.Identity
 		{
 			return new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
 			{
-				new Claim("id", id),
+				new Claim(ClaimTypes.NameIdentifier, id),
 				new Claim("Api", "Apiuser")
 			});
 		}

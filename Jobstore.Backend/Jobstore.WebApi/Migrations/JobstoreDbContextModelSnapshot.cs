@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Jobstore.WebApi.Migrations
 {
-    [DbContext(typeof(AppIdentityDbContext))]
-    partial class AppIdentityDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(JobstoreDbContext))]
+    partial class JobstoreDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -16,7 +16,110 @@ namespace Jobstore.WebApi.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.0.0");
 
-            modelBuilder.Entity("Jobstore.Infrastructure.Identity.Models.AppUser", b =>
+            modelBuilder.Entity("Jobstore.Infrastructure.Entities.Currency", b =>
+                {
+                    b.Property<string>("Code")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Code");
+
+                    b.ToTable("Currencies");
+                });
+
+            modelBuilder.Entity("Jobstore.Infrastructure.Entities.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(30);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppUsers");
+                });
+
+            modelBuilder.Entity("Jobstore.Infrastructure.Entities.Vacancy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("GetDate()");
+
+                    b.Property<string>("Descripion")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SalaryCurrency")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
+                    b.Property<int>("SalaryValue")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("TypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("Vacancies");
+                });
+
+            modelBuilder.Entity("Jobstore.Infrastructure.Entities.VacancyType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VacancyTypes");
+                });
+
+            modelBuilder.Entity("Jobstore.Infrastructure.Models.AppIdentityUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
@@ -34,12 +137,6 @@ namespace Jobstore.WebApi.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("TEXT");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");
@@ -214,6 +311,26 @@ namespace Jobstore.WebApi.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Jobstore.Infrastructure.Entities.User", b =>
+                {
+                    b.HasOne("Jobstore.Infrastructure.Models.AppIdentityUser", "UserIdentity")
+                        .WithOne()
+                        .HasForeignKey("Jobstore.Infrastructure.Entities.User", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Jobstore.Infrastructure.Entities.Vacancy", b =>
+                {
+                    b.HasOne("Jobstore.Infrastructure.Entities.User", "Owner")
+                        .WithMany("Vacancies")
+                        .HasForeignKey("OwnerId");
+
+                    b.HasOne("Jobstore.Infrastructure.Entities.VacancyType", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -225,7 +342,7 @@ namespace Jobstore.WebApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Jobstore.Infrastructure.Identity.Models.AppUser", null)
+                    b.HasOne("Jobstore.Infrastructure.Models.AppIdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -234,7 +351,7 @@ namespace Jobstore.WebApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Jobstore.Infrastructure.Identity.Models.AppUser", null)
+                    b.HasOne("Jobstore.Infrastructure.Models.AppIdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -249,7 +366,7 @@ namespace Jobstore.WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Jobstore.Infrastructure.Identity.Models.AppUser", null)
+                    b.HasOne("Jobstore.Infrastructure.Models.AppIdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -258,7 +375,7 @@ namespace Jobstore.WebApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Jobstore.Infrastructure.Identity.Models.AppUser", null)
+                    b.HasOne("Jobstore.Infrastructure.Models.AppIdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

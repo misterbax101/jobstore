@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Jobstore.Infrastructure.Identity
+namespace Jobstore.Infrastructure.Core
 {
 	public interface IJwtFactory
 	{

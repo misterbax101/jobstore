@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Jobstore.Infrastructure.Entities;
 using Jobstore.Infrastructure.Identity.Data;
-using Jobstore.Infrastructure.Identity.Models;
+using Jobstore.Infrastructure.Models;
 using Jobstore.WebApi.Models.Requests;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Jobstore.WebApi.Controllers
 {
@@ -15,10 +14,10 @@ namespace Jobstore.WebApi.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        private readonly AppIdentityDbContext _appDbContext;
-        private readonly UserManager<AppUser> _userManager;
+        private readonly JobstoreDbContext _appDbContext;
+        private readonly UserManager<AppIdentityUser> _userManager;
 
-        public AccountsController(UserManager<AppUser> userManager, AppIdentityDbContext appDbContext)
+        public AccountsController(UserManager<AppIdentityUser> userManager, JobstoreDbContext appDbContext)
         {
             _userManager = userManager;
             _appDbContext = appDbContext;
@@ -28,7 +27,8 @@ namespace Jobstore.WebApi.Controllers
         [Route("{id:guid}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var result = await _userManager.FindByIdAsync(id.ToString());
+            var result = await _appDbContext.AppUsers
+                .FindAsync(id.ToString());
             if (result == null)
             {
                 return NotFound();
@@ -44,25 +44,32 @@ namespace Jobstore.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var userIdentity = new AppUser
+            var userIdentity = new AppIdentityUser
             {
                 Email = request.Email,
                 UserName = request.Email,
-                FirstName = request.FirstName,
-                LastName = request.LastName
             };
             var result = await _userManager.CreateAsync(userIdentity, request.Password);
 
             if (!result.Succeeded)
             {
                 result.Errors.Select(error => { ModelState.AddModelError(error.Code, error.Description); return error; }).ToArray();
-                return  BadRequest(ModelState);
+                return BadRequest(ModelState);
             }
+
+            var userModel = await _userManager.FindByEmailAsync(request.Email);
+
+            _appDbContext.AppUsers.Add(new User
+            {
+                Id = userIdentity.Id,
+                Email = request.Email,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+            });
 
             await _appDbContext.SaveChangesAsync();
 
-            var userModel = await _userManager.FindByEmailAsync(request.Email);
-            return Ok(userModel);
+            return Ok();
         }
     }
 }

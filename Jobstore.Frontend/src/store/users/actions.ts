@@ -1,20 +1,23 @@
 import {
     GET_USER,
+    SIGN_UP_START,
+    SIGN_UP_SUCCESS,
+    SIGN_UP_FAILED,
     UsersActions
 } from './types';
-import { successAlert, errorAlert } from '../alert/actions';
 import UserModel from '../../models/UserModel';
 import SignUpModel from '../../models/SignUpModel';
 import usersService from '../../services/users';
 
 export const signUp = (data: SignUpModel) => async (dispatch: any): Promise<void> => {
     try {
-        const userId = await usersService.signUp(data)
-        dispatch(successAlert('You have signed up successfully'));
+        dispatch(signUpStart());
+        await usersService.signUp(data)
+        dispatch(signUpSuccess('You have signed up successfully'));
     }
-    catch (error) {
-        const serverError = (error.response.data instanceof String) ? error.response.data : 'Internal Server Error';
-        dispatch(errorAlert(`Sign up failed. ${serverError}`));
+    catch (err) {
+        const serverError = (err.response.data instanceof String) ? err.response.data : 'Internal Server Error';
+        dispatch(signUpError(`Sign up failed. ${serverError}`));
     }
 
 }
@@ -32,3 +35,7 @@ function getUser(user: UserModel): UsersActions {
         payload: user
     };
 }
+
+const signUpStart = (): UsersActions => ({ type: SIGN_UP_START });
+const signUpSuccess = (successMsg: string): UsersActions => ({ type: SIGN_UP_SUCCESS, payload: successMsg });
+const signUpError = (errorMsg: string): UsersActions => ({ type: SIGN_UP_FAILED, payload: errorMsg });

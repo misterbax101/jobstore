@@ -13,7 +13,16 @@ import { clearAlert } from './store/alert/actions';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 
-const App: React.FC = () => {
+interface AppProps {
+    onTryAutoSignup: () => Promise<void>
+}
+
+const App: React.FC<AppProps> = ({ onTryAutoSignup }) => {
+    React.useEffect(() => {
+        onTryAutoSignup();
+    })
+
+    
     return (
         <Container>
             <Router history={history}>
@@ -32,10 +41,6 @@ const App: React.FC = () => {
     );
 }
 
-export default connect(null,
-    dispach => {
-        authCheckState()(dispach);
-        history.listen(() => {
-            dispach(clearAlert())
-        }); return {};
-    })(App);
+
+
+export default connect(null, { onTryAutoSignup: authCheckState })(App);

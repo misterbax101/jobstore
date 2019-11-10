@@ -1,17 +1,20 @@
-import UserModel  from '../../models/UserModel'
+import UserModel from '../../models/UserModel'
 
 export interface AuthState {
     currentUser: UserModel | null,
-    isAuthenticated: boolean
+    isAuthenticated: boolean,
+    error: string | null,
+    loading: boolean
 }
 
-export const LOGIN = 'LOGIN';
-export const LOGOUT = 'LOGOUT';
+export const LOGIN_START   = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_ERROR   = 'LOGIN_ERROR';
+export const LOGOUT        = 'LOGOUT';
 
 
-interface LoginAction {
-    type: typeof LOGIN,
+interface LoginStartAction {
+    type: typeof LOGIN_START,
 }
 
 interface LoginSuccessAction {
@@ -19,8 +22,13 @@ interface LoginSuccessAction {
     payload: UserModel,
 }
 
+interface LoginErrorAction {
+    type: typeof LOGIN_ERROR,
+    payload: string,
+}
+
 interface LogoutAction {
     type: typeof LOGOUT,
 }
 
-export type AuthActionTypes = LoginAction | LogoutAction | LoginSuccessAction;
+export type AuthActionTypes = LoginStartAction | LoginSuccessAction | LoginErrorAction | LogoutAction;

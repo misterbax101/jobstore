@@ -39,13 +39,36 @@ namespace Jobstore.WebApi.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    AccessFailedCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Currencies",
+                columns: table => new
+                {
+                    Code = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Currencies", x => x.Code);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VacancyTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VacancyTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,6 +88,26 @@ namespace Jobstore.WebApi.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(maxLength: 50, nullable: false),
+                    FirstName = table.Column<string>(maxLength: 30, nullable: false),
+                    LastName = table.Column<string>(maxLength: 30, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppUsers_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -154,6 +197,38 @@ namespace Jobstore.WebApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Vacancies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(nullable: true),
+                    Descripion = table.Column<string>(maxLength: 500, nullable: false),
+                    CompanyName = table.Column<string>(maxLength: 50, nullable: false),
+                    SalaryValue = table.Column<int>(nullable: false),
+                    SalaryCurrency = table.Column<string>(maxLength: 500, nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
+                    TypeId = table.Column<int>(nullable: true),
+                    OwnerId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vacancies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Vacancies_AppUsers_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "AppUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Vacancies_VacancyTypes_TypeId",
+                        column: x => x.TypeId,
+                        principalTable: "VacancyTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -190,6 +265,16 @@ namespace Jobstore.WebApi.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vacancies_OwnerId",
+                table: "Vacancies",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vacancies_TypeId",
+                table: "Vacancies",
+                column: "TypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -210,7 +295,19 @@ namespace Jobstore.WebApi.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Currencies");
+
+            migrationBuilder.DropTable(
+                name: "Vacancies");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "AppUsers");
+
+            migrationBuilder.DropTable(
+                name: "VacancyTypes");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

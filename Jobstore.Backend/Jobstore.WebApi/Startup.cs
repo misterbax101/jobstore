@@ -12,6 +12,8 @@ using System.Text;
 using Microsoft.Extensions.Hosting;
 using Jobstore.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
+using Jobstore.Infrastructure.Models;
+using Jobstore.Infrastructure.Core;
 
 namespace Jobstore.WebApi
 {
@@ -29,7 +31,7 @@ namespace Jobstore.WebApi
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddDbContext<AppIdentityDbContext>(options =>
+			services.AddDbContext<JobstoreDbContext>(options =>
 					 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"),
 					 b => b.MigrationsAssembly(typeof(Startup).Assembly.FullName)));
 
@@ -72,7 +74,7 @@ namespace Jobstore.WebApi
 
 			services.AddAuthorization();
 
-			services.AddIdentityCore<AppUser>(o =>
+			services.AddIdentityCore<AppIdentityUser>(o =>
 			{
 				o.Password.RequireDigit = false;
 				o.Password.RequireLowercase = false;
@@ -80,7 +82,7 @@ namespace Jobstore.WebApi
 				o.Password.RequireNonAlphanumeric = false;
 				o.Password.RequiredLength = 6;
 			})
-				.AddEntityFrameworkStores<AppIdentityDbContext>()
+				.AddEntityFrameworkStores<JobstoreDbContext>()
 				.AddDefaultTokenProviders();
 
             services.AddControllers();
@@ -107,8 +109,6 @@ namespace Jobstore.WebApi
             {
                 app.UseExceptionHandler("/error");
             }
-
-            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
 			app.UseHttpsRedirection();
 

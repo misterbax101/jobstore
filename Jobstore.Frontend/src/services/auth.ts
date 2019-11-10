@@ -7,15 +7,19 @@ import setAuthToken from '../untils/setAuthToken';
 const authService = {
     login,
     logout,
-    getUserIdFromStore
+    getUserId,
+    getExpirationDate
 };
 
-async function login(model: LoginModel): Promise<string> {
+async function login(model: LoginModel): Promise<LoginResponse> {
     try {
         const response = await axios.post<LoginResponse>('/auth/login', model);
-        localStorage.setItem('authData', JSON.stringify(response.data));
+        const expirationDate = new Date(new Date().getTime() + response.data.expires_in * 1000);
+        localStorage.setItem('token', response.data.auth_token);
+        localStorage.setItem('expirationDate', expirationDate.toString());
+        localStorage.setItem('userId', response.data.id);
         setAuthToken(response.data.auth_token);
-        return response.data.id;
+        return response.data;
     }
     catch (error) {
         throw error.response.data || 'Internal Server Error';
@@ -23,16 +27,25 @@ async function login(model: LoginModel): Promise<string> {
 }
 
 function logout() {
-    localStorage.removeItem('authData');
+    localStorage.removeItem('token');
+    localStorage.removeItem('expirationDate');
+    localStorage.removeItem('userId');
     setAuthToken(null);
 }
 
-function getUserIdFromStore(): string | null {
-    const authDateString = localStorage.getItem('authData');
-    if (authDateString != null) {
-        const authDate = JSON.parse(authDateString) as LoginResponse;
-        setAuthToken(authDate.auth_token);
-        return authDate.id;
+function getUserId(): string | null {
+    const token = localStorage.getItem('token') as string;
+    if (token != null) {
+        setAuthToken(token);
+        return  localStorage.getItem('userId');
+    }
+    return null;
+}
+
+function getExpirationDate(): Date | null {
+    const expirationDate = localStorage.getItem('expirationDate');
+    if (expirationDate != null) {
+        return  new Date(expirationDate);
     }
     return null;
 }

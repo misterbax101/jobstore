@@ -1,39 +1,31 @@
-﻿using Jobstore.Infrastructure.Identity;
+﻿using Jobstore.Infrastructure.Core;
+using Jobstore.Infrastructure.Identity;
 using Jobstore.Infrastructure.Identity.Models;
+using Jobstore.Infrastructure.Models;
 using Jobstore.WebApi.Models.Requests;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Jobstore.WebApi.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class AuthController : ControllerBase
 	{
-		private readonly UserManager<AppUser> _userManager;
+		private readonly UserManager<AppIdentityUser> _userManager;
 		private readonly IJwtFactory _jwtFactory;
 		private readonly JwtIssuerOptions _jwtOptions;
 
-		public AuthController(UserManager<AppUser> userManager, IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions)
+		public AuthController(UserManager<AppIdentityUser> userManager, IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions)
 		{
 			_userManager = userManager;
 			_jwtFactory = jwtFactory;
 			_jwtOptions = jwtOptions.Value;
-		}
-
-
-		[Authorize]
-		public int Get()
-		{
-			var context = HttpContext;
-			return 1;
 		}
 
 		[HttpPost("login")]
@@ -81,7 +73,7 @@ namespace Jobstore.WebApi.Controllers
 		{
 			var response = new
 			{
-				id = identity.Claims.Single(c => c.Type == "id").Value,
+				id = identity.Claims.Single(c => c.Type == ClaimTypes.NameIdentifier).Value,
 				auth_token = await jwtFactory.GenerateEncodedToken(userName, identity),
 				expires_in = (int)jwtOptions.ValidFor.TotalSeconds
 			};

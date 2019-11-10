@@ -55,7 +55,7 @@ class SignUp extends React.Component<SignUpProps, {}> {
                     <Field type="password" name="confirmPassword" placeholder="Enter password" component={CustomInput} />
                 </FormGroup>
                 <FormGroup>
-                    <Label htmlFor="firstName">Fist Name</Label>
+                    <Label htmlFor="firstName">First Name</Label>
                     <Field name="firstName" placeholder="Enter first name" component={CustomInput} />
                 </FormGroup>
                 <FormGroup>

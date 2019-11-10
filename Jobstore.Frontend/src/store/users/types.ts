@@ -1,7 +1,12 @@
 import UserModel from '../../models/UserModel';
 
 export const GET_USER = 'GET_USER';
-export const SIGN_UP = 'SIGN_UP';
+
+
+export const SIGN_UP_START   = 'SIGN_UP_START';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+export const SIGN_UP_FAILED  = 'SIGN_UP_FAILED';
+
 
 export interface UsersState {
     [key: string]: UserModel
@@ -12,9 +17,21 @@ interface GetUser {
     payload: UserModel
 }
 
-interface SignUp {
-    type: typeof SIGN_UP,
+interface SignUpStart {
+    type: typeof SIGN_UP_START
 }
 
-export type UsersActions = GetUser | SignUp;
+interface SignUpSuccess {
+    type: typeof SIGN_UP_SUCCESS,
+    payload: string
+}
+
+
+interface SignUpFailed {
+    type: typeof SIGN_UP_FAILED,
+    payload: string
+}
+
+
+export type UsersActions = GetUser | SignUpStart | SignUpSuccess| SignUpFailed;
 

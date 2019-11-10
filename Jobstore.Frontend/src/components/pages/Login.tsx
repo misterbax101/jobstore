@@ -1,17 +1,16 @@
 import React from 'react';
 import { Formik, FormikProps, Form, Field, FormikActions } from 'formik';
-import { FormGroup, Button, Label, Spinner } from 'reactstrap';
+import { FormGroup, Button, Label, Spinner, Alert } from 'reactstrap';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
-import Alert from '../../models/Alert';
 import LoginModel from '../../models/LoginModel';
 import CustomInput from '../base/CustomInput';
-import AlertMessage from '../base/AlertMessage';
 
 interface LoginProps extends RouteComponentProps {
     onLogin(model: LoginModel): Promise<void>;
-    alert: Alert,
+    error: string | null,
+    loading: boolean,
     isAuthenticated: boolean
 }
 
@@ -31,7 +30,8 @@ class Login extends React.Component<LoginProps, {}>{
             props.history.push('/');
         }
     }
-    renderForm(filedProps: FormikProps<LoginModel>): JSX.Element {
+
+    renderForm = (filedProps: FormikProps<LoginModel>): JSX.Element => {
         return (
             <Form>
                 <FormGroup>
@@ -51,10 +51,10 @@ class Login extends React.Component<LoginProps, {}>{
                     <Button
                         color="primary"
                         type="submit"
-                        disabled={filedProps.isSubmitting}>
+                        disabled={this.props.loading}>
                         Submit
                 </Button>
-                {filedProps.isSubmitting && <Spinner type="grow" color="secondary" style={{verticalAlign:'middle'}} />}
+                    {this.props.loading && <Spinner type="grow" color="secondary" style={{ verticalAlign: 'middle' }} />}
                     <Link to={'/sign-up'} className={'btn btn-link'}>Register</Link>
                 </FormGroup>
             </Form>
@@ -69,7 +69,7 @@ class Login extends React.Component<LoginProps, {}>{
     render() {
         return (
             <React.Fragment>
-                {this.props.alert && <AlertMessage data={this.props.alert} />}
+                {this.props.error && <Alert color='danger'>{this.props.error}</Alert>}
                 <Formik
                     initialValues={{ email: 'test@gmail.com', password: 'Aa!123456', remeberMe: false }}
                     validationSchema={loginModelSchema}
