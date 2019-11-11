@@ -5,11 +5,13 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { authReducer } from './auth/reducer';
 import { alertReducer } from './alert/reducer';
 import { usersReducer } from './users/reducer';
+import { dataReducer } from './data/reducer';
 
 const rootReducer = combineReducers({
     auth: authReducer,
     alert: alertReducer,
-    users: usersReducer
+    users: usersReducer,
+    data: dataReducer
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
