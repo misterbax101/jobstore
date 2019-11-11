@@ -5,11 +5,11 @@ import { Container, Row, Col } from 'reactstrap';
 import { Router, Route, Switch } from 'react-router-dom';
 
 import { Home } from './components/pages';
+import { Footer } from './components/layout';
 import { Login, SignUp } from './containers/pages';
 import { Header } from './containers/layout';
 import { history } from './untils/history';
 import { authCheckState } from './store/auth/actions';
-import { clearAlert } from './store/alert/actions';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 
@@ -22,11 +22,10 @@ const App: React.FC<AppProps> = ({ onTryAutoSignup }) => {
         onTryAutoSignup();
     })
 
-    
     return (
-        <Container>
-            <Router history={history}>
-                <Header />
+        <Router history={history}>
+            <Header />
+            <Container>
                 <Row>
                     <Col md={{ size: 8, offset: 2 }}>
                         <Switch>
@@ -36,11 +35,10 @@ const App: React.FC<AppProps> = ({ onTryAutoSignup }) => {
                         </Switch>
                     </Col>
                 </Row>
-            </Router>
-        </Container>
+            </Container>
+            <Footer />
+        </Router>
     );
 }
-
-
 
 export default connect(null, { onTryAutoSignup: authCheckState })(App);

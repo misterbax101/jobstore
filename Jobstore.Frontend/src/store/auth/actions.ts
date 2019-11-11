@@ -9,7 +9,6 @@ import {
     LOGIN_ERROR,
     LOGIN_START
 } from './types';
-import { async } from 'q';
 
 export const login = (data: LoginModel) => async (dispatch: any) => {
     try {

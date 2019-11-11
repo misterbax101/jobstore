@@ -22,7 +22,7 @@ async function login(model: LoginModel): Promise<LoginResponse> {
         return response.data;
     }
     catch (error) {
-        throw error.response.data || 'Internal Server Error';
+        throw (error.response && error.response.data) || 'Internal Server Error';
     }
 }
 
