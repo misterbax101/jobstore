@@ -7,7 +7,7 @@ import { Router, Route, Switch } from 'react-router-dom';
 import { Home } from './components/pages';
 import { Footer } from './components/layout';
 import { Login, SignUp } from './containers/pages';
-import { AddNewVacancy } from './containers/pages/vacancies';
+import { AddNewVacancy, VacancyDetails } from './containers/pages/vacancies';
 import { Header } from './containers/layout';
 import { history } from './untils/history';
 import { authCheckState } from './store/auth/actions';
@@ -32,6 +32,7 @@ const App: React.FC<AppProps> = ({ onTryAutoSignup }) => {
                         <Switch>
                             <Route path='/login' component={Login} />
                             <Route path='/sign-up' component={SignUp} />
+                            <Route path='/vacancies/:id' component={VacancyDetails} />
                             <Route path='/vacancies/add' component={AddNewVacancy} />
                             <Route path='/' exact component={Home} />
                         </Switch>

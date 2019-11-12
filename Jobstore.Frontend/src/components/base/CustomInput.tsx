@@ -6,14 +6,14 @@ const CustomInput = <T extends {}>({ field, form: { touched, errors }, ...props 
     const touchedKey = field.name as keyof FormikTouched<T>;
     const errorsKey = field.name as keyof FormikErrors<T>;
     return (
-        <div>
+        <React.Fragment>
             <Input
                 invalid={!!touched[touchedKey] && !!errors[errorsKey]}
                 {...field}
                 {...props}
             />
             <ErrorMessage name={field.name} component="div" className="invalid-feedback" />
-        </div>);
+        </React.Fragment>);
 }
 
 export default CustomInput;

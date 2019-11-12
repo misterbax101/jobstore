@@ -5,7 +5,7 @@ import { AppState } from '../../store';
 import { signUp } from '../../store/users/actions';
 
 const mapStateToProps = (state: AppState) => ({
-    alert: state.alert.alert
+    alert: null
 });
 
 export default connect(
