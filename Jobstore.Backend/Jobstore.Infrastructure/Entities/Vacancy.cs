@@ -11,7 +11,9 @@ namespace Jobstore.Infrastructure.Entities
         public int SalaryValue { get; set; }
         public string SalaryCurrency { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int TypeId { get; set; }
         public VacancyType Type { get; set; }
+        public string OwnerId { get; set; }
         public User Owner { get; set; }
     }
 }

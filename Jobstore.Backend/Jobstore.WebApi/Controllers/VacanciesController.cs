@@ -43,6 +43,7 @@ namespace Jobstore.WebApi.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             var vacancy = new Vacancy
             {
                 Title = request.Title,
@@ -50,22 +51,15 @@ namespace Jobstore.WebApi.Controllers
                 CompanyName = request.CompanyName,
                 SalaryValue = request.SalaryValue,
                 SalaryCurrency = request.SalaryCurrency,
-                Type = new VacancyType
-                {
-                    Id = request.TypeId
-                },
-                CreatedDate = DateTime.UtcNow,
-                Owner = new User
-                {
-                    Id = UserHelper.GetUserId(HttpContext.User)
-                }
+                TypeId = request.TypeId,
+                OwnerId = UserHelper.GetUserId(HttpContext.User),
+                CreatedDate = DateTime.UtcNow
             };
 
             _appDbContext.Vacancies.Add(vacancy);
+            await _appDbContext.SaveChangesAsync();
 
-           await _appDbContext.SaveChangesAsync();
-
-            return Ok();
+            return Ok(vacancy.Id);
         }
     }
 }

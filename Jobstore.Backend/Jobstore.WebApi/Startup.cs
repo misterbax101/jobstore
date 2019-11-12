@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using Jobstore.Infrastructure.Models;
 using Jobstore.Infrastructure.Core;
 
+
 namespace Jobstore.WebApi
 {
 	public class Startup
@@ -85,9 +86,10 @@ namespace Jobstore.WebApi
 				.AddEntityFrameworkStores<JobstoreDbContext>()
 				.AddDefaultTokenProviders();
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
-			services.AddCors(options =>
+
+            services.AddCors(options =>
 			{
 				options.AddDefaultPolicy(builder =>
 				{

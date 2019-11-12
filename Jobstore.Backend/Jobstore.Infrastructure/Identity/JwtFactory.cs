@@ -19,11 +19,11 @@ namespace Jobstore.Infrastructure.Identity
 			ThrowIfInvalidOptions(_jwtOptions);
 		}
 
-		public async Task<string> GenerateEncodedToken(string userName, ClaimsIdentity identity)
+		public async Task<string> GenerateEncodedToken(string userId)
 		{
 			var claims = new[]
 		 {
-				 new Claim(JwtRegisteredClaimNames.Sub, userName),
+				 new Claim(JwtRegisteredClaimNames.Sub, userId),
 				 new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
 				 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
 			 };
@@ -43,10 +43,12 @@ namespace Jobstore.Infrastructure.Identity
 
 		public ClaimsIdentity GenerateClaimsIdentity(string userName, string id)
 		{
-			return new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
+			return new ClaimsIdentity(new[]
 			{
-				new Claim(ClaimTypes.NameIdentifier, id),
-				new Claim("Api", "Apiuser")
+				new Claim(ClaimTypes.NameIdentifier, userName),
+				new Claim(ClaimTypes.Email, userName),
+				new Claim(ClaimTypes.Name, id),
+                new Claim("Api", "Apiuser")
 			});
 		}
 

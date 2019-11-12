@@ -5,7 +5,7 @@ namespace Jobstore.Infrastructure.Core
 {
 	public interface IJwtFactory
 	{
-		Task<string> GenerateEncodedToken(string userName, ClaimsIdentity identity);
+		Task<string> GenerateEncodedToken(string userName);
 		ClaimsIdentity GenerateClaimsIdentity(string userName, string id);
 	}
 }
