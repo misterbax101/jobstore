@@ -1,7 +1,5 @@
- enum AlertTypes {
+export enum AlertTypes {
     Success,
     Error,
     Info
 }
-
-export default AlertTypes;

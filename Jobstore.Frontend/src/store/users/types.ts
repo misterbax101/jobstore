@@ -1,4 +1,4 @@
-import UserModel from '../../models/UserModel';
+import { UserModel } from '../../models';
 
 export const GET_USER = 'GET_USER';
 

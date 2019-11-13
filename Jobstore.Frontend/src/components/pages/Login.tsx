@@ -4,7 +4,7 @@ import { FormGroup, Button, Label, Spinner, Alert } from 'reactstrap';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
-import LoginModel from '../../models/LoginModel';
+import { LoginModel } from '../../models';
 import CustomInput from '../base/CustomInput';
 
 interface LoginProps extends RouteComponentProps {

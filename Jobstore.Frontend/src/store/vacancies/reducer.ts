@@ -10,8 +10,7 @@ import {
 const initialSate: VacanciesState = {
     newVacancy: {
         isRequesting: false
-    },
-    vacancies: {}
+    }
 };
 
 export function vacanciesReducer(
@@ -45,10 +44,7 @@ export function vacanciesReducer(
         case GET_VACANCY: {
             return {
                 ...state,
-                vacancies: {
-                    ...state.vacancies,
-                    [action.payload.id]: action.payload
-                }
+                [action.payload.id]: action.payload
             }
         }
         default:

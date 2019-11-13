@@ -1,7 +1,7 @@
 import { authService, usersService } from '../../services';
 import { history } from '../../untils/history';
-import LoginModel from './../../models/LoginModel';
-import UserModel from './../../models/UserModel';
+import { LoginModel, UserModel } from './../../models';
+import { getUserById } from './../users/actions';
 import {
     AuthActionTypes,
     LOGIN_SUCCESS,
@@ -14,8 +14,7 @@ export const login = (data: LoginModel) => async (dispatch: any) => {
     try {
         dispatch(start());
         const authData = await authService.login(data);
-        const curentUser = await usersService.getUserById(authData.id);
-        dispatch(success(curentUser));
+        dispatch(success(authData.id));
         dispatch(checkAuthTimeout(authData.expires_in));
         history.push('/');
     }
@@ -43,8 +42,8 @@ export const authCheckState = () => async (dispatch: any) => {
         if (expirationDate == null || expirationDate <= new Date()) {
             dispatch(logout());
         } else {
-        const curentUser = await usersService.getUserById(userId);
-        dispatch(success(curentUser));
+        dispatch(success(userId));
+        dispatch(getUserById(userId));
         dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000 ));
         }
     } else {
@@ -54,5 +53,5 @@ export const authCheckState = () => async (dispatch: any) => {
 
 
 const start = (): AuthActionTypes => ({ type: LOGIN_START });
-const success = (userId: UserModel): AuthActionTypes => ({ type: LOGIN_SUCCESS, payload: userId });
+const success = (userId: string): AuthActionTypes => ({ type: LOGIN_SUCCESS, payload: userId });
 const error = (error: string): AuthActionTypes => ({ type: LOGIN_ERROR, payload: error });

@@ -1,7 +1,7 @@
-import UserModel from '../../models/UserModel'
+import { UserModel } from '../../models'
 
 export interface AuthState {
-    currentUser: UserModel | null,
+    userId: string | null,
     isAuthenticated: boolean,
     error: string | null,
     loading: boolean
@@ -19,7 +19,7 @@ interface LoginStartAction {
 
 interface LoginSuccessAction {
     type: typeof LOGIN_SUCCESS,
-    payload: UserModel,
+    payload: string,
 }
 
 interface LoginErrorAction {

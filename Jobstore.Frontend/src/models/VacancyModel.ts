@@ -1,4 +1,4 @@
-export default interface CreateVacancyModel {
+export  interface VacancyModel {
     id: number
     title: string,
     description: string,

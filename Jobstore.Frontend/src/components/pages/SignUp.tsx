@@ -3,9 +3,8 @@ import { Formik, FormikProps, Form, Field, FormikActions } from 'formik';
 import { FormGroup, Button, Label, Spinner } from 'reactstrap';
 import * as Yup from 'yup';
 
-import SignUpModel from '../../models/SignUpModel';
+import { Alert, SignUpModel } from '../../models';
 import CustomInput from '../base/CustomInput';
-import Alert from '../../models/Alert';
 import AlertMessage from '../base/AlertMessage';
 
 interface SignUpProps {

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Jobstore.WebApi.Controllers
 {
@@ -27,7 +28,8 @@ namespace Jobstore.WebApi.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var result = await _appDbContext.Vacancies
-                .FindAsync(id);
+                                            .Include(x => x.Owner)
+                                            .FirstOrDefaultAsync(vacancy => vacancy.Id == id);
             if (result == null)
             {
                 return NotFound();

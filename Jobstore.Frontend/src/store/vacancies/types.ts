@@ -1,5 +1,5 @@
 import { Action } from '../types';
-import VacancyModel from '../../models/VacancyModel';
+import { VacancyModel } from '../../models';
 
 
 export const CREATE_VACANCY_REQUEST = 'CREATE_VACANCY_REQUEST';
@@ -18,7 +18,5 @@ export interface VacanciesState {
         error?: string,
         vacancyId?: number
     },
-    vacancies: {
-        [key: number]: VacancyModel
-    }
+    [key: number]: VacancyModel
 }

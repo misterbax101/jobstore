@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 import { GET_CURRENCIES, GET_VACANCY_TYPES } from './types';
-import Currency from '../../models/Currency';
-import VacancyType from '../../models/VacancyType';
+import {Currency, VacancyType } from '../../models';
 
 export const getCurrencies = () => async (dispach:any) => {
     const response = await axios.get<Currency>('/currencies')

@@ -10,9 +10,7 @@ import {
     getVacancyTypes
 } from '../../../store/data/actions';
 import { createVacancy } from '../../../store/vacancies/actions';
-import Currency from '../../../models/Currency';
-import CreateVacancyModel from '../../../models/CreateVacancyModel';
-import VacancyType from '../../../models/VacancyType';
+import { CreateVacancyModel, VacancyType, Currency } from '../../../models';
 import CustomInput from '../../../components/base/CustomInput';
 import { AppState } from '../../../store';
 

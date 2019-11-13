@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import { Row, Col, Spinner } from 'reactstrap';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { getVacancy } from '../../../store/vacancies/actions';
-import VacancyModel from '../../../models/VacancyModel';
+import { getVacancy, selectVacancy } from '../../../store/vacancies';
+import { VacancyModel } from '../../../models';
 import { AppState } from '../../../store';
-
 
 
 interface VacancyDetailsProps extends RouteComponentProps<any> {
@@ -14,9 +13,9 @@ interface VacancyDetailsProps extends RouteComponentProps<any> {
     vacancy: VacancyModel
 }
 
-
 class VacancyDetails extends React.Component<VacancyDetailsProps, {}>{
-    componentWillMount() {
+
+    componentDidMount() {
         const { id } = this.props.match.params;
         this.props.getVacancy(id);
     }
@@ -36,7 +35,7 @@ class VacancyDetails extends React.Component<VacancyDetailsProps, {}>{
 const mapStateToProps = (state: AppState, ownProps: any) => {
     const { id } = ownProps.match.params;
     return {
-        vacancy: state.vacancies.vacancies[id]
+        vacancy: selectVacancy(state, id)
     }
 }
 

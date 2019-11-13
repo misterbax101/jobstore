@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import LoginModel from '../models/LoginModel'
+import { LoginModel } from '../models'
 import LoginResponse from '../models/apiResponses/LoginResponse'
 import setAuthToken from '../untils/setAuthToken';
 

@@ -5,8 +5,7 @@ import {
     GetAllItemsAction,
 } from './types';
 
-import Currency from '../../models/Currency';
-import VacancyType from '../../models/VacancyType';
+import { Currency, VacancyType } from '../../models';
 
 const initialState: DataState = {
     currencies: [],
