@@ -32,13 +32,5 @@ class VacancyDetails extends React.Component<VacancyDetailsProps, {}>{
     }
 }
 
-const mapStateToProps = (state: AppState, ownProps: any) => {
-    const { id } = ownProps.match.params;
-    return {
-        vacancy: selectVacancy(state, id)
-    }
-}
+export default VacancyDetails;
 
-export default connect(mapStateToProps, {
-    getVacancy,
-})(VacancyDetails);

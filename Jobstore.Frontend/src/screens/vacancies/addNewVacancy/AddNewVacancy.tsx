@@ -1,19 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Formik, FormikProps, Form, Field, FormikActions } from 'formik';
 import { FormGroup, Button, Label, Spinner, Alert, InputGroup, InputGroupAddon } from 'reactstrap';
 import { RouteComponentProps } from 'react-router-dom';
-import * as Yup from 'yup';
 
-import {
-    getCurrencies,
-    getVacancyTypes
-} from '../../../store/data/actions';
-import { createVacancy } from '../../../store/vacancies/actions';
 import { CreateVacancyModel, VacancyType, Currency } from '../../../models';
 import CustomInput from '../../../components/base/CustomInput';
-import { AppState } from '../../../store';
-
+import FormInput from '../../../components/base/FormInput';
+import resouces from './../../../translations';
 
 const fromInitalValues: CreateVacancyModel = {
     companyName: '',
@@ -32,18 +25,10 @@ interface AddNewVacancyProps extends RouteComponentProps {
     vacancyTypes: Array<VacancyType>
     loading: boolean,
     error?: string,
-    vacancyId?: number
 }
 
-const renderInputField = (name: string, label: string, placeholder: string, type: string = 'text') => (
-    <FormGroup>
-        <Label htmlFor={name}>{label}</Label>
-        <Field id={name} type={type} name={name} placeholder={placeholder} component={CustomInput} />
-    </FormGroup>
-)
-
 class AddNewVacancy extends React.Component<AddNewVacancyProps, {}>{
-    componentWillMount() {
+    componentDidMount() {
         this.props.getCurrencies();
         this.props.getVacancyTypes();
     }
@@ -56,6 +41,7 @@ class AddNewVacancy extends React.Component<AddNewVacancyProps, {}>{
     renderForm = (props: FormikProps<CreateVacancyModel>): JSX.Element => {
         return (
             <Form>
+                 <FormInput name="title" label={} placeholder=""  />
                 {renderInputField("title", "Title", "Enter title")}
                 {renderInputField("descripion", "Description", "Enter description", 'textarea')}
                 {renderInputField("companyName", "Company Name", "Enter company name")}
@@ -121,16 +107,4 @@ class AddNewVacancy extends React.Component<AddNewVacancyProps, {}>{
     }
 }
 
-const mapStateToProps = (state: AppState) => ({
-    currencies: state.data.currencies,
-    vacancyTypes: state.data.vacancyTypes,
-    loading: state.vacancies.newVacancy.isRequesting,
-    error: state.vacancies.newVacancy.error,
-    vacancyId: state.vacancies.newVacancy.vacancyId
-})
-
-export default connect(mapStateToProps, {
-    getCurrencies,
-    getVacancyTypes,
-    createVacancy
-})(AddNewVacancy);
+export default AddNewVacancy;

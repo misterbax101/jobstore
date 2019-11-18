@@ -1,0 +1,38 @@
+{
+    "common": {
+        "fields": {
+            "email": "Email",
+            "password": "Password",
+            "firstName": "First name",
+            "lastName": "Last name",
+            "passwordConfirm": "Confirm Password"
+        },
+        "placholders": {
+            "emailPlacholder": "Enter email",
+            "passwordPlacholder": "Enter password",
+            "firstNamePlacholder": "Enter first name",
+            "lastNamePlacholder": "Enter last name"
+        },
+
+        "validationErrors": {
+            "fieldRequired": "Field is required",
+            "invalidEmail": "Invalid email",
+            "passwordNotMuchRules": "Password must contain at least one lowercase letter, one uppercase letter, and a number"
+        },
+        "buttonLabels": {
+            "submit": "Submit"
+        }
+
+    },
+    "login": {
+        "remeberMe": "Remeber me",
+        "register": "Register"
+    },
+    "addVacancy": {
+        "title": "Title",
+        "description": "Description",
+        "companyName": "Company Name",
+        "type ": "Type"
+
+    }
+}
