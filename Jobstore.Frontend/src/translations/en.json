@@ -20,7 +20,9 @@
             "passwordNotMuchRules": "Password must contain at least one lowercase letter, one uppercase letter, and a number"
         },
         "buttonLabels": {
-            "submit": "Submit"
+            "submit": "Submit",
+            "login": "Login",
+            "logout": "Logout"
         }
 
     },
@@ -29,10 +31,32 @@
         "register": "Register"
     },
     "addVacancy": {
-        "title": "Title",
-        "description": "Description",
-        "companyName": "Company Name",
-        "type ": "Type"
-
+        "fields":{
+            "title": {
+                "label": "Title",
+                "placeholder": "Enter title"
+            },
+            "description": {
+                "label": "Description",
+                "placeholder": "Enter description"
+            },
+            "companyName": {
+                "label": "Company Name",
+                "placeholder": "Enter company name"
+            },
+            "type": {
+                "label": "Type",
+                "emptyOption": "Select type..."
+            },
+            "salary": {
+                "label": "Salary",
+                "placeholder": "Enter salary"
+            }
+        },
+        "buttonLabel": "Add a new vacancy"
+    },
+    "header": {
+        "hi": "Hi",
+        "myProfile": "My Profile"
     }
 }

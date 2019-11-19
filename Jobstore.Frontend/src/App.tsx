@@ -16,9 +16,6 @@ interface AppProps {
 }
 
 class App extends React.Component<AppProps> {
-    constructor(props: AppProps) {
-        super(props);
-    }
     componentDidMount(){
         this.props.onTryAutoSignup();
     }

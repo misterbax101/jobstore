@@ -1,6 +1,6 @@
-import { authService, usersService } from '../../services';
+import { authService } from '../../services';
 import { history } from '../../untils/history';
-import { LoginModel, UserModel } from './../../models';
+import { LoginModel } from './../../models';
 import { getUserById } from './../users/actions';
 import {
     AuthActionTypes,

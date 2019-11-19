@@ -1,5 +1,5 @@
 import Header from './Header';
-import Footer from './Footer';
+import Footer from './footer/Footer';
 import LoginButton from './LoginButton'
 
 export {

@@ -1,5 +1,3 @@
-import { UserModel } from '../../models'
-
 export interface AuthState {
     userId: string | null,
     isAuthenticated: boolean,
