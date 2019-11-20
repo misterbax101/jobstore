@@ -1,18 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Formik, FormikProps, Form, Field, FormikActions } from 'formik';
+import { Formik, FormikProps, Form, Field } from 'formik';
 import { FormGroup, Button, Label, Spinner, Alert, InputGroup, InputGroupAddon } from 'reactstrap';
 import { RouteComponentProps } from 'react-router-dom';
-import * as Yup from 'yup';
 
-import {
-    getCurrencies,
-    getVacancyTypes
-} from '../../../store/data/actions';
-import { createVacancy } from '../../../store/vacancies/actions';
 import { CreateVacancyModel, VacancyType, Currency } from '../../../models';
 import CustomInput from '../../../components/base/CustomInput';
-import { AppState } from '../../../store';
+import FormInput from '../../../components/base/FormInput';
+import resouces from './../../../translations';
+import {vacancyValidationSchema } from './vacancyValidationSchema';
 
 
 const fromInitalValues: CreateVacancyModel = {
@@ -32,63 +27,69 @@ interface AddNewVacancyProps extends RouteComponentProps {
     vacancyTypes: Array<VacancyType>
     loading: boolean,
     error?: string,
-    vacancyId?: number
 }
 
-const renderInputField = (name: string, label: string, placeholder: string, type: string = 'text') => (
-    <FormGroup>
-        <Label htmlFor={name}>{label}</Label>
-        <Field id={name} type={type} name={name} placeholder={placeholder} component={CustomInput} />
-    </FormGroup>
-)
-
 class AddNewVacancy extends React.Component<AddNewVacancyProps, {}>{
-    componentWillMount() {
+    componentDidMount() {
         this.props.getCurrencies();
         this.props.getVacancyTypes();
     }
 
-    onFormSubmit = (values: CreateVacancyModel, action: FormikActions<CreateVacancyModel>) => {
-        console.log(values);
+    onFormSubmit = (values: CreateVacancyModel) => {
         this.props.createVacancy(values);
     }
 
-    renderForm = (props: FormikProps<CreateVacancyModel>): JSX.Element => {
+    renderForm = ({ values, handleBlur, handleChange }: FormikProps<CreateVacancyModel>): JSX.Element => {
+
+        const { fields: fieldsResouces, buttonLabel } = resouces.addVacancy;
+        const { currencies, loading, vacancyTypes } = this.props;
+
         return (
             <Form>
-                {renderInputField("title", "Title", "Enter title")}
-                {renderInputField("descripion", "Description", "Enter description", 'textarea')}
-                {renderInputField("companyName", "Company Name", "Enter company name")}
+                <FormInput
+                    name="title"
+                    {...fieldsResouces.title} />
+                <FormInput
+                    name="descripion"
+                    {...fieldsResouces.description}
+                    type="textarea" />
+                <FormInput
+                    name="companyName"
+                    {...fieldsResouces.companyName} />
                 <FormGroup>
-                    <Label>Type</Label>
+                    <Label>{fieldsResouces.type.label}</Label>
                     <select
                         name="typeId"
-                        value={props.values.typeId}
-                        onChange={props.handleChange}
-                        onBlur={props.handleBlur}
+                        value={values.typeId}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
                         className="form-control">
-                        <option value="">Select type...</option>
-                        {this.props.vacancyTypes.map(type =>
+                        <option value="">{fieldsResouces.type.emptyOption}</option>
+                        {vacancyTypes.map(type =>
                             <option key={type.id} value={type.id} label={type.title}></option>)}
                     </select>
                 </FormGroup>
                 <FormGroup>
-                    <Label htmlFor='salaryValue'>Salary</Label>
+                    <Label htmlFor='salaryValue'>{fieldsResouces.salary.label}</Label>
                     <InputGroup>
-                        <Field id='salaryValue' type='number' name='salaryValue' placeholder='Enter salary' component={CustomInput} />
+                        <Field
+                            id='salaryValue'
+                            type='number'
+                            name='salaryValue'
+                            placeholder={fieldsResouces.salary.placeholder}
+                            component={CustomInput} />
                         <InputGroupAddon addonType='append'>
                             <select
                                 name="salaryCurrency"
-                                value={props.values.salaryCurrency}
-                                onChange={props.handleChange}
-                                onBlur={props.handleBlur}
+                                value={values.salaryCurrency}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
                                 className="form-control "
                                 style={{
                                     borderTopLeftRadius: '0',
                                     borderBottomLeftRadius: '0'
                                 }}>
-                                <option value="">Select currency</option>
-                                {this.props.currencies.map(type =>
+                                {currencies.map(type =>
                                     <option key={type.code} value={type.code} label={type.code}></option>)}
                             </select>
                         </InputGroupAddon>
@@ -98,10 +99,10 @@ class AddNewVacancy extends React.Component<AddNewVacancyProps, {}>{
                     <Button
                         color="primary"
                         type="submit"
-                        disabled={this.props.loading}>
-                        Submit
+                        disabled={loading}>
+                        {buttonLabel}
                 </Button>
-                    {this.props.loading && <Spinner type="grow" color="secondary" style={{ verticalAlign: 'middle' }} />}
+                    {loading && <Spinner type="grow" color="secondary" style={{ verticalAlign: 'middle' }} />}
                 </FormGroup>
             </Form>
         );
@@ -115,22 +116,11 @@ class AddNewVacancy extends React.Component<AddNewVacancyProps, {}>{
                     initialValues={fromInitalValues}
                     onSubmit={this.onFormSubmit}
                     render={this.renderForm}
+                    validationSchema={vacancyValidationSchema}
                 />
             </React.Fragment>
         );
     }
 }
 
-const mapStateToProps = (state: AppState) => ({
-    currencies: state.data.currencies,
-    vacancyTypes: state.data.vacancyTypes,
-    loading: state.vacancies.newVacancy.isRequesting,
-    error: state.vacancies.newVacancy.error,
-    vacancyId: state.vacancies.newVacancy.vacancyId
-})
-
-export default connect(mapStateToProps, {
-    getCurrencies,
-    getVacancyTypes,
-    createVacancy
-})(AddNewVacancy);
+export default AddNewVacancy;

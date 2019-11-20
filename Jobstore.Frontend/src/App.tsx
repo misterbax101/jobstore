@@ -3,10 +3,9 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { Router, Route, Switch } from 'react-router-dom';
 
-import { Home } from './components/pages';
+import { Home, Login, SignUp } from './screens';
 import { Layout } from './containers/layout';
-import { Login, SignUp } from './containers/pages';
-import { AddNewVacancy, VacancyDetails } from './containers/pages/vacancies';
+import { AddNewVacancy, VacancyDetails } from './screens/vacancies';
 import { history } from './untils/history';
 import { authCheckState } from './store/auth';
 
@@ -17,10 +16,6 @@ interface AppProps {
 }
 
 class App extends React.Component<AppProps> {
-    constructor(props: AppProps) {
-        super(props);
-       // this.props.onTryAutoSignup();
-    }
     componentDidMount(){
         this.props.onTryAutoSignup();
     }

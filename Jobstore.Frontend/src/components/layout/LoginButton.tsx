@@ -1,3 +1,5 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
     UncontrolledDropdown,
     DropdownToggle,
@@ -5,8 +7,8 @@ import {
     DropdownItem,
     NavLink
 } from 'reactstrap';
-import React from 'react';
-import { Link } from 'react-router-dom';
+
+import translations from './../../translations';
 
 
 interface LoginButtonProps {
@@ -16,27 +18,30 @@ interface LoginButtonProps {
 }
 
 class LoginButton extends React.Component<LoginButtonProps, {}>{
-    onLogoutClick = ():void => {
+    onLogoutClick = (): void => {
         this.props.logout();
     }
 
     render() {
-        if (!this.props.isAuthenticated) {
-            return <NavLink tag={Link} to="/login">Login</NavLink>
+        const { isAuthenticated, userName } = this.props;
+        const { common:{buttonLabels}, header } = translations;
+
+        if (!isAuthenticated) {
+            return <NavLink tag={Link} to="/login">{buttonLabels.login}</NavLink>
         }
 
         return (
             <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                    Hi {this.props.userName}
+                    {header.hi} {userName}
                 </DropdownToggle>
                 <DropdownMenu right>
                     <DropdownItem>
-                        <NavLink tag={Link} to="/">My Profile</NavLink>
+                        <NavLink tag={Link} to="/">{header.myProfile}</NavLink>
                     </DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem>
-                        <NavLink onClick={this.onLogoutClick}>Logout</NavLink>
+                        <NavLink onClick={this.onLogoutClick}>{buttonLabels.logout}</NavLink>
                     </DropdownItem>
                 </DropdownMenu>
             </UncontrolledDropdown>

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { SignUp } from '../../components/pages';
+import SignUp from './SignUp';
 import { AppState } from '../../store';
 import { signUp } from '../../store/users/actions';
 
