@@ -2,9 +2,9 @@ import {
     GET_CURRENCIES,
     GET_VACANCY_TYPES,
     DataState,
-    GetAllItemsAction,
 } from './types';
 
+import {  ActionCreator, Action} from './../types';
 import { Currency, VacancyType } from '../../models';
 
 const initialState: DataState = {
@@ -14,7 +14,7 @@ const initialState: DataState = {
 
 export function dataReducer(
     state = initialState,
-    action: GetAllItemsAction<typeof GET_CURRENCIES, Currency> | GetAllItemsAction<typeof GET_VACANCY_TYPES, VacancyType>
+    action: Action<typeof GET_CURRENCIES, Array<Currency>> | Action<typeof GET_VACANCY_TYPES, Array<VacancyType>>
 ): DataState {
     switch (action.type) {
         case GET_CURRENCIES:

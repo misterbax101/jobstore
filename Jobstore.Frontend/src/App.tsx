@@ -19,11 +19,11 @@ interface AppProps {
 class App extends React.Component<AppProps> {
     constructor(props: AppProps) {
         super(props);
+       // this.props.onTryAutoSignup();
+    }
+    componentDidMount(){
         this.props.onTryAutoSignup();
     }
-    // componentDidMount(){
-    //     this.props.onTryAutoSignup();
-    // }
 
     render() {
         return (
