@@ -2,12 +2,13 @@ import axios from 'axios'
 
 import {
     GET_VACANCY,
+    GET_VACANCIES_SUCCESS,
     CREATE_VACANCY_REQUEST,
     CREATE_VACANCY_SUCCESS,
     CREATE_VACANCY_ERROR
 } from './types';
 import { ActionCreator } from '../types';
-import { CreateVacancyModel, VacancyModel } from '../../models';
+import { CreateVacancyModel, VacancyModel, ListResponse } from '../../models';
 import { history } from '../../untils/history';
 
 export const createVacancy = (data: CreateVacancyModel) => async (dispach: any) => {
@@ -22,12 +23,22 @@ export const createVacancy = (data: CreateVacancyModel) => async (dispach: any) 
     }
 }
 
-export const getVacancy = (id: number) => async (dispach: any) => {
+export const getVacancy = (id: number) => async (dispatch: any) => {
     try {
         const response = await axios.get<VacancyModel>(`/vacancies/${id}`);
-        dispach(ActionCreator<typeof GET_VACANCY, VacancyModel>(GET_VACANCY, response.data))
+        dispatch(ActionCreator<typeof GET_VACANCY, VacancyModel>(GET_VACANCY, response.data))
     }
     catch (err) {
         console.log(err);
+    }
+}
+
+export const getVacancies = (skip: number, take: number) => async (dispatch: any) => {
+    try {
+        const { data } = await axios.get<ListResponse<VacancyModel>>(`/vacancies?skip=${skip}&take=${take}`);
+        dispatch(ActionCreator<typeof GET_VACANCIES_SUCCESS, Array<VacancyModel>>(GET_VACANCIES_SUCCESS, data.data))
+    }
+    catch {
+
     }
 }

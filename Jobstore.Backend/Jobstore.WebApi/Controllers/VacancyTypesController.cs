@@ -1,6 +1,7 @@
 ﻿using Jobstore.Infrastructure.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Jobstore.WebApi.Controllers
@@ -19,7 +20,9 @@ namespace Jobstore.WebApi.Controllers
         public async Task<IActionResult> Get()
         {
 
-            return Ok(await _dbContext.VacancyTypes.ToListAsync());
+            return Ok(await _dbContext.VacancyTypes
+                                          .OrderBy(x => x.Title)
+                                          .ToListAsync());
         } 
     }
 }

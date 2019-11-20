@@ -9,8 +9,13 @@ export const CREATE_VACANCY_ERROR = 'CREATE_VACANCY_ERROR';
 export const GET_VACANCY = 'GET_VACANCY';
 
 
+export const GET_VACANCIES_REQUEST = 'GET_VACANCIES_REQUEST';
+export const GET_VACANCIES_SUCCESS = 'GET_VACANCIES_SUCCESS';
+
+
 export type VacancyActions = Action<typeof CREATE_VACANCY_REQUEST, null> | Action<typeof CREATE_VACANCY_SUCCESS, number> |
-                             Action<typeof CREATE_VACANCY_ERROR, string> | Action<typeof GET_VACANCY,VacancyModel>
+                             Action<typeof CREATE_VACANCY_ERROR, string> | Action<typeof GET_VACANCY,VacancyModel> |
+                             Action<typeof GET_VACANCIES_SUCCESS, Array<VacancyModel>>
 
 export interface VacanciesState {
     newVacancy: {
@@ -18,5 +23,7 @@ export interface VacanciesState {
         error?: string,
         vacancyId?: number
     },
-    [key: number]: VacancyModel
+    items: {
+        [key: number]: VacancyModel
+    }
 }

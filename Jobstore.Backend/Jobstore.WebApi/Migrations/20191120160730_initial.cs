@@ -204,12 +204,12 @@ namespace Jobstore.WebApi.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(nullable: true),
-                    Descripion = table.Column<string>(maxLength: 500, nullable: false),
+                    Description = table.Column<string>(maxLength: 1000, nullable: false),
                     CompanyName = table.Column<string>(maxLength: 50, nullable: false),
                     SalaryValue = table.Column<int>(nullable: false),
                     SalaryCurrency = table.Column<string>(maxLength: 500, nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
-                    TypeId = table.Column<int>(nullable: true),
+                    TypeId = table.Column<int>(nullable: false),
                     OwnerId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -226,8 +226,48 @@ namespace Jobstore.WebApi.Migrations
                         column: x => x.TypeId,
                         principalTable: "VacancyTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Currencies",
+                columns: new[] { "Code", "Description" },
+                values: new object[] { "USD", "USD" });
+
+            migrationBuilder.InsertData(
+                table: "Currencies",
+                columns: new[] { "Code", "Description" },
+                values: new object[] { "EUR", "EUR" });
+
+            migrationBuilder.InsertData(
+                table: "VacancyTypes",
+                columns: new[] { "Id", "Title" },
+                values: new object[] { 1, "Accounting / Auditing" });
+
+            migrationBuilder.InsertData(
+                table: "VacancyTypes",
+                columns: new[] { "Id", "Title" },
+                values: new object[] { 2, "Customer Service" });
+
+            migrationBuilder.InsertData(
+                table: "VacancyTypes",
+                columns: new[] { "Id", "Title" },
+                values: new object[] { 3, "Information Technology" });
+
+            migrationBuilder.InsertData(
+                table: "VacancyTypes",
+                columns: new[] { "Id", "Title" },
+                values: new object[] { 4, "Sales / Marketing" });
+
+            migrationBuilder.InsertData(
+                table: "VacancyTypes",
+                columns: new[] { "Id", "Title" },
+                values: new object[] { 5, "Art / Design / Entertainment" });
+
+            migrationBuilder.InsertData(
+                table: "VacancyTypes",
+                columns: new[] { "Id", "Title" },
+                values: new object[] { 6, "Computer / IT (Software)" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

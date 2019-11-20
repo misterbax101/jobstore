@@ -25,12 +25,12 @@ class SignUp extends React.Component<SignUpProps, {}> {
                     <Field type="email" name="email" placeholder={placholders.emailPlacholder} component={CustomInput} />
                 </FormGroup>
                 <FormGroup>
-                    <Label htmlFor="password">{fieldResources.passwordConfirm}</Label>
+                    <Label htmlFor="password">{fieldResources.password}</Label>
                     <Field type="password" name="password" placeholder={placholders.passwordPlacholder} component={CustomInput} />
                 </FormGroup>
                 <FormGroup>
                     <Label htmlFor="confirmPassword">{fieldResources.passwordConfirm}</Label>
-                    <Field type="password" name="confirmPassword" placeholder={placholders.passwordPlacholder} component={CustomInput} />
+                    <Field type="password" name="confirmPassword" placeholder={placholders.passwordConfirmPlacholder} component={CustomInput} />
                 </FormGroup>
                 <FormGroup>
                     <Label htmlFor="firstName">{fieldResources.firstName}</Label>

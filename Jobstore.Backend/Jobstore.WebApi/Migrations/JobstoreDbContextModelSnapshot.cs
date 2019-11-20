@@ -29,6 +29,18 @@ namespace Jobstore.WebApi.Migrations
                     b.HasKey("Code");
 
                     b.ToTable("Currencies");
+
+                    b.HasData(
+                        new
+                        {
+                            Code = "USD",
+                            Description = "USD"
+                        },
+                        new
+                        {
+                            Code = "EUR",
+                            Description = "EUR"
+                        });
                 });
 
             modelBuilder.Entity("Jobstore.Infrastructure.Entities.User", b =>
@@ -72,10 +84,10 @@ namespace Jobstore.WebApi.Migrations
                         .HasColumnType("TEXT")
                         .HasDefaultValueSql("GetDate()");
 
-                    b.Property<string>("Descripion")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT")
-                        .HasMaxLength(500);
+                        .HasMaxLength(1000);
 
                     b.Property<string>("OwnerId")
                         .HasColumnType("TEXT");
@@ -91,7 +103,7 @@ namespace Jobstore.WebApi.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("TypeId")
+                    b.Property<int>("TypeId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -117,6 +129,38 @@ namespace Jobstore.WebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("VacancyTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Title = "Accounting / Auditing"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Title = "Customer Service"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Title = "Information Technology"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Title = "Sales / Marketing"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Title = "Art / Design / Entertainment"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Title = "Computer / IT (Software)"
+                        });
                 });
 
             modelBuilder.Entity("Jobstore.Infrastructure.Models.AppIdentityUser", b =>
@@ -328,7 +372,9 @@ namespace Jobstore.WebApi.Migrations
 
                     b.HasOne("Jobstore.Infrastructure.Entities.VacancyType", "Type")
                         .WithMany()
-                        .HasForeignKey("TypeId");
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

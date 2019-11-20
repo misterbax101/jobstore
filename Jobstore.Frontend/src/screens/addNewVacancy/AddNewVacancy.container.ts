@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import {
     getCurrencies,
     getVacancyTypes
-} from '../../../store/data/actions';
+} from '../../store/data/actions';
 import AddNewVacancy from './AddNewVacancy';
-import { createVacancy } from '../../../store/vacancies/actions';
-import { AppState } from '../../../store'
+import { createVacancy } from '../../store/vacancies/actions';
+import { AppState } from '../../store'
 
 const mapStateToProps = (state: AppState) => ({
     currencies: state.data.currencies,

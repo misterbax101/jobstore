@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, FormikProps, Form, Field, FormikActions } from 'formik';
-import { FormGroup, Button, Label, Spinner, Alert } from 'reactstrap';
+import { FormGroup, Button, Container, Col, Label, Spinner, Alert } from 'reactstrap';
 import { RouteComponentProps, Link } from 'react-router-dom';
 
 import { LoginModel } from '../../models';
@@ -28,31 +28,42 @@ class Login extends React.Component<LoginProps, {}>{
 
     renderForm = (filedProps: FormikProps<LoginModel>): JSX.Element => {
         return (
-            <Form>
-                <FormGroup>
-                    <Label htmlFor="email">{fields.email}</Label>
-                    <Field type="email" name="email" placeholder={placholders.emailPlacholder} component={CustomInput} />
-                </FormGroup>
-                <FormGroup>
-                    <Label htmlFor="password">{fields.password}</Label>
-                    <Field type="password" name="password" placeholder={placholders.passwordPlacholder} component={CustomInput} />
-                </FormGroup>
-                <FormGroup check>
-                    <Label check>
-                        <Field type="checkbox" name="remeberMe" component={CustomInput} />
-                        {resources.login.remeberMe}</Label>
-                </FormGroup>
-                <FormGroup>
-                    <Button
-                        color="primary"
-                        type="submit"
-                        disabled={this.props.loading}>
-                        {resources.common.buttonLabels.submit}
-                </Button>
-                    {this.props.loading && <Spinner type="grow" color="secondary" style={{ verticalAlign: 'middle' }} />}
-                    <Link to={'/sign-up'} className={'btn btn-link'}>{resources.login.register}</Link>
-                </FormGroup>
-            </Form>
+            <Container>
+                <h2>Login</h2>
+                <Form>
+                    <Col>
+                        <FormGroup>
+                            <Label htmlFor="email">{fields.email}</Label>
+                            <Field type="email" name="email" placeholder={placholders.emailPlacholder} component={CustomInput} />
+                        </FormGroup>
+                    </Col>
+                    <Col>
+                        <FormGroup>
+                            <Label htmlFor="password">{fields.password}</Label>
+                            <Field type="password" name="password" placeholder={placholders.passwordPlacholder} component={CustomInput} />
+                        </FormGroup>
+                    </Col>
+                    <Col>
+                        <FormGroup check>
+                            <Label check>
+                                <Field type="checkbox" name="remeberMe" component={CustomInput} />
+                                {resources.login.remeberMe}</Label>
+                        </FormGroup>
+                    </Col>
+                    <Col>
+                        <FormGroup>
+                            <Button
+                                color="primary"
+                                type="submit"
+                                disabled={this.props.loading}>
+                                {resources.common.buttonLabels.submit}
+                            </Button>
+                            {this.props.loading && <Spinner type="grow" color="secondary" style={{ verticalAlign: 'middle' }} />}
+                            <Link to={'/sign-up'} className={'btn btn-link'}>{resources.login.register}</Link>
+                        </FormGroup>
+                    </Col>
+                </Form>
+            </Container>
         );
     }
 

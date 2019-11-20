@@ -1,5 +1,6 @@
 import {
     GET_VACANCY,
+    GET_VACANCIES_SUCCESS,
     CREATE_VACANCY_ERROR,
     CREATE_VACANCY_REQUEST,
     CREATE_VACANCY_SUCCESS,
@@ -10,7 +11,8 @@ import {
 const initialSate: VacanciesState = {
     newVacancy: {
         isRequesting: false
-    }
+    },
+    items: {}
 };
 
 export function vacanciesReducer(
@@ -44,7 +46,26 @@ export function vacanciesReducer(
         case GET_VACANCY: {
             return {
                 ...state,
-                [action.payload.id]: action.payload
+                items: {
+                    ...state.items,
+                    [action.payload.id]: action.payload
+                }
+            }
+        }
+        case GET_VACANCIES_SUCCESS: {
+            let vacancies = {};
+            for (let item of action.payload) {
+                vacancies = {
+                    ...vacancies,
+                    [item.id]: item
+                }
+            }
+            return {
+                ...state,
+                items: {
+                    ...state.items,
+                    ...vacancies
+                }
             }
         }
         default:

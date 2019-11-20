@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import {
     getVacancy,
     selectVacancy
-} from '../../../store/vacancies';
+} from '../../store/vacancies';
 import VacancyDetails from './VacancyDetails';
-import { AppState } from '../../../store';
+import { AppState } from '../../store';
 
 
 const mapStateToProps = (state: AppState, ownProps: any) => {

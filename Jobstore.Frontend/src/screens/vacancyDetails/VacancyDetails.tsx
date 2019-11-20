@@ -1,11 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Row, Col, Spinner } from 'reactstrap';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { getVacancy, selectVacancy } from '../../../store/vacancies';
-import { VacancyModel } from '../../../models';
-import { AppState } from '../../../store';
+import { VacancyModel } from '../../models';
 
 
 interface VacancyDetailsProps extends RouteComponentProps<any> {
@@ -14,7 +11,7 @@ interface VacancyDetailsProps extends RouteComponentProps<any> {
 }
 
 class VacancyDetails extends React.Component<VacancyDetailsProps, {}>{
-
+  
     componentDidMount() {
         const { id } = this.props.match.params;
         this.props.getVacancy(id);
@@ -26,7 +23,7 @@ class VacancyDetails extends React.Component<VacancyDetailsProps, {}>{
         }
         return (
             <React.Fragment>
-
+             {this.props.vacancy.title}
             </React.Fragment>
         );
     }

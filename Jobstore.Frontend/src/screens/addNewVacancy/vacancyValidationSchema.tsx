@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import resouces from './../../../translations';
+import resouces from '../../translations';
 
 const { validationErrors } = resouces.common;
 const { fields } = resouces.addVacancy;
@@ -16,7 +16,7 @@ export const vacancyValidationSchema = Yup.object({
         .required(validationErrors.fieldRequired),
     description: Yup.string()
         .label(fields.description.label)
-        .max(200)
+        .max(500)
         .required(validationErrors.fieldRequired),
     typeId: Yup.string()
         .label(fields.type.label)

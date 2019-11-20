@@ -56,7 +56,7 @@ namespace Jobstore.WebApi.Controllers
                 new
                 {
                     TotalCount = records.Count(),
-                    Result = result.Select(MapVacancy)
+                    Data = result.Select(MapVacancy)
                 });
         }
 
@@ -77,7 +77,7 @@ namespace Jobstore.WebApi.Controllers
                 new
                 {
                     TotalCount = records.Count(),
-                    Result = result.Select(MapVacancy)
+                    Data = result.Select(MapVacancy)
                 });
         }
 
@@ -92,7 +92,7 @@ namespace Jobstore.WebApi.Controllers
             var vacancy = new Vacancy
             {
                 Title = request.Title,
-                Descripion = request.Descripion,
+                Description = request.Description,
                 CompanyName = request.CompanyName,
                 SalaryValue = request.SalaryValue,
                 SalaryCurrency = request.SalaryCurrency,
@@ -120,7 +120,7 @@ namespace Jobstore.WebApi.Controllers
             {
                 Id = id,
                 Title = request.Title,
-                Descripion = request.Descripion,
+                Description = request.Description,
                 CompanyName = request.CompanyName,
                 SalaryValue = request.SalaryValue,
                 SalaryCurrency = request.SalaryCurrency,
@@ -129,7 +129,7 @@ namespace Jobstore.WebApi.Controllers
 
             _appDbContext.Attach(vacancy);
             _appDbContext.Entry(vacancy).Property(p => p.Title).IsModified = true;
-            _appDbContext.Entry(vacancy).Property(p => p.Descripion).IsModified = true;
+            _appDbContext.Entry(vacancy).Property(p => p.Description).IsModified = true;
             _appDbContext.Entry(vacancy).Property(p => p.CompanyName).IsModified = true;
             _appDbContext.Entry(vacancy).Property(p => p.SalaryValue).IsModified = true;
             _appDbContext.Entry(vacancy).Property(p => p.SalaryCurrency).IsModified = true;
@@ -160,7 +160,7 @@ namespace Jobstore.WebApi.Controllers
             {
                 Id = vacancy.Id,
                 Title = vacancy.Title,
-                Descripion = vacancy.Descripion,
+                Description = vacancy.Description,
                 CompanyName = vacancy.CompanyName,
                 CreatedDate = vacancy.CreatedDate,
                 Type = vacancy.Type,

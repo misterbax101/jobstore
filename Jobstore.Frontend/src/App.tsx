@@ -3,9 +3,15 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { Router, Route, Switch } from 'react-router-dom';
 
-import { Home, Login, SignUp } from './screens';
+import {
+    Home,
+    Login,
+    SignUp,
+    AddNewVacancy,
+    VacancyDetails,
+    VacanciesList
+} from './screens';
 import { Layout } from './containers/layout';
-import { AddNewVacancy, VacancyDetails } from './screens/vacancies';
 import { history } from './untils/history';
 import { authCheckState } from './store/auth';
 
@@ -16,7 +22,7 @@ interface AppProps {
 }
 
 class App extends React.Component<AppProps> {
-    componentDidMount(){
+    componentDidMount() {
         this.props.onTryAutoSignup();
     }
 
@@ -27,8 +33,9 @@ class App extends React.Component<AppProps> {
                     <Switch>
                         <Route path='/login' component={Login} />
                         <Route path='/sign-up' component={SignUp} />
-                        <Route path='/vacancies/add' component={AddNewVacancy} />
+                        <Route extact path='/vacancies/add' component={AddNewVacancy} />
                         <Route extact path='/vacancies/:id' component={VacancyDetails} />
+                        <Route path='/vacancies' component={VacanciesList} />
                         <Route path='/' exact component={Home} />
                     </Switch>
                 </Layout>

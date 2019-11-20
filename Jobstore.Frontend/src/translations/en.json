@@ -10,6 +10,7 @@
         "placholders": {
             "emailPlacholder": "Enter email",
             "passwordPlacholder": "Enter password",
+            "passwordConfirmPlacholder": "Enter password again",
             "firstNamePlacholder": "Enter first name",
             "lastNamePlacholder": "Enter last name"
         },
@@ -53,7 +54,8 @@
                 "placeholder": "Enter salary"
             }
         },
-        "buttonLabel": "Add a new vacancy"
+        "buttonLabel": "Add a new vacancy",
+        "title": "Create a new vacancy"
     },
     "header": {
         "hi": "Hi",

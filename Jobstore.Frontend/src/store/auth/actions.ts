@@ -16,6 +16,7 @@ export const login = (data: LoginModel) => async (dispatch: any) => {
         const authData = await authService.login(data);
         dispatch(success(authData.id));
         dispatch(checkAuthTimeout(authData.expires_in));
+        dispatch(getUserById(authData.id));
         history.push('/');
     }
     catch (err) {
@@ -50,7 +51,6 @@ export const authCheckState = () => async (dispatch: any) => {
         dispatch(logout());
     }
 }
-
 
 const start = (): AuthActionTypes => ({ type: LOGIN_START });
 const success = (userId: string): AuthActionTypes => ({ type: LOGIN_SUCCESS, payload: userId });
