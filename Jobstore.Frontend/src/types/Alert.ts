@@ -1,4 +1,4 @@
-import { AlertTypes } from './';
+import { AlertTypes } from '.';
 
 export interface Alert  {
     type: AlertTypes,

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-import { LoginModel } from '../models'
-import LoginResponse from '../models/apiResponses/LoginResponse'
+import { LoginModel } from '../types'
+import LoginResponse from '../types/apiResponses/LoginResponse'
 import setAuthToken from '../untils/setAuthToken';
 
 const authService = {

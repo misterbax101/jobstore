@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, FormikProps, Form, Field, FormikActions } from 'formik';
 import { FormGroup, Button, Label, Spinner } from 'reactstrap';
 
-import { Alert, SignUpModel } from '../../models';
+import { Alert, SignUpModel } from '../../types';
 import { signUpValidationSchema } from './signUpValidationSchema';
 import CustomInput from './../../components/base/CustomInput';
 import AlertMessage from './../../components/base/AlertMessage';
@@ -61,7 +61,7 @@ class SignUp extends React.Component<SignUpProps, {}> {
     render() {
         return (
             <React.Fragment>
-                {this.props.alert && <AlertMessage data={this.props.alert} />}
+                {this.props.alert && <AlertMessage {...this.props.alert} />}
                 <Formik
                     initialValues={{ email: '', password: '', confirmPassword: '', firstName: '', lastName: '' }}
                     validationSchema={signUpValidationSchema}

@@ -5,7 +5,7 @@ import {
 } from './types';
 
 import {  ActionCreator, Action} from './../types';
-import { Currency, VacancyType } from '../../models';
+import { Currency, VacancyType } from '../../types';
 
 const initialState: DataState = {
     currencies: [],

@@ -3,7 +3,7 @@ import { Formik, FormikProps, Form, Field } from 'formik';
 import { FormGroup, Col, Button, Label, Spinner, Alert, InputGroup, InputGroupAddon } from 'reactstrap';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { CreateVacancyModel, VacancyType, Currency } from '../../models';
+import { CreateVacancyModel, VacancyType, Currency } from '../../types';
 import CustomInput from '../../components/base/CustomInput';
 import FormInput from '../../components/base/FormInput';
 import resouces from './../../translations';

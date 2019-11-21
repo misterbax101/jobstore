@@ -1,4 +1,4 @@
-import { Currency, VacancyType } from '../../models';
+import { Currency, VacancyType } from '../../types';
 
 export interface DataState {
     currencies: Array<Currency>,

@@ -1,5 +1,5 @@
 import { Action } from '../types';
-import { VacancyModel } from '../../models';
+import { VacancyModel } from '../../types';
 
 
 export const CREATE_VACANCY_REQUEST = 'CREATE_VACANCY_REQUEST';

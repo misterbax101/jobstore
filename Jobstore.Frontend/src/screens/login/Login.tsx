@@ -3,7 +3,8 @@ import { Formik, FormikProps, Form, Field, FormikActions } from 'formik';
 import { FormGroup, Button, Container, Col, Label, Spinner, Alert } from 'reactstrap';
 import { RouteComponentProps, Link } from 'react-router-dom';
 
-import { LoginModel } from '../../models';
+import { LoginModel } from '../../types';
+import FormInput from '../../components/base/FormInput';
 import CustomInput from '../../components/base/CustomInput';
 import { loginValidationSchema } from './loginValidationSchema'
 import resources from '../../translations';
@@ -17,7 +18,6 @@ interface LoginProps extends RouteComponentProps {
     isAuthenticated: boolean
 }
 
-
 class Login extends React.Component<LoginProps, {}>{
     constructor(props: LoginProps) {
         super(props);
@@ -27,21 +27,16 @@ class Login extends React.Component<LoginProps, {}>{
     }
 
     renderForm = (filedProps: FormikProps<LoginModel>): JSX.Element => {
+        const { loading } = this.props;
         return (
             <Container>
                 <h2>Login</h2>
                 <Form>
                     <Col>
-                        <FormGroup>
-                            <Label htmlFor="email">{fields.email}</Label>
-                            <Field type="email" name="email" placeholder={placholders.emailPlacholder} component={CustomInput} />
-                        </FormGroup>
+                        <FormInput name="email" type="email" label={fields.email} placeholder={placholders.emailPlacholder} />
                     </Col>
                     <Col>
-                        <FormGroup>
-                            <Label htmlFor="password">{fields.password}</Label>
-                            <Field type="password" name="password" placeholder={placholders.passwordPlacholder} component={CustomInput} />
-                        </FormGroup>
+                        <FormInput name="password" type="password" label={fields.password} placeholder={placholders.passwordPlacholder} />
                     </Col>
                     <Col>
                         <FormGroup check>
@@ -55,11 +50,11 @@ class Login extends React.Component<LoginProps, {}>{
                             <Button
                                 color="primary"
                                 type="submit"
-                                disabled={this.props.loading}>
+                                disabled={loading}>
                                 {resources.common.buttonLabels.submit}
                             </Button>
-                            {this.props.loading && <Spinner type="grow" color="secondary" style={{ verticalAlign: 'middle' }} />}
-                            <Link to={'/sign-up'} className={'btn btn-link'}>{resources.login.register}</Link>
+                            {loading && <Spinner type="grow" color="secondary" style={{ verticalAlign: 'middle' }} />}
+                            <Link to={'/sign-up'} className="btn btn-link">{resources.login.register}</Link>
                         </FormGroup>
                     </Col>
                 </Form>

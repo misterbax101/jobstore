@@ -6,3 +6,12 @@ export const selectCurrentUser = ({ auth, users }: AppState) => {
     }
     return null;
 }
+
+export const selectUserName = (state: AppState) => {
+    const user = selectCurrentUser(state);
+    return user ? user.firstName : null;
+}
+
+export const isAuthenticated = ({ auth }: AppState) => {
+    return auth.isAuthenticated;
+}

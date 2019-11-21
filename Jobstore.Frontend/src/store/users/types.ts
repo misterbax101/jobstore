@@ -1,5 +1,5 @@
 import { Action } from './../types';
-import { UserModel } from '../../models';
+import { UserModel } from '../../types';
 
 export const GET_USER = 'GET_USER';
 

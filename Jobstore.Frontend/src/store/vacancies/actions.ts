@@ -8,7 +8,7 @@ import {
     CREATE_VACANCY_ERROR
 } from './types';
 import { ActionCreator } from '../types';
-import { CreateVacancyModel, VacancyModel, ListResponse } from '../../models';
+import { CreateVacancyModel, VacancyModel, ListResponse } from '../../types';
 import { history } from '../../untils/history';
 
 export const createVacancy = (data: CreateVacancyModel) => async (dispach: any) => {

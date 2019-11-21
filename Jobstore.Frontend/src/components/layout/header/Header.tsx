@@ -9,31 +9,24 @@ import {
     Container
 } from 'reactstrap';
 
-import LoginButton from './LoginButton';
-import { UserModel } from './../../models'; 
-import logo from  '../../assert/images/logo.svg';
+import LoginButton from '../LoginButton';
+import logo from  '../../../assert/images/logo.svg';
+import './Header.css'
 
 interface HeaderProps {
     isAuthenticated: boolean,
-    user: UserModel | null,
+    userName: string | null,
     logout:() => any;
 }
 
-const logoStyles: React.CSSProperties = {
-    width: '2em',
-    padding: '0 5px'
-} 
-
 class Header extends React.Component<HeaderProps, {}>{
     render() {
-        const userName = this.props.user ? this.props.user.firstName: null
-
         return (
             <header className="bg-light">
-                <Container >
+                <Container>
                     <Navbar light expand="md">
                         <NavbarBrand tag={Link} to="/">
-                            <img src={logo} alt=" " className='img-fluid' style= {logoStyles}/>
+                            <img src={logo} alt=" " className='img-fluid logo'/>
                             Jobstore
                             </NavbarBrand>
                         <Nav className="ml-auto" navbar>
@@ -46,7 +39,7 @@ class Header extends React.Component<HeaderProps, {}>{
                             <NavItem>
                                 <NavLink tag={Link} to="/about">About</NavLink>
                             </NavItem>
-                            <LoginButton {...this.props} userName={userName} />
+                            <LoginButton {...this.props} userName={this.props.userName} />
                         </Nav>
                     </Navbar>
                 </Container>

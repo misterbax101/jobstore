@@ -4,11 +4,12 @@ import { Container, Row, Col } from 'reactstrap';
 
 import { Header, Footer } from './../../components/layout';
 import { AppState } from './../../store';
-import { logout, selectCurrentUser } from './../../store/auth';
+import { logout, selectUserName, isAuthenticated } from './../../store/auth';
+import './Layout.css'
 
 const mapStateToProps = (state: AppState) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    user: selectCurrentUser(state)
+    isAuthenticated: isAuthenticated(state),
+    userName: selectUserName(state)
 });
 
 const mapDispatchToProps = {
@@ -21,7 +22,7 @@ const Layout: React.FC<any> = (props) => {
     return (
         <React.Fragment>
             <Header {...props} />
-            <Container>
+            <Container tag={"main"}>
                 <Row>
                     <Col md={{ size: 8, offset: 2 }}>
                         {props.children}

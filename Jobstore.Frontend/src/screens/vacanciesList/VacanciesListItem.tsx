@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardBody, CardTitle, CardSubtitle, CardText, CardLink } from 'reactstrap';
 
-import { VacancyModel } from '../../models';
+import { VacancyModel } from '../../types';
 import { truncateWithEllipses } from '../../untils/helper';
 
 interface VacanciesListItemProps {

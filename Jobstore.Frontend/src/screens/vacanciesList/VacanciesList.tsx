@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { VacancyModel } from '../../models';
+import { VacancyModel } from '../../types';
 import VacanciesListItem from './VacanciesListItem';
 
 interface VacanciesListProps {
@@ -19,9 +19,8 @@ class VacanciesList extends React.Component<VacanciesListProps> {
     }
 
     render() {
-
         return (
-            <div>
+            <div className="mt-2 mb-2">
                 {this.renderList()}
             </div>
         )

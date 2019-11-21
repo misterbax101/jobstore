@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {SignUpModel, UserModel } from '../models';
+import {SignUpModel, UserModel } from '../types';
 
 const userService = {
     getUserById,

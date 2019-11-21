@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, Spinner } from 'reactstrap';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { VacancyModel } from '../../models';
+import { VacancyModel } from '../../types';
 
 
 interface VacancyDetailsProps extends RouteComponentProps<any> {

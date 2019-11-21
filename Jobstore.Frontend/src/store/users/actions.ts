@@ -5,7 +5,7 @@ import {
     SIGN_UP_FAILED,
 } from './types';
 import { ActionCreator } from './../types';
-import { SignUpModel, UserModel } from '../../models';
+import { SignUpModel, UserModel } from '../../types';
 import usersService from '../../services/users';
 
 export const signUp = (data: SignUpModel) => async (dispatch: any): Promise<void> => {
