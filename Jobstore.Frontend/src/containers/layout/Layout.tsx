@@ -24,7 +24,7 @@ const Layout: React.FC<any> = (props) => {
             <Header {...props} />
             <Container tag={"main"}>
                 <Row>
-                    <Col md={{ size: 8, offset: 2 }}>
+                    <Col >
                         {props.children}
                     </Col>
                 </Row>

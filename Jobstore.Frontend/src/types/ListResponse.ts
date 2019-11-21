@@ -1,4 +1,5 @@
-export  interface ListResponse<T> {
+export  interface PaginatioData<T> {
     data: Array<T>,
-    totalCount: number
+    totalCount: number,
+    page: number
 }

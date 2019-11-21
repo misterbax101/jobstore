@@ -30,7 +30,7 @@ class Login extends React.Component<LoginProps, {}>{
         const { loading } = this.props;
         return (
             <Container>
-                <h2>Login</h2>
+               
                 <Form>
                     <Col>
                         <FormInput name="email" type="email" label={fields.email} placeholder={placholders.emailPlacholder} />
@@ -70,6 +70,8 @@ class Login extends React.Component<LoginProps, {}>{
     render() {
         return (
             <React.Fragment>
+               <Col md={{ size: 8, offset:2  }}>
+               <h2>Login</h2>
                 {this.props.error && <Alert color='danger'>{this.props.error}</Alert>}
                 <Formik
                     initialValues={{ email: 'test@gmail.com', password: 'Aa!123456', remeberMe: false }}
@@ -77,6 +79,7 @@ class Login extends React.Component<LoginProps, {}>{
                     onSubmit={this.onFormSubmit}
                     render={this.renderForm}
                 />
+                </Col>
             </React.Fragment>
         );
     }

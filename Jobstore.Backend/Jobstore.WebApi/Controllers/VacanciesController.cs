@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Z.EntityFramework.Plus;
 namespace Jobstore.WebApi.Controllers
 {
     [Authorize]
@@ -42,14 +42,29 @@ namespace Jobstore.WebApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAll([FromQuery]int skip = 0, [FromQuery]int take = 10)
+        public async Task<IActionResult> GetAll([FromQuery]int skip = 0, [FromQuery]int take = 10, [FromQuery]int? vacancyType = 0, [FromQuery]string orderBy = null, [FromQuery] bool desc = false)
         {
-            var records = _appDbContext.Vacancies
-                                           .Include(x => x.Owner)
-                                           .OrderByDescending(x => x.CreatedDate);
+            IQueryable<Vacancy> records = _appDbContext.Vacancies;
+
+            if(vacancyType.GetValueOrDefault() != 0)
+            {
+                records =  records.Where(x => vacancyType == x.TypeId);
+            }
+
+            if(orderBy != null)
+            {
+                records = desc ? records.OrderByDynamic(x => $"x.{orderBy}"):
+                                 records.OrderByDescendingDynamic(x => $"x.{orderBy}"); ;
+            }
+            else
+            {
+                records = desc ? records.OrderBy(x => x.CreatedDate) :
+                                 records.OrderByDescending(x => x.CreatedDate);
+            }
 
             var result = await records.Skip(skip)
                                       .Take(take)
+                                      .Include(x => x.Owner)
                                       .ToListAsync();
 
             return Ok(

@@ -6,7 +6,7 @@ import {
 
 const initialState: UsersState = {};
 
-export function usersReducer(
+export default function usersReducer(
     state = initialState,
     action: UsersActions
 ): UsersState {

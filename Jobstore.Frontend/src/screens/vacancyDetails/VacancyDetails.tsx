@@ -11,10 +11,13 @@ interface VacancyDetailsProps extends RouteComponentProps<any> {
 }
 
 class VacancyDetails extends React.Component<VacancyDetailsProps, {}>{
-  
+
     componentDidMount() {
-        const { id } = this.props.match.params;
-        this.props.getVacancy(id);
+        const { vacancy, getVacancy, match } = this.props;
+        if (!vacancy) {
+            const { id } = match.params;
+            getVacancy(id);
+        }
     }
 
     render() {
@@ -23,7 +26,7 @@ class VacancyDetails extends React.Component<VacancyDetailsProps, {}>{
         }
         return (
             <React.Fragment>
-             {this.props.vacancy.title}
+                {this.props.vacancy.title}
             </React.Fragment>
         );
     }

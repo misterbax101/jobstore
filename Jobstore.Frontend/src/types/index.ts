@@ -7,4 +7,5 @@ export * from './SignUpModel';
 export * from './UserModel';
 export * from './VacancyModel';
 export * from './VacancyType';
+export * from './VacanciesQuery';
 export * from './ListResponse';
