@@ -1,6 +1,6 @@
 import React from 'react';
-import { Row, Col, Spinner, CardBody, Card, CardTitle, CardSubtitle, CardText, CardLink, } from 'reactstrap';
-import { RouteComponentProps, Link } from 'react-router-dom';
+import { Row, Col, Spinner, CardBody, Card, CardTitle, CardSubtitle, CardText } from 'reactstrap';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { VacancyModel, VacancyType } from '../../types';
 

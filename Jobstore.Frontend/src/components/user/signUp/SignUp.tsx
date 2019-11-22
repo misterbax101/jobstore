@@ -2,11 +2,11 @@ import React from 'react';
 import { Formik, FormikProps, Form, Field, FormikActions } from 'formik';
 import { FormGroup, Button, Label, Spinner,Col } from 'reactstrap';
 
-import { Alert, SignUpModel } from '../../types';
+import { Alert, SignUpModel } from '../../../types';
 import { signUpValidationSchema } from './signUpValidationSchema';
-import CustomInput from './../../components/base/CustomInput';
-import AlertMessage from './../../components/base/AlertMessage';
-import resources from '../../translations';
+import CustomInput from '../../base/CustomInput';
+import AlertMessage from '../../base//AlertMessage';
+import resources from '../../../translations';
 
 const { fields: fieldResources, placholders, buttonLabels } = resources.common;
 

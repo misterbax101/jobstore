@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import resources from '../../translations';
+import resources from '../../../translations';
 
 const { fields, validationErrors } = resources.common;
 

@@ -4,7 +4,7 @@ import {
     getCurrencies,
     getVacancyTypes
 } from '../../store/data/actions';
-import EditVacancy from './EditVacancy';
+import EditVacancy from '../../components/vacancy/EditVacancy';
 import { updateVacancy, getVacancy } from '../../store/vacancies/actions';
 import { AppState } from '../../store'
 import { selectVacancy ,UPDATE_VACANCY_RESET } from '../../store/vacancies';

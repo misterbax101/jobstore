@@ -1,8 +1,8 @@
 import React from 'react';
-import { Card, CardBody, Label, Col, FormGroup, Row, InputGroup, InputGroupAddon } from 'reactstrap';
+import { Card, CardBody, Label, Row, InputGroup, InputGroupAddon } from 'reactstrap';
 
 import resouces from './../../translations';
-import { VacancyType, VacanciesQuery, VacancyOrderOptions } from '../../types';
+import { VacancyType, VacanciesQuery } from '../../types';
 
 interface FiltersPros {
     vacancyTypes: Array<VacancyType>,

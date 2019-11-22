@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
     UncontrolledDropdown,
     DropdownToggle,
@@ -38,7 +38,7 @@ class LoginButton extends React.Component<LoginButtonProps, {}>{
                 </DropdownToggle>
                 <DropdownMenu right>
                     <DropdownItem>
-                        <NavLink tag={Link} to="/">{header.myProfile}</NavLink>
+                        <NavLink tag={Link} to="/my-profile">{header.myProfile}</NavLink>
                     </DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem>

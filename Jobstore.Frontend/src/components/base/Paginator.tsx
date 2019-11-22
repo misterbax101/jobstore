@@ -20,13 +20,13 @@ const Paginator: React.FC<PaginatorProps> = ({ currentPage = 1, pagesCount, onPa
     }
 
     const goToPreviousPage = () => {
-        if (selectedPage != 1) {
+        if (selectedPage !== 1) {
             goToPage(selectedPage - 1);
         }
     }
 
     const goToNextPage = () => {
-        if (selectedPage != pagesCount) {
+        if (selectedPage !== pagesCount) {
             goToPage(selectedPage + 1);
         }
     }

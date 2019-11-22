@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, FormikProps, Form, Field } from 'formik';
-import { Col, FormGroup, Label, InputGroup, InputGroupAddon, Button, Spinner } from 'reactstrap';
+import { Col, FormGroup, Label, InputGroup, InputGroupAddon, Button } from 'reactstrap';
 
 import { CreateVacancyModel, Currency, VacancyType, VacancyModel } from './../../../types';
 import { vacancyValidationSchema } from './vacancyValidationSchema';
@@ -15,7 +15,7 @@ interface VacancyFormProps {
     onSubmit: (values: CreateVacancyModel) => void
 }
 
-export const VacancyForm: React.FC<VacancyFormProps> = ({ initialValues, onSubmit, currencies, vacancyTypes }) => {
+ const VacancyForm: React.FC<VacancyFormProps> = ({ initialValues, onSubmit, currencies, vacancyTypes }) => {
 
     const renderForm = ({ values, handleBlur, handleChange }: FormikProps<CreateVacancyModel>): JSX.Element => {
 
@@ -109,3 +109,6 @@ export const VacancyForm: React.FC<VacancyFormProps> = ({ initialValues, onSubmi
         />
     );
 }
+
+
+export default VacancyForm;

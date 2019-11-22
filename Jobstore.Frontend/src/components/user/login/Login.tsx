@@ -3,11 +3,11 @@ import { Formik, FormikProps, Form, Field, FormikActions } from 'formik';
 import { FormGroup, Button, Container, Col, Label, Spinner, Alert } from 'reactstrap';
 import { RouteComponentProps, Link } from 'react-router-dom';
 
-import { LoginModel } from '../../types';
-import FormInput from '../../components/base/FormInput';
-import CustomInput from '../../components/base/CustomInput';
+import { LoginModel } from '../../../types';
+import FormInput from '../../base/FormInput';
+import CustomInput from '../../base/CustomInput';
 import { loginValidationSchema } from './loginValidationSchema'
-import resources from '../../translations';
+import resources from '../../../translations';
 
 const { fields, placholders } = resources.common;
 

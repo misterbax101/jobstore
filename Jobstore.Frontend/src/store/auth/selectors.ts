@@ -4,7 +4,7 @@ export const selectCurrentUser = ({ auth, users }: AppState) => {
     if (auth.isAuthenticated && auth.userId) {
         return users[auth.userId];
     }
-    return null;
+    return undefined;
 }
 
 export const selectUserName = (state: AppState) => {
@@ -14,4 +14,8 @@ export const selectUserName = (state: AppState) => {
 
 export const isAuthenticated = ({ auth }: AppState) => {
     return auth.isAuthenticated;
+}
+
+export const selectCurrentId = ({ auth }: AppState) => {
+    return auth.userId;
 }

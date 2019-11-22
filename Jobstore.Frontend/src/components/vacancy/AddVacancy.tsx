@@ -3,7 +3,7 @@ import { Col, Alert } from 'reactstrap';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { CreateVacancyModel, VacancyType, Currency } from '../../types';
-import { VacancyForm } from '../../components/vacancy';
+import VacancyForm from './vacancyForm/VacancyForm';
 import resouces from '../../translations';
 
 const fromInitalValues: CreateVacancyModel = {

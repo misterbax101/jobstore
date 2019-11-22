@@ -4,7 +4,7 @@ import {
     getCurrencies,
     getVacancyTypes
 } from '../../store/data/actions';
-import AddVacancy from './AddVacancy';
+import AddVacancy from '../../components/vacancy/AddVacancy';
 import { createVacancy } from '../../store/vacancies/actions';
 import { AppState } from '../../store'
 

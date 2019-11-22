@@ -7,6 +7,7 @@ import {
 import { ActionCreator } from './../types';
 import { SignUpModel, UserModel } from '../../types';
 import usersService from '../../services/users';
+import { async } from 'q';
 
 export const signUp = (data: SignUpModel) => async (dispatch: any): Promise<void> => {
     try {
@@ -25,4 +26,9 @@ export const getUserById = (userId: string) => (dispatch: any): void => {
         .then(user => {
             dispatch(ActionCreator<typeof GET_USER, UserModel>(GET_USER, user));
         })
+}
+
+
+export const updateUserProfile = (userId: string) => async (dispatch: any): Promise<void> => {
+    
 }

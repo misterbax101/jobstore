@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Login from './Login';
+import Login from '../../components/user/login/Login';
 import { AppState } from '../../store';
 import { login } from '../../store/auth/actions';
 

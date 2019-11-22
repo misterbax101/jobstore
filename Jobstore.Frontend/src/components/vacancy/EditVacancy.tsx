@@ -1,9 +1,9 @@
 import React from 'react';
-import { Col, Alert, Row, Container } from 'reactstrap';
+import { Col, Alert, Container } from 'reactstrap';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { CreateVacancyModel, VacancyType, Currency, VacancyModel } from '../../types';
-import { VacancyForm } from '../../components/vacancy';
+import  VacancyForm  from './vacancyForm/VacancyForm';
 import Spinner from '../../components/base/Spinner';
 
 

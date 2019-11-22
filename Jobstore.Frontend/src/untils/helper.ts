@@ -4,7 +4,7 @@ export const truncateWithEllipses = (text: string, max: number = 100) => {
 
 
 export const calculateSkip = (page: number, pageSize: number) => {
-    return page == 0 ? 0 : (page - 1) * pageSize;
+    return page === 0 ? 0 : (page - 1) * pageSize;
 }
 
 

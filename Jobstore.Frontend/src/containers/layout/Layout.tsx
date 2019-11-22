@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Row, Col } from 'reactstrap';
+import { Container } from 'reactstrap';
 
 import { Header, Footer } from './../../components/layout';
 import { AppState } from './../../store';

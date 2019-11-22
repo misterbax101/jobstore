@@ -5,7 +5,7 @@ import {
     selectVacancy
 } from '../../store/vacancies';
 import { getVacancyTypes } from '../../store/data';
-import VacancyDetails from './VacancyDetails';
+import VacancyDetails from '../../components/vacancy/VacancyDetails';
 import { AppState } from '../../store';
 
 
