@@ -3,6 +3,6 @@ export interface CreateVacancyModel {
     description: string,
     companyName: string,
     salaryValue?: number,
-    salaryCurrency: string,
+    salaryCurrency?: string,
     typeId: number
 }

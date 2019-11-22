@@ -5,10 +5,15 @@ import {
     CREATE_VACANCY_ERROR,
     CREATE_VACANCY_REQUEST,
     CREATE_VACANCY_SUCCESS,
+    UPDATE_VACANCY_REQUEST,
+    UPDATE_VACANCY_SUCCESS,
+    UPDATE_VACANCY_ERROR,
+    UpdateVacancyActions,
     CreateVacancyActions,
     GetVacancyActions,
     VacanciesState,
-    NewVacancyState
+    VacancyState,
+    UPDATE_VACANCY_RESET
 } from './types'
 
 const initialSate = {
@@ -18,9 +23,10 @@ const initialSate = {
     items: {}
 };
 
+
 function newVacancyReducer(
     state = initialSate.newVacancy,
-    action: CreateVacancyActions): NewVacancyState {
+    action: CreateVacancyActions): VacancyState {
     switch (action.type) {
         case CREATE_VACANCY_REQUEST:
             return {
@@ -33,6 +39,35 @@ function newVacancyReducer(
                 vacancyId: action.payload
             }
         case CREATE_VACANCY_ERROR:
+            return {
+                isRequesting: false,
+                error: action.payload
+            }
+        default:
+            return state
+
+    }
+}
+
+function editVacancyReducer(
+    state = initialSate.newVacancy,
+    action: UpdateVacancyActions): VacancyState {
+    switch (action.type) {
+        case UPDATE_VACANCY_RESET:
+                return {
+                    ...initialSate.newVacancy
+                }
+        case UPDATE_VACANCY_REQUEST:
+            return {
+                ...initialSate.newVacancy,
+                isRequesting: true,
+            }
+        case UPDATE_VACANCY_SUCCESS:
+            return {
+                isRequesting: false,
+                success: action.payload
+            }
+        case UPDATE_VACANCY_ERROR:
             return {
                 isRequesting: false,
                 error: action.payload
@@ -75,5 +110,6 @@ function vacanciesReducer(
 
 export default combineReducers({
     newVacancy: newVacancyReducer,
+    editVacancy: editVacancyReducer,
     items: vacanciesReducer
 })

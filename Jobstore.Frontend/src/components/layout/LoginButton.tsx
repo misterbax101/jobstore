@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import {
     UncontrolledDropdown,
     DropdownToggle,
@@ -9,7 +9,7 @@ import {
 } from 'reactstrap';
 
 import translations from './../../translations';
-
+import { history } from './../../untils/history'
 
 interface LoginButtonProps {
     isAuthenticated: boolean,
@@ -20,11 +20,12 @@ interface LoginButtonProps {
 class LoginButton extends React.Component<LoginButtonProps, {}>{
     onLogoutClick = (): void => {
         this.props.logout();
+        history.push('/');
     }
 
     render() {
         const { isAuthenticated, userName } = this.props;
-        const { common:{buttonLabels}, header } = translations;
+        const { common: { buttonLabels }, header } = translations;
 
         if (!isAuthenticated) {
             return <NavLink tag={Link} to="/login">{buttonLabels.login}</NavLink>

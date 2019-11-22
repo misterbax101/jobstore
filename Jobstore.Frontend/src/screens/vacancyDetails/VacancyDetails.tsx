@@ -32,7 +32,8 @@ class VacancyDetails extends React.Component<VacancyDetailsProps, {}>{
         const type = this.props.vacancyTypes[typeId];
         return (
             <Row>
-                <Card>
+                <Card
+                   className="w-100">
                     <CardBody>
                         <CardTitle tag="h5" className="text-primary">{title}</CardTitle>
                         <CardSubtitle>{description}</CardSubtitle>

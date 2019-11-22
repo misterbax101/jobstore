@@ -7,12 +7,16 @@ import {
     GET_VACANCIES_SUCCESS,
     CREATE_VACANCY_REQUEST,
     CREATE_VACANCY_SUCCESS,
-    CREATE_VACANCY_ERROR
+    CREATE_VACANCY_ERROR,
+    UPDATE_VACANCY_REQUEST,
+    UPDATE_VACANCY_SUCCESS,
+    UPDATE_VACANCY_ERROR
 } from './types';
 import { ActionCreator } from '../types';
 import { CreateVacancyModel, VacancyModel, PaginatioData, VacanciesQuery } from '../../types';
 import { history } from '../../untils/history';
 import { calculateSkip } from '../../untils/helper' 
+import resource from '../../translations';
 
 export const createVacancy = (data: CreateVacancyModel) => async (dispach: any) => {
     try {
@@ -23,6 +27,17 @@ export const createVacancy = (data: CreateVacancyModel) => async (dispach: any) 
     }
     catch (err) {
         dispach(ActionCreator<typeof CREATE_VACANCY_ERROR, string>(CREATE_VACANCY_ERROR, err.data))
+    }
+}
+
+export const updateVacancy = (id:number, data: CreateVacancyModel) => async (dispach: any) => {
+    try {
+        dispach(ActionCreator<typeof UPDATE_VACANCY_REQUEST, null>(UPDATE_VACANCY_REQUEST, null))
+        await axios.put(`/vacancies/${id}`, data);
+        dispach(ActionCreator<typeof UPDATE_VACANCY_SUCCESS, string>(UPDATE_VACANCY_SUCCESS, resource.editVacancy.successMessage))
+    }
+    catch (err) {
+        dispach(ActionCreator<typeof UPDATE_VACANCY_ERROR, string>(UPDATE_VACANCY_ERROR, err.data))
     }
 }
 

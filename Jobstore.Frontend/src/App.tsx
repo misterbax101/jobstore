@@ -6,9 +6,7 @@ import {
     Home,
     Login,
     SignUp,
-    AddNewVacancy,
-    VacancyDetails,
-    VacanciesList
+    vacancy
 } from './screens';
 import { Layout } from './containers/layout';
 import { history } from './untils/history';
@@ -31,9 +29,10 @@ class App extends React.Component<AppProps> {
                     <Switch>
                         <Route path='/login' component={Login} />
                         <Route path='/sign-up' component={SignUp} />
-                        <Route extact path='/vacancies/add' component={AddNewVacancy} />
-                        <Route extact path='/vacancies/:id' component={VacancyDetails} />
-                        <Route path='/vacancies' component={VacanciesList} />
+                        <Route extact path='/vacancies/add' component={vacancy.AddVacancy} />
+                        <Route extact path='/vacancies/edit/:id' component={vacancy.EditVacancy} />
+                        <Route extact path='/vacancies/:id' component={vacancy.VacancyDetails} />
+                        <Route extact path='/vacancies' component={vacancy.VacanciesList} />
                         <Route path='/' exact component={Home} />
                     </Switch>
                 </Layout>

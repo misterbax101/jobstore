@@ -1,48 +1,25 @@
 import React from 'react';
 import { Formik, FormikProps, Form, Field } from 'formik';
-import { FormGroup, Col, Button, Label, Spinner, Alert, InputGroup, InputGroupAddon } from 'reactstrap';
-import { RouteComponentProps } from 'react-router-dom';
+import { Col, FormGroup, Label, InputGroup, InputGroupAddon, Button, Spinner } from 'reactstrap';
 
-import { CreateVacancyModel, VacancyType, Currency } from '../../types';
-import CustomInput from '../../components/base/CustomInput';
-import FormInput from '../../components/base/FormInput';
-import resouces from './../../translations';
+import { CreateVacancyModel, Currency, VacancyType, VacancyModel } from './../../../types';
 import { vacancyValidationSchema } from './vacancyValidationSchema';
+import CustomInput from '../../base/CustomInput';
+import FormInput from '../../base/FormInput';
+import resouces from './../../../translations';
 
-
-const fromInitalValues: CreateVacancyModel = {
-    companyName: '',
-    description: '',
-    salaryCurrency: '',
-    salaryValue: undefined,
-    title: '',
-    typeId: 0
-}
-
-interface AddNewVacancyProps extends RouteComponentProps {
-    getCurrencies: () => void,
-    getVacancyTypes: () => void,
-    createVacancy: (data: CreateVacancyModel) => any,
-    currencies: Array<Currency>,
+interface VacancyFormProps {
+    initialValues: CreateVacancyModel | VacancyModel,
+    currencies: Array<Currency>
     vacancyTypes: Array<VacancyType>
-    loading: boolean,
-    error?: string,
+    onSubmit: (values: CreateVacancyModel) => void
 }
 
-class AddNewVacancy extends React.Component<AddNewVacancyProps, {}>{
-    componentDidMount() {
-        this.props.getCurrencies();
-        this.props.getVacancyTypes();
-    }
+export const VacancyForm: React.FC<VacancyFormProps> = ({ initialValues, onSubmit, currencies, vacancyTypes }) => {
 
-    onFormSubmit = (values: CreateVacancyModel) => {
-        this.props.createVacancy(values);
-    }
-
-    renderForm = ({ values, handleBlur, handleChange }: FormikProps<CreateVacancyModel>): JSX.Element => {
+    const renderForm = ({ values, handleBlur, handleChange }: FormikProps<CreateVacancyModel>): JSX.Element => {
 
         const { fields: fieldsResouces, buttonLabel } = resouces.addVacancy;
-        const { currencies, loading, vacancyTypes } = this.props;
 
         return (
             <Form>
@@ -110,35 +87,25 @@ class AddNewVacancy extends React.Component<AddNewVacancyProps, {}>{
                     <FormGroup>
                         <Button
                             color="primary"
-                            type="submit"
-                            disabled={loading}>
+                            type="submit">
                             {buttonLabel}
                         </Button>
-                        {loading && <Spinner type="grow" color="secondary" style={{ verticalAlign: 'middle' }} />}
                     </FormGroup>
                 </Col>
             </Form>
         );
     }
 
-    render() {
-
-        const { title } = resouces.addVacancy;
-        return (
-            <React.Fragment>
-                <Col>
-                    <h2>{title}</h2>
-                </Col>
-                {this.props.error && <Alert color='danger'>{this.props.error}</Alert>}
-                <Formik
-                    initialValues={fromInitalValues}
-                    onSubmit={this.onFormSubmit}
-                    render={this.renderForm}
-                    validationSchema={vacancyValidationSchema}
-                />
-            </React.Fragment>
-        );
+    const onFormSubmit = (values: CreateVacancyModel) => {
+        onSubmit(values);
     }
+    return (
+        <Formik
+            initialValues={initialValues}
+            onSubmit={onFormSubmit}
+            render={renderForm}
+            enableReinitialize={true}
+            validationSchema={vacancyValidationSchema}
+        />
+    );
 }
-
-export default AddNewVacancy;

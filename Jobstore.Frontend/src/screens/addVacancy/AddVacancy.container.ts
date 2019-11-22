@@ -4,7 +4,7 @@ import {
     getCurrencies,
     getVacancyTypes
 } from '../../store/data/actions';
-import AddNewVacancy from './AddNewVacancy';
+import AddVacancy from './AddVacancy';
 import { createVacancy } from '../../store/vacancies/actions';
 import { AppState } from '../../store'
 
@@ -20,4 +20,4 @@ export default connect(mapStateToProps, {
     getCurrencies,
     getVacancyTypes,
     createVacancy
-})(AddNewVacancy);
+})(AddVacancy);

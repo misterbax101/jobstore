@@ -54,8 +54,11 @@
                 "placeholder": "Enter salary"
             }
         },
-        "buttonLabel": "Add a new vacancy",
+        "buttonLabel": "Submit",
         "title": "Create a new vacancy"
+    },
+    "editVacancy": {
+        "successMessage": "The vacancy has been successfully updated"
     },
     "header": {
         "hi": "Hi",
