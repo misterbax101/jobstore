@@ -90,6 +90,7 @@ namespace Jobstore.WebApi
                     .AddNewtonsoftJson(jsonOptions =>
                     {
                         jsonOptions.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                        jsonOptions.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
                     });
 
 

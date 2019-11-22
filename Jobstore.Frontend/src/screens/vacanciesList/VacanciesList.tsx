@@ -18,16 +18,19 @@ interface VacanciesListProps {
 
 class VacanciesList extends React.Component<VacanciesListProps> {
     componentDidMount() {
-        this.props.getVacancies();
-        this.props.getVacancyTypes();
+        const { getVacancies, getVacancyTypes, vacancyTypes } = this.props;
+        getVacancies();
+        if (!vacancyTypes || vacancyTypes.length === 0) {
+            getVacancyTypes();
+        }
     }
 
     renderList() {
-        if (this.props.loading) {
-            return <Spinner />;
-        }
         return this.props.vacancies.map(vacancy =>
-            <VacanciesListItem vacancy={vacancy} />);
+            <VacanciesListItem
+                key= {vacancy.id}
+                className="mb-1"
+                vacancy={vacancy} />);
     }
 
     filtersChanged = (query: VacanciesQuery) => {
@@ -35,10 +38,10 @@ class VacanciesList extends React.Component<VacanciesListProps> {
     }
 
     render() {
-        const { pagesCount, getVacancies, vacancies, vacancyTypes } = this.props;
+        const { pagesCount, getVacancies, vacancyTypes, loading } = this.props;
 
         return (
-            <Row className="mt-2 mb-2">
+            <Row>
                 <Col md={{ size: 3 }} className="p-0">
                     <Filters
                         vacancyTypes={vacancyTypes}
@@ -46,6 +49,7 @@ class VacanciesList extends React.Component<VacanciesListProps> {
                     />
                 </Col>
                 <Col>
+                    <Spinner loading={loading} />
                     {this.renderList()}
                     <Paginator
                         className="justify-content-center mt-1 mb-1"

@@ -1,7 +1,7 @@
 export interface VacanciesQuery {
     vacancyType?: number,
     orderBy?: VacancyOrderOptions,
-    desc?: boolean
+    order?: string
 
 }
 

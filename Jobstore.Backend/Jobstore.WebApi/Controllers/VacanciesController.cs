@@ -1,6 +1,7 @@
 ﻿using Jobstore.Infrastructure.Entities;
 using Jobstore.Infrastructure.Identity.Data;
 using Jobstore.WebApi.Infrastructure;
+using Jobstore.WebApi.Models;
 using Jobstore.WebApi.Models.Requests;
 using Jobstore.WebApi.Models.Responses;
 using Microsoft.AspNetCore.Authorization;
@@ -42,7 +43,7 @@ namespace Jobstore.WebApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAll([FromQuery]int skip = 0, [FromQuery]int take = 10, [FromQuery]int? vacancyType = 0, [FromQuery]string orderBy = null, [FromQuery] bool desc = false)
+        public async Task<IActionResult> GetAll([FromQuery]int skip = 0, [FromQuery]int take = 10, [FromQuery]int? vacancyType = 0, [FromQuery] SortOrder? order = SortOrder.Desc, [FromQuery]string orderBy = null)
         {
             IQueryable<Vacancy> records = _appDbContext.Vacancies;
 
@@ -53,13 +54,13 @@ namespace Jobstore.WebApi.Controllers
 
             if(orderBy != null)
             {
-                records = desc ? records.OrderByDynamic(x => $"x.{orderBy}"):
-                                 records.OrderByDescendingDynamic(x => $"x.{orderBy}"); ;
+                records = order == SortOrder.Asc ? records.OrderByDynamic(x => $"x.{orderBy}"):
+                                                   records.OrderByDescendingDynamic(x => $"x.{orderBy}"); ;
             }
             else
             {
-                records = desc ? records.OrderBy(x => x.CreatedDate) :
-                                 records.OrderByDescending(x => x.CreatedDate);
+                records = order == SortOrder.Asc ? records.OrderBy(x => x.CreatedDate) :
+                                                   records.OrderByDescending(x => x.CreatedDate);
             }
 
             var result = await records.Skip(skip)
@@ -178,7 +179,7 @@ namespace Jobstore.WebApi.Controllers
                 Description = vacancy.Description,
                 CompanyName = vacancy.CompanyName,
                 CreatedDate = vacancy.CreatedDate,
-                Type = vacancy.Type,
+                TypeId = vacancy.TypeId,
                 SalaryValue = vacancy.SalaryValue,
                 SalaryCurrency = vacancy.SalaryCurrency,
                 OwnerId = vacancy.OwnerId,

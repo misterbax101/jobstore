@@ -5,5 +5,7 @@ export  interface VacancyModel {
     companyName: string,
     salaryValue: number,
     salaryCurrency: string,
+    ownerName: string,
+    createdDate: Date,
     typeId: number
 }

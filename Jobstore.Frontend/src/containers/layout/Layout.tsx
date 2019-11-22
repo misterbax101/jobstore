@@ -22,12 +22,10 @@ const Layout: React.FC<any> = (props) => {
     return (
         <React.Fragment>
             <Header {...props} />
-            <Container tag={"main"}>
-                <Row>
-                    <Col >
-                        {props.children}
-                    </Col>
-                </Row>
+            <Container
+                tag={"main"}
+                className="pt-2 pb-2">
+                {props.children}
             </Container>
             <Footer />
         </React.Fragment>

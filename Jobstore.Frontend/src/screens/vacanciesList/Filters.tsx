@@ -9,17 +9,14 @@ interface FiltersPros {
     onFiltersChanged: (query: VacanciesQuery) => void;
 }
 
-interface FiltersState {
-    vacancyType?: number,
-    desc?: boolean,
-    orderBy?: VacancyOrderOptions
+interface FiltersState extends VacanciesQuery {
 }
 
-class Filters extends React.Component<FiltersPros,FiltersState> {
+class Filters extends React.Component<FiltersPros, FiltersState> {
     state = {
         vacancyType: undefined,
-        desc: undefined,
-        orderBy: undefined 
+        order: undefined,
+        orderBy: undefined
     }
 
     handleChange = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
@@ -29,9 +26,9 @@ class Filters extends React.Component<FiltersPros,FiltersState> {
     }
 
     mapQuery(): VacanciesQuery {
-        const { vacancyType, orderBy, desc } = this.state;
+        const { vacancyType, orderBy, order } = this.state;
         return {
-            desc,
+            order,
             orderBy,
             vacancyType,
         }
@@ -58,7 +55,7 @@ class Filters extends React.Component<FiltersPros,FiltersState> {
     }
 
     renderOrderOptions() {
-        const { orderBy, desc } = this.state;
+        const { orderBy, order } = this.state;
         const { fields: fieldsResouces } = resouces.addVacancy;
         return (
             <Row>
@@ -73,21 +70,20 @@ class Filters extends React.Component<FiltersPros,FiltersState> {
                         <option value="Title">Title</option>
                         <option value="CompanyName">Company Name</option>
                         <option value="SalaryValue">Salary</option>
-                        <option value="CreateDate">Date</option>
-
+                        <option value="CreatedDate">Date</option>
                     </select>
                     <InputGroupAddon addonType='append'>
                         <select
-                            name="desc"
-                            value={desc}
+                            name="order"
+                            value={order}
                             onChange={this.handleChange}
                             className="form-control"
                             style={{
                                 borderTopLeftRadius: '0',
                                 borderBottomLeftRadius: '0'
                             }}>
-                            <option value="false">asc</option>)
-                                    <option value="true">desc</option>)
+                            <option value="asc">A-Z</option>)
+                            <option value="desc">Z-A</option>)
                                 </select>
                     </InputGroupAddon>
                 </InputGroup>

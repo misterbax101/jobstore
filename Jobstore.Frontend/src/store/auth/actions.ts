@@ -27,6 +27,7 @@ export const login = (data: LoginModel) => async (dispatch: any) => {
 
 export const logout = (): AuthActionTypes => {
     authService.logout();
+    history.push('/');
     return { type: LOGOUT }
 };
 

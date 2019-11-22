@@ -1,5 +1,3 @@
-
-
 export const truncateWithEllipses = (text: string, max: number = 100) => {
     return text.substr(0, max - 1) + (text.length > max ? '...' : '');
 }
@@ -11,3 +9,6 @@ export const calculateSkip = (page: number, pageSize: number) => {
 
 
 export const  getPagesCount =(totalCount: number, pageSize: number) =>  Math.ceil(totalCount / pageSize);
+
+
+

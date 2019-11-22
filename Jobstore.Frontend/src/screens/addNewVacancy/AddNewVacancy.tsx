@@ -98,6 +98,7 @@ class AddNewVacancy extends React.Component<AddNewVacancyProps, {}>{
                                         borderTopLeftRadius: '0',
                                         borderBottomLeftRadius: '0'
                                     }}>
+                                    <option value="">Select</option>
                                     {currencies.map(type =>
                                         <option key={type.code} value={type.code} label={type.code}></option>)}
                                 </select>

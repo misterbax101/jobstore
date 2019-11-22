@@ -6,20 +6,24 @@ import { VacancyModel } from '../../types';
 import { truncateWithEllipses } from '../../untils/helper';
 
 interface VacanciesListItemProps {
-    vacancy: VacancyModel
+    vacancy: VacancyModel,
+    className?: string
 }
 
 const MAX_DESCRIPTION_LENGHT = 200;
 
-const VacanciesListItem: React.FC<VacanciesListItemProps> = ({ vacancy: { id, title, description, companyName, salaryValue, salaryCurrency } }) => {
+const VacanciesListItem: React.FC<VacanciesListItemProps> = ({ vacancy: { id, title, description, companyName, salaryValue, salaryCurrency }, className }) => {
 
-    const shortenDescription = truncateWithEllipses(description,MAX_DESCRIPTION_LENGHT);
+    const shortenDescription = truncateWithEllipses(description, MAX_DESCRIPTION_LENGHT);
     return (
-        <Card>
+        <Card
+            className={className}>
             <CardBody>
                 <CardTitle tag="h5" className="text-primary">{title}</CardTitle>
                 <CardSubtitle>{shortenDescription}</CardSubtitle>
-
+                <CardText>
+                 <span>Proposed salary: </span>
+                 <span>{salaryValue} {salaryCurrency}</span></CardText>
                 <CardLink
                     tag={Link}
                     to={`/vacancies/${id}`}>

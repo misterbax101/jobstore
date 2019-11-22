@@ -1,12 +1,17 @@
 import React from 'react';
-import { Row, Col, Spinner as BootsrapSpinner } from 'reactstrap';
+import { Spinner as BootsrapSpinner } from 'reactstrap';
+import './Spinner.css';
 
+interface SpinnerProps {
+        loading: boolean
+}
 
-const Spinner: React.FC = () =>
-    (<Row className="text-center mt-5">
-        <Col>
-            <BootsrapSpinner></BootsrapSpinner>
-        </Col>
-    </Row>);
-
-    export default Spinner;
+const Spinner: React.FC<SpinnerProps> = ({loading}) => {
+        if(!loading) {
+                return null;
+        }
+        return (<div className="spinner">
+                <BootsrapSpinner></BootsrapSpinner>
+        </div>);
+}
+export default Spinner;
