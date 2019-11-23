@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import {
     GET_USER,
     SIGN_UP_REQUEST,
@@ -5,9 +7,8 @@ import {
     SIGN_UP_FAILED,
 } from './types';
 import { ActionCreator } from './../types';
-import { SignUpModel, UserModel } from '../../types';
+import { SignUpModel, UserModel, UpdateProfileModel } from '../../types';
 import usersService from '../../services/users';
-import { async } from 'q';
 
 export const signUp = (data: SignUpModel) => async (dispatch: any): Promise<void> => {
     try {
@@ -29,6 +30,6 @@ export const getUserById = (userId: string) => (dispatch: any): void => {
 }
 
 
-export const updateUserProfile = (userId: string) => async (dispatch: any): Promise<void> => {
-    
+export const updateUserProfile = (userId: string, data: UpdateProfileModel) => async (dispatch: any): Promise<void> => {
+    await axios.put(`/accounts/${userId}`, data);
 }

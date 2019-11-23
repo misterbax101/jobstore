@@ -9,3 +9,4 @@ export * from './VacancyModel';
 export * from './VacancyType';
 export * from './VacanciesQuery';
 export * from './ListResponse';
+export * from './UpdateProfileModel';

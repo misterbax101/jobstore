@@ -1,13 +1,14 @@
 import React from 'react';
 
-import { UserModel } from '../../../types';
+import { UserModel , UpdateProfileModel } from '../../../types';
 import UserProfileFrom from './UserProfileFrom';
 import { Spinner } from 'reactstrap';
 
 interface UseProfileProps {
     userData?: UserModel,
-    userId?: string,
-    getUserById: (id:string) => void
+    userId: string,
+    getUserById: (userId:string) => void
+    updateUserProfile: (userId:string, data:UpdateProfileModel) => void
 }
 
 class UseProfile extends React.Component<UseProfileProps> {
@@ -18,8 +19,9 @@ class UseProfile extends React.Component<UseProfileProps> {
         }
     }
 
-    onFormSubmit (values: UserModel){
-        console.log(values);
+    onFormSubmit =  (values: UserModel) => {
+        const { userId, updateUserProfile} = this.props;
+        updateUserProfile(userId, {...values});
     }
 
     render() {

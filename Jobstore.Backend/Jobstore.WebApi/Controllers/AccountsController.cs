@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
+
 
 namespace Jobstore.WebApi.Controllers
 {
@@ -68,6 +70,30 @@ namespace Jobstore.WebApi.Controllers
                 FirstName = request.FirstName,
                 LastName = request.LastName,
             });
+
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> Put(Guid id, [FromBody]UpdateUserRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = _appDbContext.AppUsers.Find(id.ToString());
+            if(user == null)
+            {
+                return NotFound();
+            }
+
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+
 
             await _appDbContext.SaveChangesAsync();
 
