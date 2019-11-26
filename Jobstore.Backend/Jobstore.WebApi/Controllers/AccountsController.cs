@@ -4,7 +4,6 @@ using Jobstore.Infrastructure.Models;
 using Jobstore.WebApi.Models.Requests;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,15 +27,18 @@ namespace Jobstore.WebApi.Controllers
         [Route("{id:guid}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var result = await _appDbContext.AppUsers
-                .Include(m => m.Vacancies)
-                .FirstOrDefaultAsync(user => user.Id == id.ToString());
-            if (result == null)
+            var user = await _appDbContext.AppUsers.FindAsync(id.ToString());
+            if (user == null)
             {
                 return NotFound();
             }
-
-            return Ok(result);
+            return Ok(new
+            {
+                user.Id,
+                user.Email,
+                user.FirstName,
+                user.LastName
+            });
         }
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]SignUpRequest request)

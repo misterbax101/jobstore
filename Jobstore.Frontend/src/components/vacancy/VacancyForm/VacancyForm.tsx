@@ -2,11 +2,11 @@ import React from 'react';
 import { Formik, FormikProps, Form, Field } from 'formik';
 import { Col, FormGroup, Label, InputGroup, InputGroupAddon, Button } from 'reactstrap';
 
-import { CreateVacancyModel, Currency, VacancyType, VacancyModel } from './../../../types';
+import { CreateVacancyModel, Currency, VacancyType, VacancyModel } from '../../../types';
 import { vacancyValidationSchema } from './vacancyValidationSchema';
 import CustomInput from '../../base/CustomInput';
 import FormInput from '../../base/FormInput';
-import resouces from './../../../translations';
+import resouces from '../../../translations';
 
 interface VacancyFormProps {
     initialValues: CreateVacancyModel | VacancyModel,
@@ -109,6 +109,5 @@ interface VacancyFormProps {
         />
     );
 }
-
 
 export default VacancyForm;

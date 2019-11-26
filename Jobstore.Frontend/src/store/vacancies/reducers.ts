@@ -23,7 +23,6 @@ const initialSate = {
     items: {}
 };
 
-
 function newVacancyReducer(
     state = initialSate.newVacancy,
     action: CreateVacancyActions): VacancyState {

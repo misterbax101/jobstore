@@ -6,32 +6,40 @@ import {
     user,
     vacancy
 } from './containers';
+import PrivateRoute from './components/base/PrivateRoute';
 import { Layout } from './containers/layout';
 import { history } from './untils/history';
-import { authCheckState } from './store/auth';
+import { authCheckState, isAuthenticated } from './store/auth';
+import { AppState } from './store';
 
 
 interface AppProps {
-    onTryAutoSignup: () => Promise<void>
+    onTryAutoSignup: () => Promise<void>,
+    isAuthenticated: boolean
 }
 
 class App extends React.Component<AppProps> {
-    componentDidMount() {
-        this.props.onTryAutoSignup();
+    constructor(props: AppProps) {
+        super(props);
+
+    }
+    async componentDidMount() {
+       await this.props.onTryAutoSignup();
     }
 
     render() {
+        const { isAuthenticated } = this.props;
         return (
             <Router history={history}>
                 <Layout>
                     <Switch>
                         <Route path='/login' component={user.Login} />
                         <Route path='/sign-up' component={user.SignUp} />
-                        <Route path='/my-profile' component={user.UserProfile} />
-                        <Route extact path='/vacancies/add' component={vacancy.AddVacancy} />
-                        <Route extact path='/vacancies/edit/:id' component={vacancy.EditVacancy} />
+                        <PrivateRoute isAuthenticated={isAuthenticated} path='/vacancies/add' component={vacancy.AddVacancy} />
+                        <PrivateRoute isAuthenticated={isAuthenticated} path='/my-profile' component={user.UserProfile} />
+                        <PrivateRoute isAuthenticated={isAuthenticated} path='/vacancies/edit/:id' component={vacancy.EditVacancy} />
                         <Route extact path='/vacancies/:id' component={vacancy.VacancyDetails} />
-                        <Route extact path='/vacancies' component={vacancy.VacanciesList} />
+                        <Route extact path='/vacancies' component={vacancy.Vacancies} />
                         <Route path='/' exact component={user.Home} />
                     </Switch>
                 </Layout>
@@ -40,4 +48,9 @@ class App extends React.Component<AppProps> {
     }
 }
 
-export default connect(null, { onTryAutoSignup: authCheckState })(App);
+const mapStateToProps = (state: AppState) => ({ isAuthenticated: isAuthenticated(state) });
+
+export default connect(mapStateToProps,
+    {
+        onTryAutoSignup: authCheckState
+    })(App);

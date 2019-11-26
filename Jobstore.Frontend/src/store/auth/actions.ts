@@ -10,17 +10,18 @@ import {
     LOGIN_START
 } from './types';
 
-export const login = (data: LoginModel) => async (dispatch: any) => {
+export const login = (data: LoginModel) => async (dispatch: any): Promise<boolean> => {
     try {
         dispatch(start());
         const authData = await authService.login(data);
         dispatch(success(authData.id));
         dispatch(checkAuthTimeout(authData.expires_in));
         dispatch(getUserById(authData.id));
-        history.push('/');
+        return true;
     }
     catch (err) {
         dispatch(error(err));
+        return false;
     }
 }
 

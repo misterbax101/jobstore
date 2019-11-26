@@ -3,7 +3,7 @@ import { Col, Alert, Container } from 'reactstrap';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { CreateVacancyModel, VacancyType, Currency, VacancyModel } from '../../types';
-import  VacancyForm  from './vacancyForm/VacancyForm';
+import VacancyForm from './vacancyForm/VacancyForm';
 import Spinner from '../../components/base/Spinner';
 
 
@@ -40,12 +40,9 @@ class EditVacancy extends React.Component<EditVacancyProps, {}>{
 
     render() {
         const { vacancy, currencies, vacancyTypes, error, success } = this.props;
-        
-
+    
         return (
-            <React.Fragment>
                 <Container>
-              
                     <Col>
                         <h2>Edit vacancy</h2>
                     </Col>
@@ -61,7 +58,6 @@ class EditVacancy extends React.Component<EditVacancyProps, {}>{
                         />
                     </Col>
                 </Container>
-            </React.Fragment>
         );
     }
 }
