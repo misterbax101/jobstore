@@ -11,7 +11,8 @@ type RenderComponent = (props: RouteComponentProps<any>) => React.ReactNode;
 
 export default class PrivateRoute extends Route<PrivateRouteProps> {
     render() {
-        const { component: Component, isAuthenticated, ...rest }: PrivateRouteProps = this.props;
+        const { component: Component, isAuthenticated, ...rest } = this.props;
+        
         const renderComponent: RenderComponent = (props) => (
             isAuthenticated
                 ? <Component {...props} />

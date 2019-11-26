@@ -7,33 +7,33 @@ import { Spinner } from 'reactstrap';
 interface UseProfileProps {
     userData?: UserModel,
     userId?: string,
-    getUserById: (id:string) => void
+    getUserById: (id: string) => Promise<void>,
+    updateUserProfile: (user: UserModel) => Promise<void>
 }
 
 class UseProfile extends React.Component<UseProfileProps> {
-    componentDidMount(){
-        const { userId, getUserById} = this.props;
-        if(userId) {
-        getUserById(userId);
+    componentDidMount() {
+        const { userId, getUserById } = this.props;
+        if (userId) {
+            getUserById(userId);
         }
     }
 
-    onFormSubmit (values: UserModel){
-        console.log(values);
+    onFormSubmit = (values: UserModel) => {
+        this.props.updateUserProfile(values);
     }
 
     render() {
         const { userData } = this.props;
-        if(!userData){
+        if (!userData) {
             return <Spinner />;
         }
         return (
-            <UserProfileFrom  
+            <UserProfileFrom
                 onSubmit={this.onFormSubmit}
-                initialValues={userData}/>
+                initialValues={userData} />
         );
     }
 }
-
 
 export default UseProfile;

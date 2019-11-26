@@ -4,7 +4,8 @@ import {SignUpModel, UserModel } from '../types';
 
 const userService = {
     getUserById,
-    signUp
+    signUp,
+    updateUser,
 }
 
 async function getUserById(userId: string): Promise<UserModel> {
@@ -17,6 +18,12 @@ async function signUp(data: SignUpModel): Promise<string> {
     return response.data.id;
 }
 
-
+async function updateUser(userId: string, firstName: string, lastName: string): Promise<void> {
+    const response = await axios.put(`accounts/${userId}`, {
+        firstName,
+        lastName
+    });
+    return response.data.id;
+}
 
 export default userService;

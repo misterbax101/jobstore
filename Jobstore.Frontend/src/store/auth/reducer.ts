@@ -1,7 +1,7 @@
 import {
     AuthState,
     AuthActionTypes,
-    LOGIN_START,
+    LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_ERROR,
     LOGOUT
@@ -18,7 +18,7 @@ export default function authReducer(
     action: AuthActionTypes
 ): AuthState {
     switch (action.type) {
-        case LOGIN_START: {
+        case LOGIN_REQUEST: {
             return {
                 ...state,
                 error: null,

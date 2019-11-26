@@ -21,10 +21,10 @@ interface AppProps {
 class App extends React.Component<AppProps> {
     constructor(props: AppProps) {
         super(props);
-
+        this.props.onTryAutoSignup();
     }
-    async componentDidMount() {
-       await this.props.onTryAutoSignup();
+ componentDidMount() {
+       //this.props.onTryAutoSignup();
     }
 
     render() {
@@ -40,7 +40,7 @@ class App extends React.Component<AppProps> {
                         <PrivateRoute isAuthenticated={isAuthenticated} path='/vacancies/edit/:id' component={vacancy.EditVacancy} />
                         <Route extact path='/vacancies/:id' component={vacancy.VacancyDetails} />
                         <Route extact path='/vacancies' component={vacancy.Vacancies} />
-                        <Route path='/' exact component={user.Home} />
+                     
                     </Switch>
                 </Layout>
             </Router>
@@ -48,7 +48,7 @@ class App extends React.Component<AppProps> {
     }
 }
 
-const mapStateToProps = (state: AppState) => ({ isAuthenticated: isAuthenticated(state) });
+const mapStateToProps = (state: AppState) => ({ isAuthenticated: state.auth.isAuthenticated });
 
 export default connect(mapStateToProps,
     {

@@ -75,5 +75,30 @@ namespace Jobstore.WebApi.Controllers
 
             return Ok();
         }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> Update(string id, [FromBody] UpdateAccountRequestcs request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var updatedUser = new User
+            {
+                Id = id,
+                FirstName = request.FirstName,
+                LastName = request.LastName
+            };
+
+            _appDbContext.Attach(updatedUser);
+            _appDbContext.Entry(updatedUser).Property(p => p.FirstName).IsModified = true;
+            _appDbContext.Entry(updatedUser).Property(p => p.LastName).IsModified = true;
+
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }

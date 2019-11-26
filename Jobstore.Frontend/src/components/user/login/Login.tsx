@@ -22,8 +22,16 @@ class Login extends React.Component<LoginProps, {}>{
     constructor(props: LoginProps) {
         super(props);
         if (props.isAuthenticated) {
-            props.history.push(routes.home);
+            this.redirect();;
         }
+    }
+
+    redirect = () => {
+        const { history, location } = this.props;
+        const redirectUrl = location.state && location.state.from
+            ? location.state.from :
+            routes.home;
+        history.push(redirectUrl);
     }
 
     renderForm = (filedProps: FormikProps<LoginModel>): JSX.Element => {
@@ -65,11 +73,7 @@ class Login extends React.Component<LoginProps, {}>{
         const result = await this.props.onLogin(values);
         action.setSubmitting(false);
         if (result) {
-            const { history, location } = this.props;
-            const redirectUrl = location.state && location.state.from
-                                                                      ? location.state.from :
-                                                                        routes.home;
-            history.push(redirectUrl);
+            this.redirect();
         }
     }
 
