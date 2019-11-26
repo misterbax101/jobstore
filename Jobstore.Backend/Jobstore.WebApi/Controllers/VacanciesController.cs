@@ -2,17 +2,20 @@
 using Jobstore.Infrastructure.Identity.Data;
 using Jobstore.WebApi.Infrastructure;
 using Jobstore.WebApi.Models.Requests;
+using Jobstore.WebApi.Models.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Jobstore.WebApi.Controllers
 {
-    [Route("api/[controller]")]
     [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
     public class VacanciesController : ControllerBase
     {
         private readonly JobstoreDbContext _appDbContext;
@@ -27,13 +30,55 @@ namespace Jobstore.WebApi.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var result = await _appDbContext.Vacancies
-                .FindAsync(id);
+                                            .Include(x => x.Owner)
+                                            .FirstOrDefaultAsync(vacancy => vacancy.Id == id);
             if (result == null)
             {
                 return NotFound();
             }
 
-            return Ok(result);
+            return Ok(MapVacancy(result));
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAll([FromQuery]int skip = 0, [FromQuery]int take = 10)
+        {
+            var records = _appDbContext.Vacancies
+                                           .Include(x => x.Owner)
+                                           .OrderByDescending(x => x.CreatedDate);
+
+            var result = await records.Skip(skip)
+                                      .Take(take)
+                                      .ToListAsync();
+
+            return Ok(
+                new
+                {
+                    TotalCount = records.Count(),
+                    Result = result.Select(MapVacancy)
+                });
+        }
+
+        [HttpGet]
+        [Route("/api/users/{userId:guid}/vacancies")]
+        public async Task<IActionResult> GetUserVacancies(Guid userId, [FromQuery]int skip = 0, [FromQuery]int take = 10)
+        {
+            var records = _appDbContext.Vacancies
+                                          .Include(x => x.Owner)
+                                          .Where(x => x.OwnerId == userId.ToString())
+                                          .OrderByDescending(x => x.CreatedDate);
+
+            var result = await records.Skip(skip)
+                                      .Take(take)
+                                      .ToListAsync();
+
+            return Ok(
+                new
+                {
+                    TotalCount = records.Count(),
+                    Result = result.Select(MapVacancy)
+                });
         }
 
         [HttpPost]
@@ -57,9 +102,73 @@ namespace Jobstore.WebApi.Controllers
             };
 
             _appDbContext.Vacancies.Add(vacancy);
+            await _appDbContext.SaveChangesAsync().ConfigureAwait(true);
+
+            return Ok(vacancy.Id);
+        }
+
+        [HttpPut]
+        [Route("{id:int}")]
+        public async Task<IActionResult> Update(int id, [FromBody] CreateVacancyRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var vacancy = new Vacancy
+            {
+                Id = id,
+                Title = request.Title,
+                Descripion = request.Descripion,
+                CompanyName = request.CompanyName,
+                SalaryValue = request.SalaryValue,
+                SalaryCurrency = request.SalaryCurrency,
+                TypeId = request.TypeId,
+            };
+
+            _appDbContext.Attach(vacancy);
+            _appDbContext.Entry(vacancy).Property(p => p.Title).IsModified = true;
+            _appDbContext.Entry(vacancy).Property(p => p.Descripion).IsModified = true;
+            _appDbContext.Entry(vacancy).Property(p => p.CompanyName).IsModified = true;
+            _appDbContext.Entry(vacancy).Property(p => p.SalaryValue).IsModified = true;
+            _appDbContext.Entry(vacancy).Property(p => p.SalaryCurrency).IsModified = true;
+            _appDbContext.Entry(vacancy).Property(p => p.TypeId).IsModified = true;
+
             await _appDbContext.SaveChangesAsync();
 
             return Ok(vacancy.Id);
+        }
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            _appDbContext.Vacancies.Remove(new Vacancy
+            {
+                Id = id
+            });
+
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        private VacancyModel MapVacancy(Vacancy vacancy)
+        {
+            return new VacancyModel
+            {
+                Id = vacancy.Id,
+                Title = vacancy.Title,
+                Descripion = vacancy.Descripion,
+                CompanyName = vacancy.CompanyName,
+                CreatedDate = vacancy.CreatedDate,
+                Type = vacancy.Type,
+                SalaryValue = vacancy.SalaryValue,
+                SalaryCurrency = vacancy.SalaryCurrency,
+                OwnerId = vacancy.OwnerId,
+                OwnerName = $"{vacancy.Owner.FirstName} {vacancy.Owner.LastName}"
+            };
         }
     }
 }

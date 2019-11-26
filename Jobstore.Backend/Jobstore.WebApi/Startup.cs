@@ -86,7 +86,11 @@ namespace Jobstore.WebApi
 				.AddEntityFrameworkStores<JobstoreDbContext>()
 				.AddDefaultTokenProviders();
 
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers()
+                    .AddNewtonsoftJson(jsonOptions =>
+                    {
+                        jsonOptions.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    });
 
 
             services.AddCors(options =>

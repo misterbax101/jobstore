@@ -1,4 +1,4 @@
-export default interface LoginModel {
+export  interface LoginModel {
     email: string,
     password: string,
     remeberMe: boolean

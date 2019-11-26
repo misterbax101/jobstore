@@ -4,6 +4,7 @@ using Jobstore.Infrastructure.Models;
 using Jobstore.WebApi.Models.Requests;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,7 +29,8 @@ namespace Jobstore.WebApi.Controllers
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await _appDbContext.AppUsers
-                .FindAsync(id.ToString());
+                .Include(m => m.Vacancies)
+                .FirstOrDefaultAsync(user => user.Id == id.ToString());
             if (result == null)
             {
                 return NotFound();

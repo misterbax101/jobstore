@@ -3,13 +3,13 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import { authReducer } from './auth/reducer';
-import { alertReducer } from './alert/reducer';
+import { vacanciesReducer } from './vacancies/reducer';
 import { usersReducer } from './users/reducer';
 import { dataReducer } from './data/reducer';
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    alert: alertReducer,
+    vacancies: vacanciesReducer,
     users: usersReducer,
     data: dataReducer
 });

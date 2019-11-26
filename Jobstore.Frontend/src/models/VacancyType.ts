@@ -1,4 +1,4 @@
-export default interface VacancyType {
+export interface VacancyType {
     id: number,
     title: string,
 }

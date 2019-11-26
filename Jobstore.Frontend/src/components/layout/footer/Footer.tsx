@@ -1,21 +1,13 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
-
-
-const footerStyles: React.CSSProperties = {
-    position: 'absolute',
-    bottom: '0',
-    width: '100%',
-    minHeight: '60px',
-}
+import './Footer.css';
 
 class Footer extends Component {
     render() {
         const currentYear = new Date().getFullYear();
         return (
             <footer
-                className="bg-light text-muted"
-                style={footerStyles}>
+                className="bg-light text-muted footer">
                 <Container className='py-3'>
                     <Row >
                         <Col>

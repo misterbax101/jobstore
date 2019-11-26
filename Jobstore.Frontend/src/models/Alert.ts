@@ -1,6 +1,6 @@
-import AlertTypes from './AlertTypes';
+import { AlertTypes } from './';
 
-export default interface Alert  {
+export interface Alert  {
     type: AlertTypes,
     message: string
 }

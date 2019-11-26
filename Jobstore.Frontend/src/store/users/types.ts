@@ -1,37 +1,16 @@
-import UserModel from '../../models/UserModel';
+import { Action } from './../types';
+import { UserModel } from '../../models';
 
 export const GET_USER = 'GET_USER';
 
-
-export const SIGN_UP_START   = 'SIGN_UP_START';
+export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILED  = 'SIGN_UP_FAILED';
-
 
 export interface UsersState {
     [key: string]: UserModel
 }
 
-interface GetUser {
-    type: typeof GET_USER,
-    payload: UserModel
-}
-
-interface SignUpStart {
-    type: typeof SIGN_UP_START
-}
-
-interface SignUpSuccess {
-    type: typeof SIGN_UP_SUCCESS,
-    payload: string
-}
-
-
-interface SignUpFailed {
-    type: typeof SIGN_UP_FAILED,
-    payload: string
-}
-
-
-export type UsersActions = GetUser | SignUpStart | SignUpSuccess| SignUpFailed;
+export type UsersActions = Action<typeof GET_USER, UserModel> | Action<typeof SIGN_UP_REQUEST, null> |
+                           Action<typeof SIGN_UP_SUCCESS, string> | Action<typeof SIGN_UP_FAILED, string>;
 
