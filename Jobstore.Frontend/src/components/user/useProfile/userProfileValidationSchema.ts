@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
 
-import resouces from '../../../translations';
+import resources from '../../../translations';
 
-const { validationErrors, fields } = resouces.common;
+const { fields, validationErrors } = resources.common;
 
 export const userProfileValidationSchema = Yup.object({
     firstName: Yup.string()

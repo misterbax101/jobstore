@@ -6,7 +6,7 @@ import { selectCurrentUser, selectCurrentId  } from '../../store/auth';
 import {  getUserById, updateUserProfile } from  '../../store/users';
 
 const mapStateToProps = (state: AppState) => ({
-    userId: selectCurrentId(state),
+    userId: selectCurrentId(state) || '',
     userData: selectCurrentUser(state)
 });
 

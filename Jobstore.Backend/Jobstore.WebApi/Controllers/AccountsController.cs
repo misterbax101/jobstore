@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
+
 
 namespace Jobstore.WebApi.Controllers
 {
@@ -85,16 +87,15 @@ namespace Jobstore.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var updatedUser = new User
+            var user = _appDbContext.AppUsers.Find(id);
+            if(user == null)
             {
-                Id = id,
-                FirstName = request.FirstName,
-                LastName = request.LastName
-            };
+                return NotFound();
+            }
 
-            _appDbContext.Attach(updatedUser);
-            _appDbContext.Entry(updatedUser).Property(p => p.FirstName).IsModified = true;
-            _appDbContext.Entry(updatedUser).Property(p => p.LastName).IsModified = true;
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+
 
             await _appDbContext.SaveChangesAsync();
 
