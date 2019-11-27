@@ -40,6 +40,9 @@ class LoginButton extends React.Component<LoginButtonProps, {}>{
                     <DropdownItem>
                         <NavLink tag={Link} to="/my-profile">{header.myProfile}</NavLink>
                     </DropdownItem>
+                    <DropdownItem>
+                        <NavLink tag={Link} to="/vacancies/add">{header.createVacancy}</NavLink>
+                    </DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem>
                         <NavLink onClick={this.onLogoutClick}>{buttonLabels.logout}</NavLink>

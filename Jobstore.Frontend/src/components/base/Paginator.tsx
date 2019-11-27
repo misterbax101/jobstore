@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
-
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+
+import { getPagesCount } from './../../untils/helper';
+
 
 interface PaginatorProps {
     currentPage?: number,
-    pagesCount: number,
-    firstPage?: number,
-    onPageChange: (newPage: number) => void;
+    itemsCount: number,
+    pageSize?: number,
     className?: string
+    onPageChange: (newPage: number) => void;
 }
 
-const Paginator: React.FC<PaginatorProps> = ({ currentPage = 1, pagesCount, onPageChange, className }) => {
+const Paginator: React.FC<PaginatorProps> = ({ currentPage = 1, pageSize = 5, itemsCount, onPageChange, className }) => {
 
     const [selectedPage, setSelectedPage] = useState(currentPage);
 
+    const pagesCount = getPagesCount(itemsCount, pageSize);
+    
     const goToPage = (page: number) => {
         setSelectedPage(page);
         onPageChange(page);

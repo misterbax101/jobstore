@@ -62,6 +62,7 @@
     },
     "header": {
         "hi": "Hi",
-        "myProfile": "My Profile"
+        "myProfile": "My Profile",
+        "createVacancy": "Create a vacancy"
     }
 }

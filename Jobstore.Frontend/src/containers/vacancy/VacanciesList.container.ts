@@ -7,10 +7,7 @@ import {
 import { getVacancyTypes } from '../../store/data';
 import VacancyList from '../../components/vacancy/VacanciesList';
 import { AppState } from '../../store';
-import { getPagesCount } from '../../untils/helper';
 import { VacanciesQuery } from '../../types';
-
-const PAGE_SIZE = 5;
 
 const mapStateToProps = (state: AppState, ownProps: any) => {
     const currentPage = state.pagination.pages[state.pagination.currentPage];
@@ -18,7 +15,7 @@ const mapStateToProps = (state: AppState, ownProps: any) => {
         return {
             vacancies: selectVacanyByIds(state, currentPage.ids),
             loading: currentPage.loading,
-            pagesCount: getPagesCount(state.pagination.recordsCount, PAGE_SIZE),
+            totalCount: state.pagination.recordsCount,
             vacancyTypes: state.data.vacancyTypes,
         }
     }
@@ -26,12 +23,12 @@ const mapStateToProps = (state: AppState, ownProps: any) => {
     return {
         vacancies: [],
         loading: false,
-        pagesCount: 0,
+        totalCount: 0,
         vacancyTypes: state.data.vacancyTypes
     }
 }
 
 export default connect(mapStateToProps, {
-    getVacancies: (page: number = 1, query: VacanciesQuery = {}) => getVacancies(page, PAGE_SIZE, query),
+    getVacancies: (page: number = 1, pageSize: number, query: VacanciesQuery = {}) => getVacancies(page, pageSize, query),
     getVacancyTypes
 })(VacancyList);
