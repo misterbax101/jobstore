@@ -25,7 +25,7 @@ export default class PrivateRoute extends Route<PrivateRouteProps> {
         );
 
         return (
-            <Route {...rest} render={renderComponent} />
+            <Route  {...rest} render={renderComponent} />
         );
     }
 }

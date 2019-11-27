@@ -19,12 +19,8 @@ interface AppProps {
 }
 
 class App extends React.Component<AppProps> {
-    constructor(props: AppProps) {
-        super(props);
+    componentDidMount() {
         this.props.onTryAutoSignup();
-    }
- componentDidMount() {
-       //this.props.onTryAutoSignup();
     }
 
     render() {
@@ -33,14 +29,15 @@ class App extends React.Component<AppProps> {
             <Router history={history}>
                 <Layout>
                     <Switch>
+                        <Route exact path='/' component={user.Home} />
                         <Route path='/login' component={user.Login} />
                         <Route path='/sign-up' component={user.SignUp} />
-                        <PrivateRoute isAuthenticated={isAuthenticated} path='/vacancies/add' component={vacancy.AddVacancy} />
-                        <PrivateRoute isAuthenticated={isAuthenticated} path='/my-profile' component={user.UserProfile} />
-                        <PrivateRoute isAuthenticated={isAuthenticated} path='/vacancies/edit/:id' component={vacancy.EditVacancy} />
-                        <Route extact path='/vacancies/:id' component={vacancy.VacancyDetails} />
-                        <Route extact path='/vacancies' component={vacancy.Vacancies} />
-                     
+                        <PrivateRoute path='/my-profile' component={user.UserProfile} isAuthenticated={isAuthenticated} />
+                        <Route path='/vacancies' component={vacancy.Vacancies} exact />
+                        <PrivateRoute path='/vacancies/add' component={vacancy.AddVacancy} isAuthenticated={isAuthenticated} />
+                        <PrivateRoute path='/vacancies/edit/:id' component={vacancy.EditVacancy} isAuthenticated={isAuthenticated} />
+                        <Route path='/vacancies/:id' component={vacancy.VacancyDetails} />
+
                     </Switch>
                 </Layout>
             </Router>
