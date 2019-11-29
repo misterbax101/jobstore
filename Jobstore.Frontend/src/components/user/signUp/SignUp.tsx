@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, FormikProps, Form, Field, FormikActions } from 'formik';
-import { FormGroup, Button, Label, Spinner, Col, Row } from 'reactstrap';
+import { FormGroup, Button, Label, Spinner, Col } from 'reactstrap';
 
 import { Alert, SignUpModel } from '../../../types';
 import { signUpValidationSchema } from './signUpValidationSchema';

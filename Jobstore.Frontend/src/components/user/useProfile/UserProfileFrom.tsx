@@ -32,7 +32,6 @@ const UserProfileFrom: React.FC<UserProfileFromProps> = ({ initialValues, onSubm
                     <Label htmlFor="lastName">{fieldResources.lastName}</Label>
                     <Field name="lastName" placeholder={placholders.lastNamePlacholder} component={CustomInput} />
                 </FormGroup>
-                <Col>
                     <FormGroup>
                         <Button
                             color="primary"
@@ -40,7 +39,6 @@ const UserProfileFrom: React.FC<UserProfileFromProps> = ({ initialValues, onSubm
                             Submit
                         </Button>
                     </FormGroup>
-                </Col>
             </Form>
         );
     }

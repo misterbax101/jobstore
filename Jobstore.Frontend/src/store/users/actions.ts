@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import {
     GET_USER,
     SIGN_UP_REQUEST,
@@ -10,7 +8,7 @@ import {
     UPDATE_USER_FAILED
 } from './types';
 import { ActionCreator } from './../types';
-import { SignUpModel, UserModel, UpdateProfileModel } from '../../types';
+import { SignUpModel, UserModel } from '../../types';
 import usersService from '../../services/users';
 
 export const signUp = (data: SignUpModel) => async (dispatch: any): Promise<void> => {

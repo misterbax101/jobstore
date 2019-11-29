@@ -1,5 +1,3 @@
-import { combineReducers } from 'redux';
-
 import {
     GET_USER,
     UsersActions,

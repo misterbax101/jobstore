@@ -13,7 +13,7 @@ import {
 export const login = (data: LoginModel) => async (dispatch: any): Promise<boolean> => {
     try {
         dispatch(ActionCreator<typeof LOGIN_REQUEST, null>(LOGIN_REQUEST, null));
-        const { id, auth_token, expires_in } = await authService.login(data);
+        const { id, expires_in } = await authService.login(data);
         dispatch(ActionCreator<typeof LOGIN_SUCCESS, string>(LOGIN_SUCCESS, id));
         dispatch(checkAuthTimeout(expires_in));
         dispatch(getUserById(id));

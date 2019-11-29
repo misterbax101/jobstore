@@ -6,10 +6,11 @@ import {
     user,
     vacancy
 } from './containers';
+import { About, Contacts } from './components/support';
 import PrivateRoute from './components/base/PrivateRoute';
 import { Layout } from './containers/layout';
 import { history } from './untils/history';
-import { authCheckState, isAuthenticated } from './store/auth';
+import { authCheckState } from './store/auth';
 import { AppState } from './store';
 
 
@@ -36,8 +37,9 @@ class App extends React.Component<AppProps> {
                         <Route path='/vacancies' component={vacancy.Vacancies} exact />
                         <PrivateRoute path='/vacancies/add' component={vacancy.AddVacancy} isAuthenticated={isAuthenticated} />
                         <PrivateRoute path='/vacancies/edit/:id' component={vacancy.EditVacancy} isAuthenticated={isAuthenticated} />
-                        <Route path='/vacancies/:id' component={vacancy.VacancyDetails} />
-
+                        <Route path='/vacancies/:id' component={vacancy.VacancyDetails} /> 
+                        <Route path='/about' component={About}/>
+                        <Route path='/contacts' component={Contacts}/>
                     </Switch>
                 </Layout>
             </Router>

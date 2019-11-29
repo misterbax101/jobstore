@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { UserModel, UpdateProfileModel } from '../../../types';
+import { UserModel } from '../../../types';
 import UserProfileFrom from './UserProfileFrom';
 import { Spinner, Col } from 'reactstrap';
 

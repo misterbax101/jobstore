@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container } from 'reactstrap';
+import { Container, Col } from 'reactstrap';
 
 import { Header, Footer } from './../../components/layout';
 import { AppState } from './../../store';
@@ -25,7 +25,9 @@ const Layout: React.FC<any> = (props) => {
             <Container
                 tag={"main"}
                 className="pt-2 pb-2 pr-4 pl-4">
-                {props.children}
+                <Col>
+                    {props.children}
+                </Col>
             </Container>
             <Footer />
         </React.Fragment>

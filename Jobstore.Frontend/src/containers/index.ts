@@ -7,6 +7,7 @@ import EditVacancy from './vacancy/EditVacancy';
 import VacancyDetails from './vacancy/VacancyDetails';
 import Vacancies from './vacancy/Vacancies';
 
+
 export const vacancy =  {
     AddVacancy,
     EditVacancy,

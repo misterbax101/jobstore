@@ -1,5 +1,4 @@
 import React from 'react';
-import { Col } from 'reactstrap';
 
 import { VacancyModel } from '../../../types';
 import VacanciesListItem from './VacanciesListItem';
