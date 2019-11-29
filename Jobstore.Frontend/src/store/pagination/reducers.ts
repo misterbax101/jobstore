@@ -38,8 +38,12 @@ const currentPage = (currentPage = 1, action: GetVacancyActions) =>
 const recordsCount = (count = 0, action: GetVacancyActions) =>
     action.type === GET_VACANCIES_SUCCESS ? action.payload.totalCount : count
 
-export default combineReducers({
+const vacancies =  combineReducers({
     pages: vacanciesPages,
     currentPage: currentPage,
     recordsCount: recordsCount
 })
+
+export default combineReducers({
+    vacancies
+});

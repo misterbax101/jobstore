@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { stringify } from  'querystring';
+import { stringify } from 'querystring';
 
 import {
     GET_VACANCY,
@@ -15,7 +15,7 @@ import {
 import { ActionCreator } from '../types';
 import { CreateVacancyModel, VacancyModel, PaginatioData, VacanciesQuery } from '../../types';
 import { history } from '../../untils/history';
-import { calculateSkip } from '../../untils/helper' 
+import { calculateSkip } from '../../untils/helper'
 import resource from '../../translations';
 
 export const createVacancy = (data: CreateVacancyModel) => async (dispach: any) => {
@@ -30,7 +30,7 @@ export const createVacancy = (data: CreateVacancyModel) => async (dispach: any) 
     }
 }
 
-export const updateVacancy = (id:number, data: CreateVacancyModel) => async (dispach: any) => {
+export const updateVacancy = (id: number, data: CreateVacancyModel) => async (dispach: any) => {
     try {
         dispach(ActionCreator<typeof UPDATE_VACANCY_REQUEST, null>(UPDATE_VACANCY_REQUEST, null))
         await axios.put(`/vacancies/${id}`, data);
@@ -54,12 +54,31 @@ export const getVacancy = (id: number) => async (dispatch: any) => {
 export const getVacancies = (page: number, pageSize: number, query: VacanciesQuery = {}) => async (dispatch: any) => {
     try {
         dispatch(ActionCreator<typeof GET_VACANCIES_REQUEST, number>(GET_VACANCIES_REQUEST, page));
-        const skip = calculateSkip(page,pageSize);
+        const skip = calculateSkip(page, pageSize);
         const { data } = await axios.get<PaginatioData<VacancyModel>>(`/vacancies`, {
             params: {
                 skip: skip,
                 take: pageSize,
                 ...query
+            },
+            paramsSerializer: (parms) => stringify(parms)
+        });
+        dispatch(ActionCreator<typeof GET_VACANCIES_SUCCESS, PaginatioData<VacancyModel>>(GET_VACANCIES_SUCCESS, { ...data, page: page }))
+    }
+    catch {
+
+    }
+}
+
+export const searchVacancies = (page: number, pageSize: number, query?: string) => async (dispatch: any) => {
+    try {
+        dispatch(ActionCreator<typeof GET_VACANCIES_REQUEST, number>(GET_VACANCIES_REQUEST, page));
+        const skip = calculateSkip(page, pageSize);
+        const { data } = await axios.get<PaginatioData<VacancyModel>>(`/vacancies/search`, {
+            params: {
+                skip: skip,
+                take: pageSize,
+                query: query || ''
             },
             paramsSerializer: (parms) => stringify(parms)
         });

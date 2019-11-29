@@ -2,16 +2,26 @@ import { connect } from 'react-redux'
 
 import { AppState } from '../store';
 import Home from '../components/Home'
-import { getVacancies } from '../store/vacancies';
+import { searchVacancies, selectVacanyByIds } from '../store/vacancies';
 
 const PAGE_SIZE = 5;
 
 const mapStateToProps = (state: AppState) => {
+
+    const currentPage = state.pagination.vacancies.pages[state.pagination.vacancies.currentPage];
+    if (currentPage) {
+        return {
+            vacancies: selectVacanyByIds(state, currentPage.ids),
+            loading: currentPage.loading,
+        }
+    }
+
     return {
-        vacancies: Object.values(state.vacancies.items)
+        vacancies: [],
+        loading: false,
     }
 }
 
 export default connect(mapStateToProps, {
-    getVacancies: () => getVacancies(1, PAGE_SIZE, {}),
+    searchVacancies: (query?: string) => searchVacancies(1, PAGE_SIZE,query),
 })(Home);

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 
 import { VacancyModel, VacancyType, VacanciesQuery } from '../../types';
+import VacanciesList from './vacanciesList/VacanciesList';
 import Filters from './Filters';
 import Paginator from '../../components/base/Paginator';
 import Spinner from '../../components/base/Spinner';
-import ModelConfirmation from '../../components/base/ModelConfirmation';
 
 interface VacanciesProps {
     vacancies: Array<VacancyModel>,
@@ -18,10 +18,7 @@ interface VacanciesProps {
 
 const PAGE_SIZE = 5;
 
-class VacanciesList extends React.Component<VacanciesListProps> {
-    state = {
-        show: false
-    };
+class Vacancies extends React.Component<VacanciesProps> {
     componentDidMount() {
         const { getVacancies, getVacancyTypes, vacancyTypes } = this.props;
         getVacancies(1, PAGE_SIZE);
@@ -30,39 +27,24 @@ class VacanciesList extends React.Component<VacanciesListProps> {
         }
     }
 
-    
-    renderList() {
-        return this.props.vacancies.map(vacancy =>
-            <VacanciesListItem
-                key={vacancy.id}
-                className="mb-1"
-                vacancy={vacancy} />);
-    }
-
     filtersChanged = (query: VacanciesQuery) => {
         this.props.getVacancies(1, PAGE_SIZE, query);
     }
 
     render() {
-        const { totalCount, getVacancies, vacancyTypes, loading } = this.props;
+        const { totalCount, getVacancies, vacancyTypes, loading, vacancies } = this.props;
 
         return (
             <Row>
-            <ModelConfirmation 
-               show= {this.state.show}
-               onClose ={() => console.log('closed')}
-               onConfirm ={() => console.log('confirmed')}/>
                 <Col md={{ size: 3 }} className="p-0">
                     <Filters
                         vacancyTypes={vacancyTypes}
                         onFiltersChanged={this.filtersChanged}
                     />
-            <Button  onClick= {() => this.setState({show:true})}>Show</Button>
-
                 </Col>
                 <Col>
                     <Spinner loading={loading} />
-                     <VacanciesList vacancies={vacancies}/>
+                    <VacanciesList vacancies={vacancies} />
                     <Paginator
                         className="justify-content-center mt-1 mb-1"
                         itemsCount={totalCount}
@@ -74,5 +56,3 @@ class VacanciesList extends React.Component<VacanciesListProps> {
 }
 
 export default Vacancies;
-
-

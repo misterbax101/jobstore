@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, FormikProps, Form, Field, FormikActions } from 'formik';
-import { FormGroup, Button, Label, Spinner,Col } from 'reactstrap';
+import { FormGroup, Button, Label, Spinner, Col, Row } from 'reactstrap';
 
 import { Alert, SignUpModel } from '../../../types';
 import { signUpValidationSchema } from './signUpValidationSchema';
@@ -60,8 +60,10 @@ class SignUp extends React.Component<SignUpProps, {}> {
 
     render() {
         return (
-            <Col md={{ size: 8, offset:2  }}>
-            <h2>Sign Up</h2>
+            <>
+                <Col>
+                    <h2>Sign Up</h2>
+                
                 {this.props.alert && <AlertMessage {...this.props.alert} />}
                 <Formik
                     initialValues={{ email: '', password: '', confirmPassword: '', firstName: '', lastName: '' }}
@@ -69,7 +71,9 @@ class SignUp extends React.Component<SignUpProps, {}> {
                     render={this.renderForm}
                     onSubmit={this.onFormSubmit}
                 />
-            </Col>
+                </Col>
+
+            </>
         );
     }
 }

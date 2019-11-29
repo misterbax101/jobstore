@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { UserModel , UpdateProfileModel } from '../../../types';
+import { UserModel, UpdateProfileModel } from '../../../types';
 import UserProfileFrom from './UserProfileFrom';
-import { Spinner } from 'reactstrap';
+import { Spinner, Col } from 'reactstrap';
 
 interface UseProfileProps {
     userData?: UserModel,
     userId: string,
-    getUserById: (userId:string) => void
+    getUserById: (userId: string) => void
     updateUserProfile: (user: UserModel) => Promise<void>
 }
 
@@ -19,7 +19,7 @@ class UseProfile extends React.Component<UseProfileProps> {
         }
     }
 
-    onFormSubmit =  (values: UserModel) => {
+    onFormSubmit = (values: UserModel) => {
         this.props.updateUserProfile(values);
     }
 
@@ -29,9 +29,12 @@ class UseProfile extends React.Component<UseProfileProps> {
             return <Spinner />;
         }
         return (
-            <UserProfileFrom
-                onSubmit={this.onFormSubmit}
-                initialValues={userData} />
+            <Col>
+               <h2>Manage profile</h2>
+                <UserProfileFrom
+                    onSubmit={this.onFormSubmit}
+                    initialValues={userData} />
+            </Col>
         );
     }
 }

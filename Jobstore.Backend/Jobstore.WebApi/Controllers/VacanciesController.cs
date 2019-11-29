@@ -80,6 +80,7 @@ namespace Jobstore.WebApi.Controllers
         [Route("search")]
         public async Task<IActionResult> Search([FromQuery] string query, [FromQuery]int skip = 0, [FromQuery]int take = 10)
         {
+            query = query == null ? string.Empty : query;
             var records = _appDbContext.Vacancies.Where(vacancy =>
                                                            vacancy.Title.Contains(query) ||
                                                            vacancy.CompanyName.Contains(query) ||

@@ -1,22 +1,42 @@
 import React from 'react';
 
+import { Row, Col } from 'reactstrap';
 import { VacancyModel } from './../types';
+import Spinner from './base/Spinner';
+import SearchBar from './base/SearchBar';
 import VacanciesList from './vacancy/vacanciesList/VacanciesList';
 
 interface HomeProps {
     vacancies: Array<VacancyModel>
-    getVacancies: () => void
+    loading: boolean,
+    searchVacancies: (query?: string) => void
 }
 
 class Home extends React.Component<HomeProps, {}> {
     componentDidMount() {
-        this.props.getVacancies();
+        this.props.searchVacancies();
     }
+
+    onFilterChnaged = (value: string) => {
+        this.props.searchVacancies(value);
+    }
+
     render() {
-        const { vacancies } = this.props;
+        const { vacancies, loading } = this.props;
         return (
-            <VacanciesList
-                vacancies={vacancies} />
+            <>
+                <Row>
+                    <Col >
+                        <SearchBar
+                            size='lg'
+                            onChnage={this.onFilterChnaged}
+                            className="mb-1" />
+                        <Spinner loading={loading} />
+                        <VacanciesList
+                            vacancies={vacancies} />
+                    </Col>
+                </Row>
+            </>
         );
     }
 }

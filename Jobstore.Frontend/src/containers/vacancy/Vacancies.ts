@@ -10,12 +10,12 @@ import { AppState } from '../../store';
 import { VacanciesQuery } from '../../types';
 
 const mapStateToProps = (state: AppState, ownProps: any) => {
-    const currentPage = state.pagination.pages[state.pagination.currentPage];
+    const currentPage = state.pagination.vacancies.pages[state.pagination.vacancies.currentPage];
     if (currentPage) {
         return {
             vacancies: selectVacanyByIds(state, currentPage.ids),
             loading: currentPage.loading,
-            totalCount: state.pagination.recordsCount,
+            totalCount: state.pagination.vacancies.recordsCount,
             vacancyTypes: state.data.vacancyTypes,
         }
     }
