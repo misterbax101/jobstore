@@ -110,5 +110,4 @@ interface VacancyFormProps {
     );
 }
 
-
 export default VacancyForm;

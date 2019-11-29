@@ -43,18 +43,18 @@ namespace Jobstore.WebApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAll([FromQuery]int skip = 0, [FromQuery]int take = 10, [FromQuery]int? vacancyType = 0, [FromQuery] SortOrder? order = SortOrder.Desc, [FromQuery]string orderBy = null)
+        public async Task<IActionResult> GetAll([FromQuery]int skip = 0, [FromQuery]int take = 10, [FromQuery]int? vacancyType = 0, [FromQuery] SortOrder? order = SortOrder.Asc, [FromQuery]string orderBy = null)
         {
             IQueryable<Vacancy> records = _appDbContext.Vacancies;
 
-            if(vacancyType.GetValueOrDefault() != 0)
+            if (vacancyType.GetValueOrDefault() != 0)
             {
-                records =  records.Where(x => vacancyType == x.TypeId);
+                records = records.Where(x => vacancyType == x.TypeId);
             }
 
-            if(orderBy != null)
+            if (orderBy != null)
             {
-                records = order == SortOrder.Asc ? records.OrderByDynamic(x => $"x.{orderBy}"):
+                records = order == SortOrder.Asc ? records.OrderByDynamic(x => $"x.{orderBy}") :
                                                    records.OrderByDescendingDynamic(x => $"x.{orderBy}"); ;
             }
             else
@@ -68,12 +68,33 @@ namespace Jobstore.WebApi.Controllers
                                       .Include(x => x.Owner)
                                       .ToListAsync();
 
-            return Ok(
-                new
-                {
-                    TotalCount = records.Count(),
-                    Data = result.Select(MapVacancy)
-                });
+            return Ok(new
+            {
+                TotalCount = records.Count(),
+                Data = result.Select(MapVacancy)
+            });
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("search")]
+        public async Task<IActionResult> Search([FromQuery] string query, [FromQuery]int skip = 0, [FromQuery]int take = 10)
+        {
+            var records = _appDbContext.Vacancies.Where(vacancy =>
+                                                           vacancy.Title.Contains(query) ||
+                                                           vacancy.CompanyName.Contains(query) ||
+                                                           vacancy.Description.Contains(query));
+
+            var result = await records.Skip(skip)
+                                     .Take(take)
+                                     .Include(x => x.Owner)
+                                     .ToListAsync();
+
+            return Ok(new
+            {
+                TotalCount = records.Count(),
+                Data = result.Select(MapVacancy)
+            });
         }
 
         [HttpGet]

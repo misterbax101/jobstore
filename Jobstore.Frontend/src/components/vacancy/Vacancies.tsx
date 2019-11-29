@@ -2,13 +2,12 @@ import React from 'react';
 import { Row, Col, Button } from 'reactstrap';
 
 import { VacancyModel, VacancyType, VacanciesQuery } from '../../types';
-import VacanciesListItem from './VacanciesListItem';
 import Filters from './Filters';
 import Paginator from '../../components/base/Paginator';
 import Spinner from '../../components/base/Spinner';
 import ModelConfirmation from '../../components/base/ModelConfirmation';
 
-interface VacanciesListProps {
+interface VacanciesProps {
     vacancies: Array<VacancyModel>,
     loading: boolean,
     totalCount: number,
@@ -63,7 +62,7 @@ class VacanciesList extends React.Component<VacanciesListProps> {
                 </Col>
                 <Col>
                     <Spinner loading={loading} />
-                    {this.renderList()}
+                     <VacanciesList vacancies={vacancies}/>
                     <Paginator
                         className="justify-content-center mt-1 mb-1"
                         itemsCount={totalCount}
@@ -74,6 +73,6 @@ class VacanciesList extends React.Component<VacanciesListProps> {
     }
 }
 
-export default VacanciesList;
+export default Vacancies;
 
 

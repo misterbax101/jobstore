@@ -24,5 +24,8 @@ export const vacancyValidationSchema = Yup.object({
     salaryValue: Yup.number()
         .label(fields.salary.label)
         .max(1000000)
+        .required(validationErrors.fieldRequired),
+    salaryCurrency: Yup.string()
+        .label(fields.salary.label)
         .required(validationErrors.fieldRequired)
 });

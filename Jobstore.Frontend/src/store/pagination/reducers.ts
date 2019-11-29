@@ -7,7 +7,6 @@ import {
 } from '../vacancies/types';
 import { PaginationState } from './types';
 
-
 const vacanciesPages = (state: PaginationState<number> = {}, action: GetVacancyActions) => {
     switch (action.type) {
         case GET_VACANCIES_REQUEST: {

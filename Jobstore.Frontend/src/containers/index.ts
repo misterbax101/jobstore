@@ -1,17 +1,17 @@
-import Home from './home/Home'
-import Login from './user/Login.container';
-import SignUp from './user/SignUp.container';
-import UserProfile from './user/UserProfile.container';
-import AddVacancy from './vacancy/AddVacancy.container';
-import EditVacancy from './vacancy/EditVacancy.container';
-import VacancyDetails from './vacancy/VacancyDetails.container';
-import VacanciesList from './vacancy/VacanciesList.container';
+import Home from './Home'
+import Login from './user/Login';
+import SignUp from './user/SignUp';
+import UserProfile from './user/UserProfile';
+import AddVacancy from './vacancy/AddVacancy';
+import EditVacancy from './vacancy/EditVacancy';
+import VacancyDetails from './vacancy/VacancyDetails';
+import Vacancies from './vacancy/Vacancies';
 
 export const vacancy =  {
     AddVacancy,
     EditVacancy,
     VacancyDetails,
-    VacanciesList
+    Vacancies
 }
 
 export const user = {

@@ -1,32 +1,20 @@
-export interface AuthState {
+import {
+    Action,
+    RequestState
+} from '../types';
+
+export interface AuthState extends RequestState {
     userId?: string,
     isAuthenticated: boolean,
-    error: string | null,
-    loading: boolean
 }
 
-export const LOGIN_START   = 'LOGIN_START';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_ERROR   = 'LOGIN_ERROR';
-export const LOGOUT        = 'LOGOUT';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const LOGOUT = 'LOGOUT';
 
-
-interface LoginStartAction {
-    type: typeof LOGIN_START,
-}
-
-interface LoginSuccessAction {
-    type: typeof LOGIN_SUCCESS,
-    payload: string,
-}
-
-interface LoginErrorAction {
-    type: typeof LOGIN_ERROR,
-    payload: string,
-}
-
-interface LogoutAction {
-    type: typeof LOGOUT,
-}
-
-export type AuthActionTypes = LoginStartAction | LoginSuccessAction | LoginErrorAction | LogoutAction;
+export type AuthActionTypes =
+    Action<typeof LOGIN_REQUEST, null> |
+    Action<typeof LOGIN_SUCCESS, string> |
+    Action<typeof LOGIN_ERROR, string> |
+    Action<typeof LOGOUT, null>;

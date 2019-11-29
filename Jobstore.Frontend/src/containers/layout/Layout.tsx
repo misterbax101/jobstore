@@ -24,7 +24,7 @@ const Layout: React.FC<any> = (props) => {
             <Header {...props} />
             <Container
                 tag={"main"}
-                className="pt-2 pb-2">
+                className="pt-2 pb-2 pr-4 pl-4">
                 {props.children}
             </Container>
             <Footer />
