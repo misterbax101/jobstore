@@ -2,16 +2,28 @@ import thunkMiddleware from 'redux-thunk';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import  authReducer from './auth/reducer';
-import  vacanciesReducer  from './vacancies/reducers';
-import  paginationReducer  from './pagination/reducers';
-import  usersReducer  from './users/reducer';
-import  dataReducer from './data/reducers';
+import authReducer from './auth/reducer';
+import vacanciesReducer from './vacancies/reducers';
+import createPagination from './pagination/createPagination';
+import usersReducer from './users/reducer';
+import dataReducer from './data/reducers';
+
+import {
+    GET_VACANCIES_REQUEST,
+    GET_VACANCIES_SUCCESS
+} from './vacancies/types';
+import { VacancyModel } from '../types';
+
+const vacancies = createPagination<VacancyModel, number, typeof GET_VACANCIES_REQUEST, typeof GET_VACANCIES_SUCCESS>(GET_VACANCIES_REQUEST, GET_VACANCIES_SUCCESS, 'id');
+
+const pagination = combineReducers({
+    vacancies
+});
 
 const rootReducer = combineReducers({
     auth: authReducer,
     vacancies: vacanciesReducer,
-    pagination: paginationReducer,
+    pagination: pagination,
     users: usersReducer,
     data: dataReducer
 });

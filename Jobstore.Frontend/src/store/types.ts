@@ -1,5 +1,3 @@
-
-
 export interface Action<ActionType, PayloadType> {
     type: ActionType,
     payload: PayloadType

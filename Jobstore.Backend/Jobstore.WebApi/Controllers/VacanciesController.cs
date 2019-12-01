@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
@@ -81,15 +82,17 @@ namespace Jobstore.WebApi.Controllers
         public async Task<IActionResult> Search([FromQuery] string query, [FromQuery]int skip = 0, [FromQuery]int take = 10)
         {
             query = query == null ? string.Empty : query;
-            var records = _appDbContext.Vacancies.Where(vacancy =>
-                                                           vacancy.Title.Contains(query) ||
-                                                           vacancy.CompanyName.Contains(query) ||
-                                                           vacancy.Description.Contains(query));
+            IEnumerable<Vacancy> records = await _appDbContext.Vacancies
+                 .Include(x => x.Owner)
+                 .ToListAsync();
 
-            var result = await records.Skip(skip)
-                                     .Take(take)
-                                     .Include(x => x.Owner)
-                                     .ToListAsync();
+             records = records.Where(vacancy =>
+                                                           vacancy.Title.Contains(query, StringComparison.InvariantCultureIgnoreCase) ||
+                                                           vacancy.CompanyName.Contains(query, StringComparison.InvariantCultureIgnoreCase) ||
+                                                           vacancy.Description.Contains(query, StringComparison.InvariantCultureIgnoreCase));
+
+            var result =  records.Skip(skip)
+                                     .Take(take);
 
             return Ok(new
             {

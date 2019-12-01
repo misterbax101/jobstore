@@ -1,49 +1,72 @@
-import { combineReducers } from 'redux';
+import { Action } from './../types';
 
-import {
-    GetVacancyActions,
-    GET_VACANCIES_REQUEST,
-    GET_VACANCIES_SUCCESS
-} from '../vacancies/types';
 import { PaginationState } from './types';
+import { PaginatioData } from '../../types';
 
-const vacanciesPages = (state: PaginationState<number> = {}, action: GetVacancyActions) => {
-    switch (action.type) {
-        case GET_VACANCIES_REQUEST: {
-            return {
-                ...state,
-                [action.payload]: {
-                    ids: [],
-                    loading: true
+export function pages<DateT, KeyT, fetchingActionT, successActionT>(fetchingAction: fetchingActionT, successAction: successActionT, idPropery: keyof DateT) {
+    return (state: PaginationState<KeyT> = {}, action: Action<fetchingActionT, number> | Action<successActionT, PaginatioData<DateT>>): PaginationState<KeyT> => {
+        switch (action.type) {
+            case fetchingAction: {
+                return {
+                    ...state,
+                    [action.payload as number]: {
+                        ids: [],
+                        loading: true
+                    }
                 }
             }
-        }
-        case GET_VACANCIES_SUCCESS: {
-            return {
-                ...state,
-                [action.payload.page]: {
-                    ids: action.payload.data.map(item => item.id),
-                    loading: false
+            case successAction: {
+                const payload = action.payload as PaginatioData<DateT>;
+                return {
+                    ...state,
+                    [payload.page]: {
+                        ids: payload.data.map(item => item[idPropery]) as Array<KeyT> | [],
+                        loading: false
+                    }
                 }
             }
+            default:
+                return state;
         }
-        default:
-            return state;
     }
 }
 
-const currentPage = (currentPage = 1, action: GetVacancyActions) =>
-    action.type === GET_VACANCIES_REQUEST ? action.payload : currentPage
+// export const vacanciesPages = (state: PaginationState<number> = {}, action: GetVacancyActions) => {
+//     switch (action.type) {
+//         case GET_VACANCIES_REQUEST: {
+//             return {
+//                 ...state,
+//                 [action.payload]: {
+//                     ids: [],
+//                     loading: true
+//                 }
+//             }
+//         }
+//         case GET_VACANCIES_SUCCESS: {
+//             return {
+//                 ...state,
+//                 [action.payload.page]: {
+//                     ids: action.payload.data.map(item => item.id),
+//                     loading: false
+//                 }
+//             }
+//         }
+//         default:
+//             return state;
+//     }
+// }
 
-const recordsCount = (count = 0, action: GetVacancyActions) =>
-    action.type === GET_VACANCIES_SUCCESS ? action.payload.totalCount : count
+// export const currentPage = (currentPage = 1, action: GetVacancyActions) =>
+//     action.type === GET_VACANCIES_REQUEST ? action.payload : currentPage
 
-const vacancies =  combineReducers({
-    pages: vacanciesPages,
-    currentPage: currentPage,
-    recordsCount: recordsCount
-})
+export function currentPage<T, P>(fetchingAction: T) {
+    return (currentPage = 1, action: Action<T, P>) => action.type === fetchingAction ? action.payload : currentPage;
+}
 
-export default combineReducers({
-    vacancies
-});
+export function recordsCount<T, P>(successAction: T) {
+    return (count = 0, action: Action<T, PaginatioData<P>>) => action.type === successAction ? action.payload.totalCount : count;
+}
+
+// export const recordsCount = (count = 0, action: GetVacancyActions) =>
+//     action.type === GET_VACANCIES_SUCCESS ? action.payload.totalCount : count
+

@@ -6,7 +6,7 @@ import { CreateVacancyModel, VacancyType, Currency, VacancyModel } from '../../t
 import VacancyForm from './vacancyForm/VacancyForm';
 import Spinner from '../../components/base/Spinner';
 
-
+// todo any
 interface EditVacancyProps extends RouteComponentProps<any> {
     getCurrencies: () => void,
     getVacancyTypes: () => void,
