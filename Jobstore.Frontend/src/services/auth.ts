@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { LoginModel } from '../types'
+import { apis } from './../constants/'
 import LoginResponse from '../types/apiResponses/LoginResponse'
 import setAuthToken from '../untils/setAuthToken';
 
@@ -13,7 +14,7 @@ const authService = {
 
 async function login(model: LoginModel): Promise<LoginResponse> {
     try {
-        const response = await axios.post<LoginResponse>('/auth/login', model);
+        const response = await axios.post<LoginResponse>(apis.authEndpoint, model);
         const expirationDate = new Date(new Date().getTime() + response.data.expires_in * 1000);
         localStorage.setItem('token', response.data.auth_token);
         localStorage.setItem('expirationDate', expirationDate.toString());

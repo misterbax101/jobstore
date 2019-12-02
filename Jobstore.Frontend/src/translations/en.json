@@ -64,5 +64,15 @@
         "hi": "Hi",
         "myProfile": "My Profile",
         "createVacancy": "Create a vacancy"
+    },
+    "signUp": {
+        "resposeMessages": {
+            "SignedUpSuccessfully": "You have signed up successfully",
+            "SignUpFailed": "Sign up failed.",
+            "ProfileUpdatedSuccessfully": "Your profile has been updated up successfully",
+             "UpdatingFailed": "Updating  failed.",
+            "InternalServerError": "Internal Server Error"
+
+        }
     }
 }

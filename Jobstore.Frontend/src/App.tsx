@@ -23,6 +23,7 @@ class App extends React.Component<AppProps> {
 
     render() {
         const { isAuthenticated } = this.props;
+
         return (
             <Router history={history}>
                 <Layout>
