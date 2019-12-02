@@ -3,9 +3,9 @@ export  interface VacancyModel {
     title: string,
     description: string,
     companyName: string,
-    salaryValue: number,
+    salaryValue?: number,
     salaryCurrency: string,
-    ownerName: string,
-    createdDate: Date,
+    ownerName?: string,
+    createdDate?: Date,
     typeId: number
 }

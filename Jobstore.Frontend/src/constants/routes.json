@@ -1,4 +1,12 @@
 {
     "home": "/",
-    "login": "/login"
+    "login": "/login",
+    "signUp": "/sign-up",
+    "myProfile": "/my-profile",
+    "contacts": "/contacts",
+    "about": "/about",
+    "vacancies": "/vacancies",
+    "vacancyDetails": "/vacancies",
+    "addVacancy": "/vacancies/add",
+    "editVacancy": "/vacancies/edit"
 }

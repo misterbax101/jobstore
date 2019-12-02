@@ -61,7 +61,7 @@ class Login extends React.Component<LoginProps, {}>{
                                 {resources.common.buttonLabels.submit}
                             </Button>
                             {loading && <Spinner type="grow" color="secondary" style={{ verticalAlign: 'middle' }} />}
-                            <Link to={'/sign-up'} className="btn btn-link">{resources.login.register}</Link>
+                            <Link to={routes.signUp} className="btn btn-link">{resources.login.register}</Link>
                         </FormGroup>
                     </Col>
                 </Form>

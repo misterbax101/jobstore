@@ -1,3 +1,6 @@
+import apis from './apis.json';
 import routes from './routes.json';
 
-export { routes };
+export {
+    apis, 
+    routes };

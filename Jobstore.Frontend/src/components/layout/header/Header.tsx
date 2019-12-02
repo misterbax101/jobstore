@@ -9,6 +9,7 @@ import {
     Container
 } from 'reactstrap';
 
+import { routes } from './../../../constants';
 import LoginButton from '../LoginButton';
 import logo from  '../../../assert/images/logo.svg';
 import './Header.css'
@@ -25,19 +26,19 @@ class Header extends React.Component<HeaderProps, {}>{
             <header className="bg-light">
                 <Container>
                     <Navbar light expand="md">
-                        <NavbarBrand tag={Link} to="/">
+                        <NavbarBrand tag={Link} to={routes.home}>
                             <img src={logo} alt=" " className='img-fluid logo'/>
                             Jobstore
                             </NavbarBrand>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink tag={Link} to="/vacancies">Vacancies</NavLink>
+                                <NavLink tag={Link} to={routes.vacancies}>Vacancies</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink tag={Link} to="/contacts">Contacts</NavLink>
+                                <NavLink tag={Link} to={routes.contacts}>Contacts</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink tag={Link} to="/about">About</NavLink>
+                                <NavLink tag={Link} to={routes.about}>About</NavLink>
                             </NavItem>
                             <LoginButton {...this.props} userName={this.props.userName} />
                         </Nav>

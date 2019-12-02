@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Alert, Container } from 'reactstrap';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { CreateVacancyModel, VacancyType, Currency, VacancyModel } from '../../types';
+import { VacancyType, Currency, VacancyModel } from '../../types';
 import VacancyForm from './vacancyForm/VacancyForm';
 import Spinner from '../../components/base/Spinner';
 
@@ -11,7 +11,7 @@ interface EditVacancyProps extends RouteComponentProps<any> {
     getCurrencies: () => void,
     getVacancyTypes: () => void,
     getVacancy: (id: number) => void,
-    updateVacancy: (id: number, data: CreateVacancyModel) => any,
+    updateVacancy: (id: number, data: VacancyModel) => any,
     reset: () => void,
     currencies: Array<Currency>,
     vacancyTypes: Array<VacancyType>
@@ -33,7 +33,7 @@ class EditVacancy extends React.Component<EditVacancyProps, {}>{
         getVacancyTypes();
     }
 
-    onFormSubmit = (values: CreateVacancyModel) => {
+    onFormSubmit = (values: VacancyModel) => {
         const { id } = this.props.match.params;
         this.props.updateVacancy(id, values);
     }

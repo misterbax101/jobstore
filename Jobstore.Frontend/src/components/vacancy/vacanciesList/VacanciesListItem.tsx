@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardBody, CardTitle, CardSubtitle, CardText, CardLink } from 'reactstrap';
 
+import { routes } from './../../../constants'; 
 import { VacancyModel } from '../../../types';
 import { truncateWithEllipses } from '../../../untils/helper';
 
@@ -26,7 +27,7 @@ const VacanciesListItem: React.FC<VacanciesListItemProps> = ({ vacancy: { id, ti
                  <span>{salaryValue} {salaryCurrency}</span></CardText>
                 <CardLink
                     tag={Link}
-                    to={`/vacancies/${id}`}>
+                    to={`${routes.vacancyDetails}/${id}`}>
                     Go to get more details
                  </CardLink>
             </CardBody>

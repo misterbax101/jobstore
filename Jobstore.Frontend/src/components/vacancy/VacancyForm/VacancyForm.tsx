@@ -2,22 +2,22 @@ import React from 'react';
 import { Formik, FormikProps, Form, Field } from 'formik';
 import { Col, FormGroup, Label, InputGroup, InputGroupAddon, Button } from 'reactstrap';
 
-import { CreateVacancyModel, Currency, VacancyType, VacancyModel } from '../../../types';
+import { Currency, VacancyType, VacancyModel } from '../../../types';
 import { vacancyValidationSchema } from './vacancyValidationSchema';
 import CustomInput from '../../base/CustomInput';
 import FormInput from '../../base/FormInput';
 import resouces from '../../../translations';
 
 interface VacancyFormProps {
-    initialValues: CreateVacancyModel | VacancyModel,
+    initialValues:   VacancyModel,
     currencies: Array<Currency>
     vacancyTypes: Array<VacancyType>
-    onSubmit: (values: CreateVacancyModel) => void
+    onSubmit: (values: VacancyModel) => void
 }
 
  const VacancyForm: React.FC<VacancyFormProps> = ({ initialValues, onSubmit, currencies, vacancyTypes }) => {
 
-    const renderForm = ({ values, handleBlur, handleChange }: FormikProps<CreateVacancyModel>): JSX.Element => {
+    const renderForm = ({ values, handleBlur, handleChange }: FormikProps<VacancyModel>): JSX.Element => {
 
         const { fields: fieldsResouces, buttonLabel } = resouces.addVacancy;
 
@@ -96,7 +96,7 @@ interface VacancyFormProps {
         );
     }
 
-    const onFormSubmit = (values: CreateVacancyModel) => {
+    const onFormSubmit = (values: VacancyModel) => {
         onSubmit(values);
     }
     return (

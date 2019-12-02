@@ -13,12 +13,12 @@ import {
     UPDATE_VACANCY_ERROR
 } from './types';
 import { ActionCreator } from '../types';
-import { CreateVacancyModel, VacancyModel, PaginatioData, VacanciesQuery } from '../../types';
+import { VacancyModel, PaginatioData, VacanciesQuery } from '../../types';
 import { history } from '../../untils/history';
 import { calculateSkip } from '../../untils/helper'
 import resource from '../../translations';
 
-export const createVacancy = (data: CreateVacancyModel) => async (dispach: any) => {
+export const createVacancy = (data: VacancyModel) => async (dispach: any) => {
     try {
         dispach(ActionCreator<typeof CREATE_VACANCY_REQUEST, null>(CREATE_VACANCY_REQUEST, null))
         const response = await axios.post<number>('/vacancies', data);
@@ -30,7 +30,7 @@ export const createVacancy = (data: CreateVacancyModel) => async (dispach: any) 
     }
 }
 
-export const updateVacancy = (id: number, data: CreateVacancyModel) => async (dispach: any) => {
+export const updateVacancy = (id: number, data: VacancyModel) => async (dispach: any) => {
     try {
         dispach(ActionCreator<typeof UPDATE_VACANCY_REQUEST, null>(UPDATE_VACANCY_REQUEST, null))
         await axios.put(`/vacancies/${id}`, data);

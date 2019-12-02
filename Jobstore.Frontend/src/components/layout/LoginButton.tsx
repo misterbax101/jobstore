@@ -10,6 +10,7 @@ import {
 
 import translations from './../../translations';
 import { history } from './../../untils/history'
+import { routes } from './../../constants';
 
 interface LoginButtonProps {
     isAuthenticated: boolean,
@@ -20,7 +21,7 @@ interface LoginButtonProps {
 class LoginButton extends React.Component<LoginButtonProps, {}>{
     onLogoutClick = (): void => {
         this.props.logout();
-        history.push('/');
+        history.push(routes.home);
     }
 
     render() {
@@ -28,7 +29,7 @@ class LoginButton extends React.Component<LoginButtonProps, {}>{
         const { common: { buttonLabels }, header } = translations;
 
         if (!isAuthenticated) {
-            return <NavLink tag={Link} to="/login">{buttonLabels.login}</NavLink>
+            return <NavLink tag={Link} to={routes.login}>{buttonLabels.login}</NavLink>
         }
 
         return (
@@ -38,10 +39,10 @@ class LoginButton extends React.Component<LoginButtonProps, {}>{
                 </DropdownToggle>
                 <DropdownMenu right>
                     <DropdownItem>
-                        <NavLink tag={Link} to="/my-profile">{header.myProfile}</NavLink>
+                        <NavLink tag={Link} to={routes.myProfile}>{header.myProfile}</NavLink>
                     </DropdownItem>
                     <DropdownItem>
-                        <NavLink tag={Link} to="/vacancies/add">{header.createVacancy}</NavLink>
+                        <NavLink tag={Link} to={routes.addVacancy}>{header.createVacancy}</NavLink>
                     </DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, FormikProps, Form, Field } from 'formik';
-import { Col, FormGroup, Label, Button } from 'reactstrap';
+import { FormGroup, Label, Button } from 'reactstrap';
 
 import { UserModel } from './../../../types';
 import validationSchema from './userProfileValidationSchema';

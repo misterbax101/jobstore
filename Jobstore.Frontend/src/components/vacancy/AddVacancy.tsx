@@ -2,15 +2,15 @@ import React from 'react';
 import { Col, Alert } from 'reactstrap';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { CreateVacancyModel, VacancyType, Currency } from '../../types';
+import { VacancyModel, VacancyType, Currency } from '../../types';
 import VacancyForm from './vacancyForm/VacancyForm';
 import resouces from '../../translations';
 
-const fromInitalValues: CreateVacancyModel = {
+const fromInitalValues: VacancyModel = {
+    id: 0,
     companyName: '',
     description: '',
     salaryCurrency: '',
-    salaryValue: undefined,
     title: '',
     typeId: 0
 }
@@ -18,7 +18,7 @@ const fromInitalValues: CreateVacancyModel = {
 interface AddVacancyProps extends RouteComponentProps {
     getCurrencies: () => void,
     getVacancyTypes: () => void,
-    createVacancy: (data: CreateVacancyModel) => any,
+    createVacancy: (data: VacancyModel) => any,
     currencies: Array<Currency>,
     vacancyTypes: Array<VacancyType>
     loading: boolean,
@@ -31,7 +31,7 @@ class AddVacancy extends React.Component<AddVacancyProps, {}>{
         this.props.getVacancyTypes();
     }
 
-    onFormSubmit = (values: CreateVacancyModel) => {
+    onFormSubmit = (values: VacancyModel) => {
         this.props.createVacancy(values);
     }
 
