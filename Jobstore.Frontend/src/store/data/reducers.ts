@@ -5,14 +5,14 @@ import {
     GET_VACANCY_TYPES,
 } from './types';
 
-import {  Action} from '../types';
+import {  PayloadAction} from '../types';
 import { Currency, VacancyType } from '../../types';
 
 const currenciesInitialState: Array<Currency> = [];
 
 function currenciesReducer(
     state =currenciesInitialState,
-    action: Action<typeof GET_CURRENCIES, Array<Currency>>
+    action: PayloadAction<typeof GET_CURRENCIES, Array<Currency>>
 ): Array<Currency> {
     switch (action.type) {
         case GET_CURRENCIES:
@@ -26,7 +26,7 @@ const vacancyTypesInitialState: Array<VacancyType> = [];
 
 function vacancyTypesReducer(
     state = vacancyTypesInitialState,
-    action: Action<typeof GET_VACANCY_TYPES, Array<VacancyType>>
+    action: PayloadAction<typeof GET_VACANCY_TYPES, Array<VacancyType>>
 ): Array<VacancyType> {
     switch (action.type) {
         case GET_VACANCY_TYPES:

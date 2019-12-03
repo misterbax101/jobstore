@@ -2,22 +2,21 @@ import React from 'react';
 import { Formik, FormikProps, Form, Field, FormikActions } from 'formik';
 import { FormGroup, Button, Label, Spinner, Col } from 'reactstrap';
 
-import { Alert, SignUpModel } from '../../../types';
+import { SignUpModel, RequestStatus } from '../../../types';
 import { signUpValidationSchema } from './signUpValidationSchema';
 import CustomInput from '../../base/CustomInput';
-import AlertMessage from '../../base//AlertMessage';
+import FormAlerts from '../../base/FormAlerts';
 import resources from '../../../translations';
 
-const { fields: fieldResources, placholders, buttonLabels } = resources.common;
 
 interface SignUpProps {
     onSubmit(data: SignUpModel): Promise<void>;
-    alert: Alert | null
+    requestStatus: RequestStatus;
 }
 
 class SignUp extends React.Component<SignUpProps, {}> {
-
     renderForm(filedProps: FormikProps<SignUpModel>): JSX.Element {
+        const { fields: fieldResources, placholders, buttonLabels } = resources.common;
         return (
             <Form>
                 <FormGroup>
@@ -59,21 +58,19 @@ class SignUp extends React.Component<SignUpProps, {}> {
     }
 
     render() {
+        const formInitialValues: SignUpModel = { email: '', password: '', confirmPassword: '', firstName: '', lastName: '' };
+        const { header } = resources.signUp;
         return (
-            <>
-                <Col>
-                    <h2>Sign Up</h2>
-                
-                {this.props.alert && <AlertMessage {...this.props.alert} />}
+            <Col>
+                <h2>{header}</h2>
+                <FormAlerts {...this.props.requestStatus} />
                 <Formik
-                    initialValues={{ email: '', password: '', confirmPassword: '', firstName: '', lastName: '' }}
+                    initialValues={formInitialValues}
                     validationSchema={signUpValidationSchema}
                     render={this.renderForm}
                     onSubmit={this.onFormSubmit}
                 />
-                </Col>
-
-            </>
+            </Col>
         );
     }
 }

@@ -1,12 +1,14 @@
 import React from 'react';
-
-import { UserModel } from '../../../types';
-import UserProfileFrom from './UserProfileFrom';
 import { Spinner, Col } from 'reactstrap';
+
+import UserProfileFrom from './UserProfileFrom';
+import FormAlerts from './../../base/FormAlerts';
+import { UserModel, RequestStatus } from '../../../types';
 
 interface UseProfileProps {
     userData?: UserModel,
     userId: string,
+    requestStatus: RequestStatus,
     getUserById: (userId: string) => void
     updateUserProfile: (user: UserModel) => Promise<void>
 }
@@ -24,14 +26,15 @@ class UseProfile extends React.Component<UseProfileProps> {
     }
 
     render() {
-        const { userData } = this.props;
+        const { userData, requestStatus } = this.props;
         if (!userData) {
             return <Spinner />;
         }
         return (
             <Col>
                <h2>Manage profile</h2>
-                <UserProfileFrom
+                <FormAlerts {...requestStatus} />
+                <UserProfileFrom 
                     onSubmit={this.onFormSubmit}
                     initialValues={userData} />
             </Col>

@@ -1,8 +1,10 @@
 import { connect } from 'react-redux';
+import {  Dispatch } from 'redux';
 
 import Login from '../../components/user/login/Login';
-import { AppState } from '../../store';
-import { login } from '../../store/auth/actions';
+import { AppState, ActionCreator } from '../../store';
+import { login, reset } from '../../store/auth';
+import { LoginModel } from '../../types';
 
 const mapStateToProps = (state: AppState) => ({
     isAuthenticated: state.auth.isAuthenticated,
@@ -10,7 +12,12 @@ const mapStateToProps = (state: AppState) => ({
     loading: state.auth.loading
 });
 
+const mapDispatchToProps = {
+    onLogin: login,
+    resetForm: reset
+}
+
 export default connect(
     mapStateToProps,
-    { onLogin: login },
+    mapDispatchToProps
 )(Login)

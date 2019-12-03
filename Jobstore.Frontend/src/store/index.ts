@@ -29,3 +29,5 @@ export default function configureStore() {
 
     return store;
 }
+
+export * from './types';

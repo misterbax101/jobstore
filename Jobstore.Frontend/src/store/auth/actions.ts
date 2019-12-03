@@ -4,6 +4,7 @@ import { ActionCreator } from '../types';
 import { getUserById } from './../users/actions';
 import {
     LOGOUT,
+    LOGIN_RESET,
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_ERROR,
@@ -52,3 +53,5 @@ export const authCheckState = () => async (dispatch: any) => {
     }
 }
 
+
+export const reset = () =>  ActionCreator<typeof LOGIN_RESET, null>(LOGIN_RESET,null);

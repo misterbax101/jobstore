@@ -7,7 +7,8 @@ import {  getUserById, updateUserProfile } from  '../../store/users';
 
 const mapStateToProps = (state: AppState) => ({
     userId: selectCurrentId(state) || '',
-    userData: selectCurrentUser(state)
+    userData: selectCurrentUser(state),
+    requestStatus: state.users.updateProfile
 });
 
 export default connect(

@@ -1,4 +1,4 @@
-import { Action } from '../types';
+import { PayloadAction } from '../types';
 import { VacancyModel, PaginatioData } from '../../types';
 
 
@@ -19,20 +19,20 @@ export const GET_VACANCIES_REQUEST = 'GET_VACANCIES_REQUEST';
 export const GET_VACANCIES_SUCCESS = 'GET_VACANCIES_SUCCESS';
 
 
-export type CreateVacancyActions = Action<typeof CREATE_VACANCY_REQUEST, null> |
-    Action<typeof CREATE_VACANCY_SUCCESS, number> |
-    Action<typeof CREATE_VACANCY_ERROR, string>   |
-    Action<typeof CREATE_VACANCY_RESET, null>;
+export type CreateVacancyActions = PayloadAction<typeof CREATE_VACANCY_REQUEST, null> |
+    PayloadAction<typeof CREATE_VACANCY_SUCCESS, number> |
+    PayloadAction<typeof CREATE_VACANCY_ERROR, string>   |
+    PayloadAction<typeof CREATE_VACANCY_RESET, null>;
 
-export type UpdateVacancyActions = Action<typeof UPDATE_VACANCY_REQUEST, null> |
-    Action<typeof UPDATE_VACANCY_SUCCESS,string> |
-    Action<typeof UPDATE_VACANCY_ERROR, string>  |
-    Action<typeof UPDATE_VACANCY_RESET, null>;
+export type UpdateVacancyActions = PayloadAction<typeof UPDATE_VACANCY_REQUEST, null> |
+    PayloadAction<typeof UPDATE_VACANCY_SUCCESS,string> |
+    PayloadAction<typeof UPDATE_VACANCY_ERROR, string>  |
+    PayloadAction<typeof UPDATE_VACANCY_RESET, null>;
 
 
-export type GetVacancyActions = Action<typeof GET_VACANCY, VacancyModel> |
-    Action<typeof GET_VACANCIES_REQUEST, number> |
-    Action<typeof GET_VACANCIES_SUCCESS, PaginatioData<VacancyModel>>
+export type GetVacancyActions = PayloadAction<typeof GET_VACANCY, VacancyModel> |
+    PayloadAction<typeof GET_VACANCIES_REQUEST, number> |
+    PayloadAction<typeof GET_VACANCIES_SUCCESS, PaginatioData<VacancyModel>>
 
 export interface VacanciesState {
     [key: number]: VacancyModel

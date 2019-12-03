@@ -33,7 +33,7 @@ const vacanciesPages = (state: PaginationState<number> = {}, action: GetVacancyA
 }
 
 const currentPage = (currentPage = 1, action: GetVacancyActions) =>
-    action.type === GET_VACANCIES_REQUEST ? action.payload : currentPage
+    action.type === GET_VACANCIES_SUCCESS ? action.payload.page : currentPage
 
 const recordsCount = (count = 0, action: GetVacancyActions) =>
     action.type === GET_VACANCIES_SUCCESS ? action.payload.totalCount : count

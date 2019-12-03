@@ -73,6 +73,7 @@
              "UpdatingFailed": "Updating  failed.",
             "InternalServerError": "Internal Server Error"
 
-        }
+        },
+        "header": "Sign Up"
     }
 }

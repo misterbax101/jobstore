@@ -1,5 +1,3 @@
-export * from './Alert';
-export * from './AlertTypes';
 export * from './Currency';
 export * from './LoginModel';
 export * from './SignUpModel';
@@ -8,4 +6,5 @@ export * from './VacancyModel';
 export * from './VacancyType';
 export * from './VacanciesQuery';
 export * from './PaginatioData';
+export * from './RequestStatus';
 export * from './UpdateProfileModel';
