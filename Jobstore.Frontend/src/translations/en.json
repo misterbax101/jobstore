@@ -63,6 +63,7 @@
     "header": {
         "hi": "Hi",
         "myProfile": "My Profile",
+        "myVacancies": "My Vacancies",
         "createVacancy": "Create a vacancy"
     },
     "signUp": {

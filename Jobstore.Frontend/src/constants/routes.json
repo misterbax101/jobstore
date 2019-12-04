@@ -6,6 +6,7 @@
     "contacts": "/contacts",
     "about": "/about",
     "vacancies": "/vacancies",
+    "myVacancies": "/my-vacancies",
     "vacancyDetails": "/vacancies",
     "addVacancy": "/vacancies/add",
     "editVacancy": "/vacancies/edit"

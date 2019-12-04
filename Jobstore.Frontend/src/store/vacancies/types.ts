@@ -13,6 +13,10 @@ export const UPDATE_VACANCY_REQUEST = 'UPDATE_VACANCY_REQUEST';
 export const UPDATE_VACANCY_SUCCESS = 'UPDATE_VACANCY_SUCCESS';
 export const UPDATE_VACANCY_ERROR = 'UPDATE_VACANCY_ERROR';
 
+export const DELETE_VACANCY_REQUEST = 'DELETE_VACANCY_REQUEST';
+export const DELETE_VACANCY_SUCCESS = 'DELETE_VACANCY_SUCCESS';
+export const DELETE_VACANCY_ERROR = 'DELETE_VACANCY_ERROR';
+
 export const GET_VACANCY = 'GET_VACANCY';
 
 export const GET_VACANCIES_REQUEST = 'GET_VACANCIES_REQUEST';
@@ -30,9 +34,12 @@ export type UpdateVacancyActions = PayloadAction<typeof UPDATE_VACANCY_REQUEST, 
     PayloadAction<typeof UPDATE_VACANCY_RESET, null>;
 
 
-export type GetVacancyActions = PayloadAction<typeof GET_VACANCY, VacancyModel> |
+export type GetVacancyActions = 
+    PayloadAction<typeof GET_VACANCY, VacancyModel> |
     PayloadAction<typeof GET_VACANCIES_REQUEST, number> |
-    PayloadAction<typeof GET_VACANCIES_SUCCESS, PaginatioData<VacancyModel>>
+    PayloadAction<typeof GET_VACANCIES_SUCCESS, PaginatioData<VacancyModel>> |
+    PayloadAction<typeof DELETE_VACANCY_SUCCESS, number> 
+
 
 export interface VacanciesState {
     [key: number]: VacancyModel

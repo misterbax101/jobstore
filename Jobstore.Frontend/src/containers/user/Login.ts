@@ -1,10 +1,8 @@
 import { connect } from 'react-redux';
-import {  Dispatch } from 'redux';
 
 import Login from '../../components/user/login/Login';
-import { AppState, ActionCreator } from '../../store';
+import { AppState } from '../../store';
 import { login, reset } from '../../store/auth';
-import { LoginModel } from '../../types';
 
 const mapStateToProps = (state: AppState) => ({
     isAuthenticated: state.auth.isAuthenticated,

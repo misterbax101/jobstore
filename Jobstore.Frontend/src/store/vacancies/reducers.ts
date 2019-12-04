@@ -1,4 +1,6 @@
+import _ from 'lodash';
 import { combineReducers } from 'redux';
+
 import {
     GET_VACANCY,
     GET_VACANCIES_SUCCESS,
@@ -53,9 +55,9 @@ function editVacancyReducer(
     action: UpdateVacancyActions): VacancyState {
     switch (action.type) {
         case UPDATE_VACANCY_RESET:
-                return {
-                    ...initialSate.newVacancy
-                }
+            return {
+                ...initialSate.newVacancy
+            }
         case UPDATE_VACANCY_REQUEST:
             return {
                 ...initialSate.newVacancy,
@@ -89,16 +91,9 @@ function vacanciesReducer(
             }
         }
         case GET_VACANCIES_SUCCESS: {
-            let vacancies = {};
-            for (let item of action.payload.data) {
-                vacancies = {
-                    ...vacancies,
-                    [item.id]: item
-                }
-            }
             return {
                 ...state,
-                ...vacancies
+                ..._.mapKeys(action.payload.data, 'id') 
             }
         }
         default:

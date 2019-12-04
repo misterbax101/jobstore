@@ -10,8 +10,12 @@ import {
     CREATE_VACANCY_ERROR,
     UPDATE_VACANCY_REQUEST,
     UPDATE_VACANCY_SUCCESS,
-    UPDATE_VACANCY_ERROR
+    UPDATE_VACANCY_ERROR,
+    DELETE_VACANCY_REQUEST,
+    DELETE_VACANCY_ERROR,
+    DELETE_VACANCY_SUCCESS
 } from './types';
+import { AppState } from '../index';
 import { ActionCreator } from '../types';
 import { VacancyModel, PaginatioData, VacanciesQuery } from '../../types';
 import { history } from '../../untils/history';
@@ -42,6 +46,18 @@ export const updateVacancy = (id: number, data: VacancyModel) => async (dispach:
     }
 }
 
+
+export const deleteVacancy = (id: number) => async (dispach: any) => {
+    try {
+        dispach(ActionCreator<typeof DELETE_VACANCY_REQUEST, null>(DELETE_VACANCY_REQUEST, null))
+        await axios.delete(`${apis.vacanciesEndpoint}/${id}`,);
+        dispach(ActionCreator<typeof DELETE_VACANCY_SUCCESS, number>(DELETE_VACANCY_SUCCESS, id))
+    }
+    catch (err) {
+        dispach(ActionCreator<typeof DELETE_VACANCY_ERROR, string>(DELETE_VACANCY_ERROR, err.data))
+    }
+}
+
 export const getVacancy = (id: number) => async (dispatch: any) => {
     try {
         const response = await axios.get<VacancyModel>(`${apis.vacanciesEndpoint}/${id}`);
@@ -57,6 +73,28 @@ export const getVacancies = (page: number, pageSize: number, query: VacanciesQue
         dispatch(ActionCreator<typeof GET_VACANCIES_REQUEST, number>(GET_VACANCIES_REQUEST, page));
         const skip = calculateSkip(page, pageSize);
         const { data } = await axios.get<PaginatioData<VacancyModel>>(apis.vacanciesEndpoint, {
+            params: {
+                skip: skip,
+                take: pageSize,
+                ...query
+            },
+            paramsSerializer: (parms) => stringify(parms)
+        });
+        dispatch(ActionCreator<typeof GET_VACANCIES_SUCCESS, PaginatioData<VacancyModel>>(GET_VACANCIES_SUCCESS, { ...data, page: page }))
+    }
+    catch {
+
+    }
+}
+
+
+export const getUserVacancies = (page: number, pageSize: number, query: VacanciesQuery = {}) => async (dispatch: any, getState:() => AppState) => {
+    try {
+        dispatch(ActionCreator<typeof GET_VACANCIES_REQUEST, number>(GET_VACANCIES_REQUEST, page));
+        const skip = calculateSkip(page, pageSize);
+        const { auth } = getState();
+        const userId = auth.userId;
+        const { data } = await axios.get<PaginatioData<VacancyModel>>(`/users/${userId}/vacancies`, {
             params: {
                 skip: skip,
                 take: pageSize,

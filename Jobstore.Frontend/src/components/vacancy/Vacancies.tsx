@@ -11,6 +11,7 @@ interface VacanciesProps {
     vacancies: Array<VacancyModel>,
     loading: boolean,
     totalCount: number,
+    currentPage: number,
     vacancyTypes: Array<VacancyType>
     getVacancies: (pageIndex: number, pageSize: number, query?: VacanciesQuery) => Promise<void>,
     getVacancyTypes: () => void
@@ -32,7 +33,7 @@ class Vacancies extends React.Component<VacanciesProps> {
     }
 
     render() {
-        const { totalCount, getVacancies, vacancyTypes, loading, vacancies } = this.props;
+        const { totalCount, currentPage, getVacancies, vacancyTypes, loading, vacancies } = this.props;
 
         return (
             <Row>
@@ -45,10 +46,12 @@ class Vacancies extends React.Component<VacanciesProps> {
                 <Col>
                     <Spinner loading={loading} />
                     <VacanciesList vacancies={vacancies} />
-                    <Paginator
+                    {!loading && 
+                        <Paginator
                         className="justify-content-center mt-1 mb-1"
                         itemsCount={totalCount}
-                        onPageChange={(page: number) => getVacancies(page, PAGE_SIZE)} />
+                        currentPage={currentPage}
+                        onPageChange={(page: number) => getVacancies(page, PAGE_SIZE)} />}
                 </Col>
             </Row>
         )

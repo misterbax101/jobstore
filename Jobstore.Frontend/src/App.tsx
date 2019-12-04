@@ -33,9 +33,10 @@ class App extends React.Component<AppProps> {
                         <Route path={routes.signUp} component={user.SignUp} />
                         <PrivateRoute path={routes.myProfile} component={user.UserProfile} isAuthenticated={isAuthenticated} />
                         <Route path={routes.vacancies} component={vacancy.Vacancies} exact />
+                        <PrivateRoute path={routes.myVacancies} component={vacancy.MyVacancies} isAuthenticated={isAuthenticated} />
                         <PrivateRoute path={routes.addVacancy} component={vacancy.AddVacancy} isAuthenticated={isAuthenticated} />
                         <PrivateRoute path={`${routes.editVacancy}/:id`} component={vacancy.EditVacancy} isAuthenticated={isAuthenticated} />
-                        <Route path={`${routes.home}/:id`} component={vacancy.VacancyDetails} />
+                        <Route path={`${routes.vacancyDetails}/:id`} component={vacancy.VacancyDetails} />
                         <Route path={routes.about} component={About} />
                         <Route path={routes.contacts} component={Contacts} />
                     </Switch>
