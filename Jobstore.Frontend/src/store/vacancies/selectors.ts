@@ -7,3 +7,5 @@ export const selectVacancies = (state: AppState) => Object.values(state.vacancie
 export const selectVacanyByIds = (state: AppState, ids: Array<number>)  => ids.map(id => state.vacancies.items[id]);
 
 export const selectEditVacancy = (state: AppState) => state.vacancies.editVacancy;
+
+export const selectNewVacancy = (state: AppState) => state.vacancies.newVacancy;

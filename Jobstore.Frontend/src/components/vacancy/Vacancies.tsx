@@ -12,24 +12,23 @@ interface VacanciesProps {
     loading: boolean,
     totalCount: number,
     currentPage: number,
-    vacancyTypes: Array<VacancyType>
-    getVacancies: (pageIndex: number, pageSize: number, query?: VacanciesQuery) => Promise<void>,
+    vacancyTypes: Array<VacancyType>,
+    getVacancies: (pageIndex?: number, query?: VacanciesQuery) => Promise<void>,
     getVacancyTypes: () => void
 }
 
-const PAGE_SIZE = 5;
 
 class Vacancies extends React.Component<VacanciesProps> {
     componentDidMount() {
         const { getVacancies, getVacancyTypes, vacancyTypes } = this.props;
-        getVacancies(1, PAGE_SIZE);
+        getVacancies();
         if (!vacancyTypes || vacancyTypes.length === 0) {
             getVacancyTypes();
         }
     }
 
     filtersChanged = (query: VacanciesQuery) => {
-        this.props.getVacancies(1, PAGE_SIZE, query);
+        this.props.getVacancies(1, query);
     }
 
     render() {
@@ -51,7 +50,7 @@ class Vacancies extends React.Component<VacanciesProps> {
                         className="justify-content-center mt-1 mb-1"
                         itemsCount={totalCount}
                         currentPage={currentPage}
-                        onPageChange={(page: number) => getVacancies(page, PAGE_SIZE)} />}
+                        onPageChange={(page: number) => getVacancies(page)} />}
                 </Col>
             </Row>
         )

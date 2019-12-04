@@ -4,21 +4,21 @@ import { Container, Col } from 'reactstrap';
 
 import { Header, Footer } from './../../components/layout';
 import { AppState } from './../../store';
-import { logout, selectUserName, isAuthenticated } from './../../store/auth';
+import { logout, getCurrentUserName, isAuthenticated } from './../../store/auth';
 import './Layout.css'
 
 const mapStateToProps = (state: AppState) => ({
     isAuthenticated: isAuthenticated(state),
-    userName: selectUserName(state)
+    userName: getCurrentUserName(state)
 });
 
 const mapDispatchToProps = {
     logout
 }
 
-type LayoutProps = ReturnType<typeof mapStateToProps> | typeof mapDispatchToProps;
+type LayoutProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-const Layout: React.FC<any> = (props) => {
+const Layout: React.FC<LayoutProps> = (props) => {
     return (
         <React.Fragment>
             <Header {...props} />

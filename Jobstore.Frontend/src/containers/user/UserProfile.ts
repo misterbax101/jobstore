@@ -2,13 +2,13 @@ import { connect } from 'react-redux';
 
 import UseProfile from '../../components/user/useProfile/UseProfile';
 import { AppState } from '../../store';
-import { selectCurrentUser, selectCurrentId  } from '../../store/auth';
-import {  getUserById, updateUserProfile } from  '../../store/users';
+import { getCurrentUser, selectCurrentId  } from '../../store/auth';
+import { getUserById, updateUserProfile, getUpdateProfileStatus } from  '../../store/users';
 
 const mapStateToProps = (state: AppState) => ({
     userId: selectCurrentId(state) || '',
-    userData: selectCurrentUser(state),
-    requestStatus: state.users.updateProfile
+    userData: getCurrentUser(state),
+    requestStatus: getUpdateProfileStatus(state)
 });
 
 export default connect(

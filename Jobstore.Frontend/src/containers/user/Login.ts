@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 
 import Login from '../../components/user/login/Login';
 import { AppState } from '../../store';
-import { login, reset } from '../../store/auth';
+import { login, reset, isAuthenticated } from '../../store/auth';
 
 const mapStateToProps = (state: AppState) => ({
-    isAuthenticated: state.auth.isAuthenticated,
+    isAuthenticated: isAuthenticated(state),
     error: state.auth.error,
     loading: state.auth.loading
 });

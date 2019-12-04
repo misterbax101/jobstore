@@ -29,7 +29,7 @@ class MyVacancies extends React.Component<MyVacanciesProps, MyVacanciesState> {
         selectedVacancyId: 0
     }
     componentDidMount() {
-        this.props.getVacancies();
+        this.props.getVacancies(1);
     }
 
     onDeleteVacancyClicked = (vacancy: VacancyModel) => {
@@ -91,13 +91,12 @@ class MyVacancies extends React.Component<MyVacanciesProps, MyVacanciesState> {
                       onConfirm={this.deleteVacancy}/>
                     <Spinner loading={loading} />
                     {this.renderVacanciesList()}
-                    <Paginator
+                    {!loading && <Paginator
                         currentPage={currentPage}
                         itemsCount={totalCount}
                         onPageChange={(page: number) => getVacancies(page)}
-                        className="justify-content-center mt-1 mb-1" />
+                        className="justify-content-center mt-1 mb-1" />}
                 </Col>
-
             </Row>
         )
     }

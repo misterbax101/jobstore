@@ -2,35 +2,29 @@ import { connect } from 'react-redux'
 
 import {
     getVacancies,
-    selectVacanyByIds
 } from '../../store/vacancies';
-import { getVacancyTypes } from '../../store/data';
+import {
+    selectVacanciesCount,
+    selectCurrentVacancies,
+    selectVacanciesCurrentPage,
+    selectVacanciesCurrentPageNumber
+} from './../../store/pagination';
+import { getVacancyTypes, selectVacancyTypes } from '../../store/data';
 import VacancyList from '../../components/vacancy/Vacancies';
 import { AppState } from '../../store';
 import { VacanciesQuery } from '../../types';
 
 const mapStateToProps = (state: AppState, ownProps: any) => {
-    const currentPage = state.pagination.vacancies.pages[state.pagination.vacancies.currentPage];
-    if (currentPage) {
         return {
-            vacancies: selectVacanyByIds(state, currentPage.ids),
-            loading: currentPage.loading,
-            totalCount: state.pagination.vacancies.recordsCount,
-            currentPage: state.pagination.vacancies.currentPage,
-            vacancyTypes: state.data.vacancyTypes,
+            vacancies: selectCurrentVacancies(state),
+            loading: selectVacanciesCurrentPage(state).loading,
+            totalCount: selectVacanciesCount(state),
+            currentPage: selectVacanciesCurrentPageNumber(state),
+            vacancyTypes: selectVacancyTypes(state),
         }
-    }
-
-    return {
-        vacancies: [],
-        loading: false,
-        totalCount: 0,
-        currentPage: 0,
-        vacancyTypes: state.data.vacancyTypes
-    }
 }
 
 export default connect(mapStateToProps, {
-    getVacancies: (page: number = 1, pageSize: number, query: VacanciesQuery = {}) => getVacancies(page, pageSize, query),
+    getVacancies: (page: number = 1, query: VacanciesQuery = {}) => getVacancies(page, 5, query),
     getVacancyTypes
 })(VacancyList);
