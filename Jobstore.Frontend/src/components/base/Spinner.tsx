@@ -6,12 +6,10 @@ interface SpinnerProps {
         loading: boolean
 }
 
-const Spinner: React.FC<SpinnerProps> = ({loading}) => {
-        if(!loading) {
-                return null;
-        }
-        return (<div className="spinner">
-                <BootsrapSpinner></BootsrapSpinner>
-        </div>);
+const Spinner: React.FC<SpinnerProps> = ({ loading }) => {
+        return !loading ? null :
+                (<div className="spinner">
+                        <BootsrapSpinner></BootsrapSpinner>
+                </div>);
 }
 export default Spinner;

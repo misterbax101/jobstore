@@ -6,7 +6,7 @@ import {
     selectCurrentVacancies,
     selectVacanciesCurrentPage,
 } from './../store/pagination';
-import { searchVacancies, selectVacanyByIds } from '../store/vacancies';
+import { searchVacancies } from '../store/vacancies';
 
 const PAGE_SIZE = 5;
 

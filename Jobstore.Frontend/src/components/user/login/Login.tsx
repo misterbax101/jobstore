@@ -6,9 +6,10 @@ import { RouteComponentProps, Link } from 'react-router-dom';
 import { LoginModel } from '../../../types';
 import FormInput from '../../base/FormInput';
 import CustomInput from '../../base/CustomInput';
+import ButtonSpinner from '../../base/ButtonSpinner';
 import { loginValidationSchema } from './loginValidationSchema'
 import resources from '../../../translations';
-import { routes } from '../../../constants';
+import { routes, layout } from '../../../constants';
 const { fields, placholders } = resources.common;
 
 interface LoginProps extends RouteComponentProps {
@@ -19,6 +20,12 @@ interface LoginProps extends RouteComponentProps {
     isAuthenticated: boolean
 }
 
+const initialValues = {
+    email: '',
+    password: '',
+    remeberMe: false
+};
+
 class Login extends React.Component<LoginProps, {}>{
     constructor(props: LoginProps) {
         super(props);
@@ -26,7 +33,7 @@ class Login extends React.Component<LoginProps, {}>{
             this.redirect();;
         }
     }
-    componentDidMount(){
+    componentDidMount() {
         this.props.resetForm();
     }
     redirect = () => {
@@ -55,7 +62,7 @@ class Login extends React.Component<LoginProps, {}>{
                         disabled={loading}>
                         {resources.common.buttonLabels.submit}
                     </Button>
-                    {loading && <Spinner type="grow" color="secondary" style={{ verticalAlign: 'middle' }} />}
+                    <ButtonSpinner loading={loading} /> 
                     <Link to={routes.signUp} className="btn btn-link">{resources.login.register}</Link>
                 </FormGroup>
             </Form>
@@ -73,11 +80,13 @@ class Login extends React.Component<LoginProps, {}>{
     render() {
         return (
             <React.Fragment>
-                <Col md={{ size: 8, offset: 2 }}>
+                <Col 
+                {...layout.loginForm} 
+                className="mt-4" >
                     <h2>Login</h2>
                     {this.props.error && <Alert color='danger'>{this.props.error}</Alert>}
                     <Formik
-                        initialValues={{ email: 'test@gmail.com', password: 'Aa!123456', remeberMe: false }}
+                        initialValues={initialValues}
                         validationSchema={loginValidationSchema}
                         onSubmit={this.onFormSubmit}
                         render={this.renderForm}

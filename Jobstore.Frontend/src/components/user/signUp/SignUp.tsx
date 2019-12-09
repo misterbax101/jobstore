@@ -7,6 +7,7 @@ import { signUpValidationSchema } from './signUpValidationSchema';
 import CustomInput from '../../base/CustomInput';
 import FormAlerts from '../../base/FormAlerts';
 import resources from '../../../translations';
+import ButtonSpinner from '../../base/ButtonSpinner';
 
 
 interface SignUpProps {
@@ -46,7 +47,7 @@ class SignUp extends React.Component<SignUpProps, {}> {
                         disabled={filedProps.isSubmitting}>
                         {buttonLabels.submit}
                     </Button>
-                    {filedProps.isSubmitting && <Spinner type="grow" color="secondary" style={{ verticalAlign: 'middle' }} />}
+                    <ButtonSpinner loading={filedProps.isSubmitting} /> 
                 </FormGroup>
             </Form>
         );
