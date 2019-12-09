@@ -3,7 +3,7 @@ import { Col, Alert, Container } from 'reactstrap';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { VacancyType, Currency, VacancyModel } from '../../types';
-import VacancyForm from './vacancyForm1/VacancyForm';
+import VacancyForm from './vacancyForm/VacancyForm';
 import Spinner from '../../components/base/Spinner';
 
 
