@@ -4,6 +4,7 @@ import { Spinner, Col } from 'reactstrap';
 import UserProfileFrom from './UserProfileFrom';
 import FormAlerts from './../../base/FormAlerts';
 import { UserModel, RequestStatus } from '../../../types';
+import { async } from 'q';
 
 interface UseProfileProps {
     userData?: UserModel,
@@ -21,8 +22,8 @@ class UseProfile extends React.Component<UseProfileProps> {
         }
     }
 
-    onFormSubmit = (values: UserModel) => {
-        this.props.updateUserProfile(values);
+    onFormSubmit = async (values: UserModel) => {
+       await this.props.updateUserProfile(values);
     }
 
     render() {

@@ -1,20 +1,22 @@
 import React from 'react';
-import { Formik, FormikProps, Form, Field } from 'formik';
+import { Formik, FormikProps, Form, Field, FormikActions } from 'formik';
 import { FormGroup, Label, Button } from 'reactstrap';
 
 import { UserModel } from './../../../types';
 import validationSchema from './userProfileValidationSchema';
 import CustomInput from '../../base/CustomInput';
 import resouces from './../../../translations';
+import ButtonSpinner from '../../base/ButtonSpinner';
+import { async } from 'q';
 
 interface UserProfileFromProps {
     initialValues: UserModel,
-    onSubmit: (values: UserModel) => void
+    onSubmit: (values: UserModel) => Promise<void>
 }
 
 const UserProfileFrom: React.FC<UserProfileFromProps> = ({ initialValues, onSubmit }) => {
 
-    const renderForm = ({ values, handleBlur, handleChange }: FormikProps<UserModel>): JSX.Element => {
+    const renderForm = (filedProps: FormikProps<UserModel>): JSX.Element => {
 
         const { fields: fieldResources, placholders } = resouces.common;
 
@@ -32,20 +34,23 @@ const UserProfileFrom: React.FC<UserProfileFromProps> = ({ initialValues, onSubm
                     <Label htmlFor="lastName">{fieldResources.lastName}</Label>
                     <Field name="lastName" placeholder={placholders.lastNamePlacholder} component={CustomInput} />
                 </FormGroup>
-                    <FormGroup>
-                        <Button
-                            color="primary"
-                            type="submit">
-                            Submit
+                <FormGroup>
+                    <Button
+                        color="primary"
+                        type="submit">
+                        Submit
                         </Button>
-                    </FormGroup>
+                    <ButtonSpinner loading={filedProps.isSubmitting} />
+                </FormGroup>
             </Form>
         );
     }
 
-    const onFormSubmit = (values: UserModel) => {
-        onSubmit(values);
+    const onFormSubmit = async (values: UserModel, actions: FormikActions<UserModel>): Promise<void> => {
+        await onSubmit(values);
+        actions.setSubmitting(false);
     }
+
     return (
         <Formik
             initialValues={initialValues}
