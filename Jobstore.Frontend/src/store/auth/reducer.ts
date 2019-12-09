@@ -1,7 +1,8 @@
 import {
     AuthState,
     AuthActionTypes,
-    LOGIN_START,
+    LOGIN_RESET,
+    LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_ERROR,
     LOGOUT
@@ -9,20 +10,25 @@ import {
 
 const initialState: AuthState = {
     isAuthenticated: false,
-    userId: null,
-    error: null,
     loading: false
 };
 
-export function authReducer(
+export default function authReducer(
     state = initialState,
     action: AuthActionTypes
 ): AuthState {
     switch (action.type) {
-        case LOGIN_START: {
+        case LOGIN_RESET: {
             return {
                 ...state,
-                error: null,
+                error: undefined,
+                loading: false
+            }
+        }
+        case LOGIN_REQUEST: {
+            return {
+                ...state,
+                error: undefined,
                 loading: true
             }
         }
@@ -30,7 +36,7 @@ export function authReducer(
             return {
                 isAuthenticated: true,
                 userId: action.payload,
-                error: null,
+                error: undefined,
                 loading: false
             }
         case LOGIN_ERROR:

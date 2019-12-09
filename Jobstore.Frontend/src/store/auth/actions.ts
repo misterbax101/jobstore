@@ -1,32 +1,34 @@
 import { authService } from '../../services';
-import { history } from '../../untils/history';
-import { LoginModel } from './../../models';
+import { LoginModel } from '../../types';
+import { ActionCreator } from '../types';
 import { getUserById } from './../users/actions';
 import {
-    AuthActionTypes,
-    LOGIN_SUCCESS,
     LOGOUT,
+    LOGIN_RESET,
+    LOGIN_REQUEST,
+    LOGIN_SUCCESS,
     LOGIN_ERROR,
-    LOGIN_START
+    AuthActionTypes
 } from './types';
 
-export const login = (data: LoginModel) => async (dispatch: any) => {
+export const login = (data: LoginModel) => async (dispatch: any): Promise<boolean> => {
     try {
-        dispatch(start());
-        const authData = await authService.login(data);
-        dispatch(success(authData.id));
-        dispatch(checkAuthTimeout(authData.expires_in));
-        history.push('/');
+        dispatch(ActionCreator<typeof LOGIN_REQUEST, null>(LOGIN_REQUEST, null));
+        const { id, expires_in } = await authService.login(data);
+        dispatch(ActionCreator<typeof LOGIN_SUCCESS, string>(LOGIN_SUCCESS, id));
+        dispatch(checkAuthTimeout(expires_in));
+        dispatch(getUserById(id));
+        return true;
     }
     catch (err) {
-        dispatch(error(err));
+        dispatch(ActionCreator<typeof LOGIN_ERROR, string>(LOGIN_ERROR, err));
+        return false;
     }
 }
 
-
 export const logout = (): AuthActionTypes => {
     authService.logout();
-    return { type: LOGOUT }
+    return ActionCreator<typeof LOGOUT, null>(LOGOUT, null);
 };
 
 export const checkAuthTimeout = (expirationTime: number) => (dispatch: any) => {
@@ -42,9 +44,9 @@ export const authCheckState = () => async (dispatch: any) => {
         if (expirationDate == null || expirationDate <= new Date()) {
             dispatch(logout());
         } else {
-        dispatch(success(userId));
-        dispatch(getUserById(userId));
-        dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000 ));
+            dispatch(ActionCreator<typeof LOGIN_SUCCESS, string>(LOGIN_SUCCESS, userId));
+            dispatch(getUserById(userId));
+            dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
         }
     } else {
         dispatch(logout());
@@ -52,6 +54,4 @@ export const authCheckState = () => async (dispatch: any) => {
 }
 
 
-const start = (): AuthActionTypes => ({ type: LOGIN_START });
-const success = (userId: string): AuthActionTypes => ({ type: LOGIN_SUCCESS, payload: userId });
-const error = (error: string): AuthActionTypes => ({ type: LOGIN_ERROR, payload: error });
+export const reset = () =>  ActionCreator<typeof LOGIN_RESET, null>(LOGIN_RESET,null);

@@ -1,0 +1,11 @@
+{
+    "loginForm": {
+        "sm": {
+            "size": 12
+        },
+        "md": {
+            "size": 8,
+            "offset": 2
+        }
+    }
+}

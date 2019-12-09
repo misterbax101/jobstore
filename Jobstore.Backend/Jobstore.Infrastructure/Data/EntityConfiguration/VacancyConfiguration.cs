@@ -18,9 +18,9 @@ namespace Jobstore.Infrastructure.Data.EntityConfiguration
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.Property(e => e.Descripion)
+            builder.Property(e => e.Description)
                 .IsRequired()
-                .HasMaxLength(500);
+                .HasMaxLength(1000);
 
             builder.Property(e => e.SalaryCurrency)
                .IsRequired()

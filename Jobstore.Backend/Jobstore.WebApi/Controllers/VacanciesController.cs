@@ -1,6 +1,7 @@
 ﻿using Jobstore.Infrastructure.Entities;
 using Jobstore.Infrastructure.Identity.Data;
 using Jobstore.WebApi.Infrastructure;
+using Jobstore.WebApi.Models;
 using Jobstore.WebApi.Models.Requests;
 using Jobstore.WebApi.Models.Responses;
 using Microsoft.AspNetCore.Authorization;
@@ -8,9 +9,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Z.EntityFramework.Plus;
 namespace Jobstore.WebApi.Controllers
 {
     [Authorize]
@@ -42,22 +44,61 @@ namespace Jobstore.WebApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAll([FromQuery]int skip = 0, [FromQuery]int take = 10)
+        public async Task<IActionResult> GetAll([FromQuery]int skip = 0, [FromQuery]int take = 10, [FromQuery]int? vacancyType = 0, [FromQuery] SortOrder? order = SortOrder.Asc, [FromQuery]string orderBy = null)
         {
-            var records = _appDbContext.Vacancies
-                                           .Include(x => x.Owner)
-                                           .OrderByDescending(x => x.CreatedDate);
+            IQueryable<Vacancy> records = _appDbContext.Vacancies;
+
+            if (vacancyType.GetValueOrDefault() != 0)
+            {
+                records = records.Where(x => vacancyType == x.TypeId);
+            }
+
+            if (orderBy != null)
+            {
+                records = order == SortOrder.Asc ? records.OrderByDynamic(x => $"x.{orderBy}") :
+                                                   records.OrderByDescendingDynamic(x => $"x.{orderBy}"); ;
+            }
+            else
+            {
+                records = order == SortOrder.Asc ? records.OrderBy(x => x.CreatedDate) :
+                                                   records.OrderByDescending(x => x.CreatedDate);
+            }
 
             var result = await records.Skip(skip)
                                       .Take(take)
+                                      .Include(x => x.Owner)
                                       .ToListAsync();
 
-            return Ok(
-                new
-                {
-                    TotalCount = records.Count(),
-                    Result = result.Select(MapVacancy)
-                });
+            return Ok(new
+            {
+                TotalCount = records.Count(),
+                Data = result.Select(MapVacancy)
+            });
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("search")]
+        public async Task<IActionResult> Search([FromQuery] string query, [FromQuery]int skip = 0, [FromQuery]int take = 10)
+        {
+            query = query == null ? string.Empty : query;
+            IEnumerable<Vacancy> records = await _appDbContext.Vacancies
+                 .Include(x => x.Owner)
+                 .ToListAsync();
+
+             records = records.Where(vacancy =>
+                                                           vacancy.Title.Contains(query, StringComparison.InvariantCultureIgnoreCase) ||
+                                                           vacancy.CompanyName.Contains(query, StringComparison.InvariantCultureIgnoreCase) ||
+                                                           vacancy.Description.Contains(query, StringComparison.InvariantCultureIgnoreCase));
+
+            var result =  records.Skip(skip)
+                                     .Take(take);
+
+            return Ok(new
+            {
+                TotalCount = records.Count(),
+                Data = result.Select(MapVacancy)
+            });
         }
 
         [HttpGet]
@@ -77,7 +118,7 @@ namespace Jobstore.WebApi.Controllers
                 new
                 {
                     TotalCount = records.Count(),
-                    Result = result.Select(MapVacancy)
+                    Data = result.Select(MapVacancy)
                 });
         }
 
@@ -92,7 +133,7 @@ namespace Jobstore.WebApi.Controllers
             var vacancy = new Vacancy
             {
                 Title = request.Title,
-                Descripion = request.Descripion,
+                Description = request.Description,
                 CompanyName = request.CompanyName,
                 SalaryValue = request.SalaryValue,
                 SalaryCurrency = request.SalaryCurrency,
@@ -120,7 +161,7 @@ namespace Jobstore.WebApi.Controllers
             {
                 Id = id,
                 Title = request.Title,
-                Descripion = request.Descripion,
+                Description = request.Description,
                 CompanyName = request.CompanyName,
                 SalaryValue = request.SalaryValue,
                 SalaryCurrency = request.SalaryCurrency,
@@ -129,7 +170,7 @@ namespace Jobstore.WebApi.Controllers
 
             _appDbContext.Attach(vacancy);
             _appDbContext.Entry(vacancy).Property(p => p.Title).IsModified = true;
-            _appDbContext.Entry(vacancy).Property(p => p.Descripion).IsModified = true;
+            _appDbContext.Entry(vacancy).Property(p => p.Description).IsModified = true;
             _appDbContext.Entry(vacancy).Property(p => p.CompanyName).IsModified = true;
             _appDbContext.Entry(vacancy).Property(p => p.SalaryValue).IsModified = true;
             _appDbContext.Entry(vacancy).Property(p => p.SalaryCurrency).IsModified = true;
@@ -160,10 +201,10 @@ namespace Jobstore.WebApi.Controllers
             {
                 Id = vacancy.Id,
                 Title = vacancy.Title,
-                Descripion = vacancy.Descripion,
+                Description = vacancy.Description,
                 CompanyName = vacancy.CompanyName,
                 CreatedDate = vacancy.CreatedDate,
-                Type = vacancy.Type,
+                TypeId = vacancy.TypeId,
                 SalaryValue = vacancy.SalaryValue,
                 SalaryCurrency = vacancy.SalaryCurrency,
                 OwnerId = vacancy.OwnerId,

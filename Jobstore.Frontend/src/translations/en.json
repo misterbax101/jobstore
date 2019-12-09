@@ -10,6 +10,7 @@
         "placholders": {
             "emailPlacholder": "Enter email",
             "passwordPlacholder": "Enter password",
+            "passwordConfirmPlacholder": "Enter password again",
             "firstNamePlacholder": "Enter first name",
             "lastNamePlacholder": "Enter last name"
         },
@@ -53,10 +54,27 @@
                 "placeholder": "Enter salary"
             }
         },
-        "buttonLabel": "Add a new vacancy"
+        "buttonLabel": "Submit",
+        "title": "Create a new vacancy"
+    },
+    "editVacancy": {
+        "successMessage": "The vacancy has been successfully updated"
     },
     "header": {
         "hi": "Hi",
-        "myProfile": "My Profile"
+        "myProfile": "My Profile",
+        "myVacancies": "My Vacancies",
+        "createVacancy": "Create a vacancy"
+    },
+    "signUp": {
+        "resposeMessages": {
+            "SignedUpSuccessfully": "You have signed up successfully",
+            "SignUpFailed": "Sign up failed.",
+            "ProfileUpdatedSuccessfully": "Your profile has been updated up successfully",
+             "UpdatingFailed": "Updating  failed.",
+            "InternalServerError": "Internal Server Error"
+
+        },
+        "header": "Sign Up"
     }
 }
