@@ -3,8 +3,7 @@ import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 
 import { getPagesCount } from './../../untils/helper';
 
-
-interface PaginatorProps {
+export interface PaginatorProps {
     currentPage?: number,
     itemsCount: number,
     pageSize?: number,

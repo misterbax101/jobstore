@@ -29,7 +29,7 @@ describe('<Login />', () => {
         expect(wrapper.getElements()).toMatchSnapshot();
     });
 
-    it('should calls reset', () => {
+    it('should call reset', () => {
 
         const resetMock = jest.fn(() => { });
         mount(
@@ -40,7 +40,7 @@ describe('<Login />', () => {
         expect(resetMock).toBeCalled();
     });
 
-    it('should redirects to home', () => {
+    it('should redirect to home', () => {
 
         const redirectUrl = '/test';
         location.state = { from: redirectUrl };
@@ -51,7 +51,7 @@ describe('<Login />', () => {
         expect(history.location.pathname).toBe(redirectUrl);
     });
 
-    it('should shows error', () => {
+    it('should show error', () => {
 
         const errorMsg = "test error";
         const wrapper = mount(
@@ -66,7 +66,7 @@ describe('<Login />', () => {
         expect(alertWrapper.text()).toBe(errorMsg);
     });
 
-    it('should shows loader', () => {
+    it('should show loader', () => {
 
         const wrapper = mount(
             <Router history={history}>
@@ -76,22 +76,6 @@ describe('<Login />', () => {
 
         const spinnerWrapper = wrapper.find(ButtonSpinner).first();
         expect(spinnerWrapper.props().loading).toBeTruthy();
-    });
-
-
-    it('should shows validation errors', () => {
-
-        const wrapper = mount(
-            <Router history={history}>
-                <Login {...defaultProps}
-                    loading={true} />
-            </Router>);
-
-        wrapper
-            .find(Button)
-            .simulate('click');
-        
-
     });
 
 });
