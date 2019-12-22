@@ -10,7 +10,7 @@ import {
 } from 'reactstrap';
 
 import { routes } from './../../../constants';
-import LoginButton from '../LoginButton';
+import LoginButton from '../LoginButton/LoginButton';
 import logo from  '../../../assert/images/logo.svg';
 import './Header.css'
 

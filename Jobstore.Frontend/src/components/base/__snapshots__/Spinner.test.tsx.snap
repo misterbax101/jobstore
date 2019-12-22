@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Spinner /> should render <Spinner /> 1`] = `
+Array [
+  <div
+    className="spinner"
+  >
+    <Spinner
+      tag="div"
+      type="border"
+    >
+      Loading...
+    </Spinner>
+  </div>,
+]
+`;
+
+exports[`<Spinner /> should render empty <Spinner /> 1`] = `
+Array [
+  null,
+]
+`;

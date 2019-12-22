@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Footer /> should render footer 1`] = `
+Array [
+  <footer
+    className="bg-light text-muted footer"
+  >
+    <Container
+      className="py-3"
+      tag="div"
+    >
+      <Row
+        tag="div"
+      >
+        <Col
+          tag="div"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          © 
+          2019
+           Jobstore  All Rights Reserved
+          <span
+            className="float-right"
+          >
+            Contact us
+            <a
+              className="ml-1"
+              href="mailto:"
+            >
+              info@jobstore.com
+            </a>
+          </span>
+        </Col>
+      </Row>
+      <hr />
+    </Container>
+  </footer>,
+]
+`;

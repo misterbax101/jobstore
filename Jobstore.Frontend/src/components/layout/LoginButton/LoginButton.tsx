@@ -8,11 +8,11 @@ import {
     NavLink
 } from 'reactstrap';
 
-import translations from './../../translations';
-import { history } from './../../untils/history'
-import { routes } from './../../constants';
+import translations from '../../../translations';
+import { history } from '../../../untils/history'
+import { routes } from '../../../constants';
 
-interface LoginButtonProps {
+export interface LoginButtonProps {
     isAuthenticated: boolean,
     userName: string | null
     logout(): void;
