@@ -1,7 +1,7 @@
 import React from 'react';
+import { RouteComponentProps, Link, withRouter } from 'react-router-dom';
 import { Formik, FormikProps, Form, Field, FormikActions } from 'formik';
-import { FormGroup, Button, Col, Label, Spinner, Alert } from 'reactstrap';
-import { RouteComponentProps, Link } from 'react-router-dom';
+import { FormGroup, Button, Col, Label, Alert } from 'reactstrap';
 
 import { LoginModel } from '../../../types';
 import FormInput from '../../base/FormInput';
@@ -12,7 +12,7 @@ import resources from '../../../translations';
 import { routes, layout } from '../../../constants';
 const { fields, placholders } = resources.common;
 
-interface LoginProps extends RouteComponentProps {
+export interface LoginProps extends RouteComponentProps {
     onLogin(model: LoginModel): Promise<boolean>;
     resetForm: () => void;
     error?: string,
